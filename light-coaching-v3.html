@@ -1471,6 +1471,23 @@
     }
   </style>
 
+<style>
+
+    /* Global high-contrast copy button activation override */
+    .copy-btn.enabled, .btn-primary-active, .resume-btn, #slack-copy-btn.enabled {
+      background: var(--blue) !important;
+      color: #ffffff !important;
+      border-color: var(--blue) !important;
+      opacity: 1 !important;
+      cursor: pointer !important;
+      font-weight: 700 !important;
+    }
+    .copy-btn:disabled, #slack-copy-btn:disabled {
+      opacity: 0.4 !important;
+      cursor: not-allowed !important;
+    }
+
+</style>
 </head>
 
 <body>
@@ -3394,7 +3411,62 @@
       </div><!-- /.main -->
 
       <!-- 1주차 미션 우측 패널 -->
-      <div class="mission-panel" id="panel-week1" style="display:none;">
+      
+      <!-- 0. 시작 전 준비 체크리스트 우측 패널 -->
+      <div class="mission-panel" id="panel-prep" style="display:none;">
+        <div class="week-badge badge-neutral" style="font-size:9px; padding:2px 8px;">시작 전 준비</div>
+        <div class="page-title" style="font-size: 20px; margin-bottom: 8px;">전체 준비 현황</div>
+        <div class="page-desc" style="font-size: 13px;">실습을 원활하게 진행하기 위한 필수 점검 리스트입니다.</div>
+        
+        <div class="sec" style="background: var(--card2); padding: 16px; border-radius: 8px; border: 1px solid var(--border-dk); margin-top: 24px;">
+          <div class="info-box" style="font-size:13px; background: transparent; padding: 0; border: 0;">
+            <label style="display:flex; gap:10px; margin-bottom:14px; cursor:pointer; line-height:1.4;">
+              <input type="checkbox" class="prep-chk" onclick="savePrepProgress()"> 
+              <span><b>Chrome 브라우저</b> 최적화 확인</span>
+            </label>
+            <label style="display:flex; gap:10px; margin-bottom:14px; cursor:pointer; line-height:1.4;">
+              <input type="checkbox" class="prep-chk" onclick="savePrepProgress()"> 
+              <span><b>Antigravity 계정</b> 연동/접속 완료</span>
+            </label>
+            <label style="display:flex; gap:10px; margin-bottom:14px; cursor:pointer; line-height:1.4;">
+              <input type="checkbox" class="prep-chk" onclick="savePrepProgress()"> 
+              <span><b>작업용 빈 폴더</b>(바탕화면) 생성</span>
+            </label>
+            <label style="display:flex; gap:10px; margin-bottom:14px; cursor:pointer; line-height:1.4;">
+              <input type="checkbox" class="prep-chk" onclick="savePrepProgress()"> 
+              <span><b>커뮤니티 슬랙</b> 접속 및 프로필 설정</span>
+            </label>
+            <label style="display:flex; gap:10px; margin-bottom:14px; cursor:pointer; line-height:1.4;">
+              <input type="checkbox" class="prep-chk" onclick="savePrepProgress()"> 
+              <span>(선택) 로컬 AI <b>Ollama 설치</b> 여부 결정</span>
+            </label>
+          </div>
+          <div id="prep-progress-bar" style="margin-top:20px; height: 6px; background: var(--border); border-radius: 10px; overflow: hidden;">
+             <div id="prep-fill" style="height:100%; background: var(--blue); width: 0%; transition: width 0.3s ease;"></div>
+          </div>
+          <div id="prep-pct" style="font-size: 12px; color: var(--muted); text-align: right; margin-top: 8px;">0% 완료</div>
+        </div>
+      </div>
+
+
+      <!-- 슬랙 질문 빌더 결과 우측 패널 -->
+      <div class="mission-panel" id="panel-slack" style="display:none;">
+        <div class="week-badge badge-neutral" style="font-size:9px; padding:2px 8px;">슬랙 전용 양식</div>
+        <div class="page-title" style="font-size: 20px; margin-bottom: 8px;">실시간 생성기</div>
+        <div class="page-desc" style="font-size: 13px;">왼쪽 폼을 작성하면 여기에 결과가 출력됩니다.</div>
+
+        <div class="prompt-block" style="margin-top: 20px; display: flex; flex-direction: column; height: 80%; border: 1px solid var(--border-dk);">
+          <div class="prompt-header" style="background: var(--card2);">
+            <div class="prompt-label">미리보기</div>
+            <button id="slack-copy-btn-panel" class="copy-btn" disabled onclick="copySlackText(this)" style="opacity: 0.4; cursor: not-allowed; transition:all 0.3s;">복사하기</button>
+          </div>
+          <div id="slack-preview-body-panel" class="prompt-body" style="flex-grow: 1; white-space: pre-wrap; font-size: 13px; line-height: 1.6; color: var(--muted); background: var(--card3); overflow-y: auto;">
+(왼쪽 내용을 모두 입력하면 완성된 질문이 보이며 복사 버튼이 활성화됩니다.)
+          </div>
+        </div>
+      </div>
+
+<div class="mission-panel" id="panel-week1" style="display:none;">
         <div class="week-badge badge-w1" style="font-size:9px; padding:2px 8px;">1주차 · 미션 제출</div>
         <div class="page-title">1주차 미션 제출</div>
         <div class="page-desc">좌측 스텝에서 작성한 내용이 이곳에 자동으로 모입니다. 모든 항목이 채워지면 다운로드가 가능합니다.</div>
@@ -3520,6 +3592,8 @@
   </div><!-- /#app -->
 
   <script>
+    // 다크모드 고정
+    document.documentElement.setAttribute('data-theme', 'dark');
 
     // ── 슬랙 빌더 로직 ──
     function selectChip(category, value, el) {
@@ -3530,6 +3604,7 @@
       el.classList.add('selected');
       updateSlackPreview();
     }
+
     function updateSlackPreview() {
       const t = document.getElementById('slack-type')?.value || '';
       const s = document.getElementById('slack-step')?.value || '';
@@ -3537,21 +3612,22 @@
       const p = document.getElementById('slack-prob')?.value.trim() || '';
       const wt = document.getElementById('slack-want')?.value.trim() || '';
       
-      const body = document.getElementById('slack-preview-body');
-      const btn = document.getElementById('slack-copy-btn');
+      const body = document.getElementById('slack-preview-body-panel');
+      const btn = document.getElementById('slack-copy-btn-panel');
       if (!body || !btn) return;
 
       if (!t && !s && !w && !p && !wt) {
          body.innerText = "(왼쪽 내용을 모두 입력하면 완성된 질문이 보이며 복사 버튼이 활성화됩니다.)";
          body.style.color = "var(--muted)";
-         btn.disabled = true; btn.classList.remove('enabled');
+         btn.disabled = true; 
+         btn.classList.remove('enabled');
          return;
       }
       
       body.style.color = "var(--title2)";
       body.innerText = `【질문 유형】\n${t || '___'}\n\n【현재 단계】\n${s || '___'}\n\n【하고 싶었던 것】\n${w || '___'}\n\n【현재 발생한 문제】\n${p || '___'}\n\n【원하는 답변】\n${wt || '___'}`;
 
-      // REQUIRED fields logic for vivid colored copy button
+      // ALL fields required check
       if (t && s && w && p && wt) {
         btn.disabled = false;
         btn.classList.add('enabled');
@@ -3560,25 +3636,44 @@
         btn.classList.remove('enabled');
       }
     }
+
     function copySlackText(btn) {
-      const body = document.getElementById('slack-preview-body');
+      const body = document.getElementById('slack-preview-body-panel');
       if (!body) return;
       navigator.clipboard.writeText(body.innerText).then(() => {
         const orig = btn.innerText;
         btn.innerText = "복사 완료! ✓";
+        btn.classList.add('enabled');
         setTimeout(() => btn.innerText = orig, 1500);
       });
     }
 
+    // ── 시작 전 준비 체크리스트 로직 ──
+    function savePrepProgress() {
+       const chks = document.querySelectorAll('.prep-chk');
+       const state = Array.from(chks).map(c => c.checked);
+       localStorage.setItem('lc_prep_chks', JSON.stringify(state));
+       updatePrepUI();
+    }
 
+    function updatePrepUI() {
+       const chks = document.querySelectorAll('.prep-chk');
+       const state = JSON.parse(localStorage.getItem('lc_prep_chks') || '[]');
+       chks.forEach((c, i) => { if(state[i] !== undefined) c.checked = state[i]; });
 
-    // 다크모드 고정
-    document.documentElement.setAttribute('data-theme', 'dark');
-
+       const total = chks.length;
+       const done = Array.from(chks).filter(c => c.checked).length;
+       const pct = Math.round((done / total) * 100);
+       const fill = document.getElementById('prep-fill');
+       const txt = document.getElementById('prep-pct');
+       if(fill) fill.style.width = pct + '%';
+       if(txt) txt.innerText = pct + '% 완료';
+    }
 
     // ── 미션 완료 체크 ──
     function checkMissionComplete() {
-      const ids = ['m1-pd', 'm1-flow', 'm1-must', 'm1-later', 'm1-out', 'm1-prd', 'm1-screen'];
+      // PRD has been removed from Week 1, thus omitted here.
+      const ids = ['m1-pd', 'm1-flow', 'm1-must', 'm1-later', 'm1-out', 'm1-screen'];
       let allFilled = true;
       for (let id of ids) {
         const el = document.getElementById(id);
@@ -3592,40 +3687,27 @@
         if (allFilled) {
           btn.disabled = false;
           btn.innerText = 'PRD Lite 초안.md 다운로드';
+          btn.classList.add('enabled'); // ensure blue button class consistency
         } else {
           btn.disabled = true;
           btn.innerText = '모든 항목을 입력해주세요';
+          btn.classList.remove('enabled');
         }
       }
     }
 
     // saveInput 수정 (타이핑 시 체크)
-    const oldSaveInput = saveInput;
-    saveInput = function (id) {
-      oldSaveInput(id);
-      checkMissionComplete();
-    };
-
-    // DOMContentLoaded 에도 체크 추가
-    const oldDOMContent = window.onload; // or just append event listener
-    document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(checkMissionComplete, 100);
-    });
-
-
-    // ── 인풋 저장/동기화 ──
     function saveInput(id) {
       const el = document.getElementById(id);
       if (!el) return;
       localStorage.setItem('lc_' + id, el.value);
 
-      // 미션1 페이지와 동기화
+      // 미션1 페이지와 동기화 mapping
       const map = {
         'in-step3-flow': 'm1-flow',
         'in-step4-must': 'm1-must',
         'in-step4-later': 'm1-later',
         'in-step4-out': 'm1-out',
-        'in-step5-prd': 'm1-prd',
         'in-step6-screen': 'm1-screen'
       };
       if (map[id]) {
@@ -3633,18 +3715,17 @@
         if (target) target.value = el.value;
         localStorage.setItem('lc_' + map[id], el.value);
       }
+      checkMissionComplete();
     }
 
-    // 문제정의 동기화 훅
-    const oldUpdatePD = updatePD;
-    updatePD = function () {
-      oldUpdatePD();
+    // ── 문제정의 실시간 훅 ──
+    function updatePD() {
       const u = document.getElementById('pd-user')?.value.trim() || '___';
       const s = document.getElementById('pd-sit')?.value.trim() || '___';
       const p = document.getElementById('pd-prob')?.value.trim() || '___';
       const ca = document.getElementById('pd-cause')?.value.trim() || '___';
+      
       const text = `${u}는 ${s}에서 ${p}를 겪고 있으며, 그 이유는 ${ca} 때문이다.`;
-
       const m1pd = document.getElementById('m1-pd');
       if (m1pd) { m1pd.value = text; localStorage.setItem('lc_m1-pd', text); }
 
@@ -3662,22 +3743,34 @@
       localStorage.setItem('lc_pd-prob', document.getElementById('pd-prob')?.value || '');
       localStorage.setItem('lc_pd-cause', document.getElementById('pd-cause')?.value || '');
 
-      if (typeof checkMissionComplete === 'function') checkMissionComplete();
+      // Main body PD preview update logic (if exists)
+      const preview = document.getElementById('pd-preview');
+      const result = document.getElementById('pd-result');
+      if (preview && result) {
+        if (u !== '___' || s !== '___' || p !== '___' || ca !== '___') {
+           preview.style.display = 'block';
+           result.innerHTML = `<span class="ct-user" style="font-size:13px">${u}</span>는 <span class="ct-sit" style="font-size:13px">${s}</span>에서 <span class="ct-prob" style="font-size:13px">${p}</span>를 겪고 있으며, 그 이유는 <span class="ct-cause" style="font-size:13px">${ca}</span> 때문이다.`;
+        } else {
+           preview.style.display = 'none';
+        }
+      }
+
+      checkMissionComplete();
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      // 저장된 값 불러오기
-      const ids = ['in-step3-flow', 'in-step4-must', 'in-step4-later', 'in-step4-out', 'in-step5-prd', 'in-step6-screen', 'm1-pd', 'm1-flow', 'm1-must', 'm1-later', 'm1-out', 'm1-prd', 'm1-screen', 'pd-user', 'pd-sit', 'pd-prob', 'pd-cause'];
-      ids.forEach(id => {
-        const val = localStorage.getItem('lc_' + id);
-        const el = document.getElementById(id);
-        if (el && val) el.value = val;
+    function copyPD() {
+      const u = document.getElementById('pd-user')?.value.trim() || '___';
+      const s = document.getElementById('pd-sit')?.value.trim() || '___';
+      const p = document.getElementById('pd-prob')?.value.trim() || '___';
+      const ca = document.getElementById('pd-cause')?.value.trim() || '___';
+      const text = `${u}는 ${s}에서 ${p}를 겪고 있으며, 그 이유는 ${ca} 때문이다.`;
+      navigator.clipboard.writeText(text).then(() => {
+        const msg = document.getElementById('pd-copy-msg');
+        if (msg) { msg.style.display = 'inline'; setTimeout(() => msg.style.display = 'none', 2000); }
       });
-      if (typeof updatePD === 'function') updatePD();
-    });
+    }
 
     const PASSWORD = '1234';
-
     function unlock() {
       const val = document.getElementById('pw-input').value;
       const err = document.getElementById('pw-error');
@@ -3686,6 +3779,9 @@
         document.getElementById('app').style.display = 'flex';
         loadProgress();
         showResumeBanner();
+        // Initialize Proper Page View Sync
+        const initialActive = document.querySelector('.sb-item.active');
+        if (initialActive) goPage(initialActive);
       } else {
         err.style.display = 'block';
         document.getElementById('pw-input').style.borderColor = 'var(--red-dk)';
@@ -3693,11 +3789,13 @@
       }
     }
 
+    // ── CORE ROUTER ──
     function goPage(el) {
-      if (el.classList.contains('locked')) return;
+      if (!el || el.classList.contains('locked')) return;
       document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
       el.classList.add('active');
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      
       const pageId = el.dataset.page;
       const target = document.getElementById('page-' + pageId);
       if (target) {
@@ -3706,67 +3804,95 @@
         localStorage.setItem('lc_last_page', pageId);
       }
 
-      // 우측 패널 토글
-      const w2Pages = ['step7', 'step8', 'step9', 'step10', 'step11', 'step12', 'bonus1', 'bonus2', 'bonus3', 'bonus4', 'faq'];
-      const p1 = document.getElementById('panel-week1');
-      const p2 = document.getElementById('panel-week2');
-      if(p1 && p2) {
-        if (w2Pages.includes(pageId)) {
-          p1.style.display = 'none';
-          p2.style.display = 'block';
-          // 하이라이트
-          document.querySelectorAll('.chk-sec').forEach(s => s.classList.remove('active-sec'));
-          if (pageId.startsWith('step')) {
-            const num = pageId.replace('step', '');
-            const sec = document.getElementById('chk-s' + num);
-            if (sec) {
-              sec.classList.add('active-sec');
-              sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-          }
-        } else {
-          p1.style.display = 'block';
-          p2.style.display = 'none';
+      // ── RIGHT PANEL ROUTING ──
+      const pPrep = document.getElementById('panel-prep');
+      const pSlack = document.getElementById('panel-slack');
+      const pW1 = document.getElementById('panel-week1');
+      const pW2 = document.getElementById('panel-week2');
+
+      if (!pPrep || !pSlack || !pW1 || !pW2) return;
+
+      // Hide all
+      [pPrep, pSlack, pW1, pW2].forEach(p => p.style.display = 'none');
+
+      const beforeGroup = ['orientation', 'prep-checklist', 'antigravity-setup', 'ollama-setup'];
+      const week2Group = ['step7', 'step8', 'step9', 'step10', 'step11', 'step12', 'bonus1', 'bonus2', 'bonus3', 'bonus4', 'faq'];
+
+      if (pageId === 'slack-guide') {
+        pSlack.style.display = 'block';
+        updateSlackPreview(); // force real-time refresh sync
+      } else if (beforeGroup.includes(pageId)) {
+        pPrep.style.display = 'block';
+      } else if (week2Group.includes(pageId)) {
+        pW2.style.display = 'block';
+        // Scroll and highlight active checklist step
+        document.querySelectorAll('.chk-sec').forEach(s => s.classList.remove('active-sec'));
+        if (pageId.startsWith('step')) {
+           const num = pageId.replace('step', '');
+           const sec = document.getElementById('chk-s' + num);
+           if (sec) {
+             sec.classList.add('active-sec');
+             sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+           }
         }
+      } else {
+        // Default Week 1 panel
+        pW1.style.display = 'block';
       }
     }
-
-    // 체크리스트 저장 함수
-    function saveCheck(el) {
-      const checks = document.querySelectorAll('#panel-week2 input[type="checkbox"]');
-      const state = Array.from(checks).map(c => c.checked);
-      localStorage.setItem('lc_checks', JSON.stringify(state));
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const saved = JSON.parse(localStorage.getItem('lc_checks') || '[]');
-      const checks = document.querySelectorAll('#panel-week2 input[type="checkbox"]');
-      checks.forEach((c, i) => {
-        if (saved[i] !== undefined) c.checked = saved[i];
-      });
-    });
-
 
     function goPageById(id) {
       const el = document.querySelector(`.sb-item[data-page="${id}"]`);
       if (el) goPage(el);
     }
 
-    function unlock2ndWeek() {
-      document.querySelectorAll('.sb-item.locked').forEach(el => el.classList.remove('locked'));
+    // ── CHECKLIST FLOW SEQUENCING (WEEK 2) ──
+    function updateChecklistFlow() {
+      const steps = [7, 8, 9, 10, 11, 12];
+      let prevStepAllDone = true;
+      steps.forEach(num => {
+        const sec = document.getElementById('chk-s' + num);
+        if (!sec) return;
+        const checks = sec.querySelectorAll('input[type="checkbox"]');
+        const secDone = Array.from(checks).every(c => c.checked) && checks.length > 0;
+        
+        if (prevStepAllDone) {
+          sec.style.opacity = "1";
+          sec.style.pointerEvents = "auto";
+          sec.querySelectorAll('.step-lock-msg').forEach(m => m.remove());
+        } else {
+          sec.style.opacity = "0.4";
+          sec.style.pointerEvents = "none";
+          if (!sec.querySelector('.step-lock-msg')) {
+             const lockMsg = document.createElement('div');
+             lockMsg.className = 'step-lock-msg';
+             lockMsg.innerText = '🔒 이전 단계를 모두 완료해야 활성화됩니다.';
+             lockMsg.style.cssText = 'font-size:11px; color:var(--blue); margin-bottom: 10px; font-weight: bold;';
+             sec.insertBefore(lockMsg, sec.firstChild);
+          }
+        }
+        prevStepAllDone = secDone; 
+      });
     }
-    if (new URLSearchParams(location.search).get('week2') === 'open') unlock2ndWeek();
 
+    function saveCheck(el) {
+      const checks = document.querySelectorAll('#panel-week2 input[type="checkbox"]');
+      const state = Array.from(checks).map(c => c.checked);
+      localStorage.setItem('lc_checks', JSON.stringify(state));
+      updateChecklistFlow();
+    }
+
+    // ── UTILITIES ──
     function copyText(btn, id) {
       const text = document.getElementById(id).innerText;
       navigator.clipboard.writeText(text).then(() => {
         const orig = btn.textContent;
         btn.textContent = '복사됨 ✓';
-        setTimeout(() => btn.textContent = orig, 1600);
+        btn.classList.add('enabled');
+        setTimeout(() => { btn.textContent = orig; btn.classList.remove('enabled'); }, 1600);
       });
     }
 
-    // ── 라이트박스 ──
     function openLightbox(img) {
       const overlay = document.createElement('div');
       overlay.className = 'lightbox-overlay';
@@ -3775,8 +3901,16 @@
       document.body.appendChild(overlay);
     }
 
-    // ── 진도 체크 (토글 — 완료/취소 가능) ──
+    // ── PROGRESS SYSTEM ──
     function loadProgress() {
+      if (typeof updatePrepUI === "function") updatePrepUI();
+      const checks = document.querySelectorAll('#panel-week2 input[type="checkbox"]');
+      const saved = JSON.parse(localStorage.getItem('lc_checks') || '[]');
+      checks.forEach((c, i) => {
+        if (saved[i] !== undefined) c.checked = saved[i];
+      });
+      updateChecklistFlow();
+
       const done = JSON.parse(localStorage.getItem('lc_done') || '[]');
       done.forEach(pageId => {
         const dot = document.querySelector(`.sb-item[data-page="${pageId}"] .sb-dot`);
@@ -3803,9 +3937,55 @@
       localStorage.setItem('lc_done', JSON.stringify(done));
     }
 
-    // 완료 버튼 동적 삽입 (page-nav 위, 가운데 정렬)
+    function showResumeBanner() {
+      const lastPage = localStorage.getItem('lc_last_page');
+      if (!lastPage || lastPage === 'orientation') return;
+      const labels = {
+        'slack-guide': '슬랙 질문 양식', 'step1': 'STEP 1', 'step2': 'STEP 2', 'step3': 'STEP 3',
+        'step4': 'STEP 4', 'step6': 'STEP 5', 'step7': 'STEP 6', 'step8': 'STEP 7', 
+        'step9': 'STEP 8', 'step10': 'STEP 9', 'step11': 'STEP 10', 'step12': 'STEP 11'
+      };
+      const label = labels[lastPage] || lastPage;
+      const orientPage = document.getElementById('page-orientation');
+      if (!orientPage) return;
+      const banner = document.createElement('div');
+      banner.className = 'resume-banner show';
+      banner.innerHTML = `<div class="resume-text">마지막으로 <b>${label}</b>까지 보셨어요.</div>
+      <button class="resume-btn enabled" onclick="goPageById('${lastPage}');this.closest('.resume-banner').remove()">이어서 보기 →</button>`;
+      orientPage.insertBefore(banner, orientPage.firstChild);
+    }
+
+    function downloadMission1() {
+      const pd = document.getElementById('m1-pd')?.value || '(미작성)';
+      const flow = document.getElementById('m1-flow')?.value || '(미작성)';
+      const must = document.getElementById('m1-must')?.value || '(미작성)';
+      const later = document.getElementById('m1-later')?.value || '(미작성)';
+      const out = document.getElementById('m1-out')?.value || '(미작성)';
+      // Note: PRD is deliberately omitted as per requested streamlining
+      const scr = document.getElementById('m1-screen')?.value || '(미작성)';
+      const date = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+
+      const md = `# 1주차 미션 제출\n제출일: ${date}\n\n---\n\n## 1. 문제정의 문장\n\n${pd}\n\n---\n\n## 2. 사용자 흐름\n\n${flow}\n\n---\n\n## 3. 기능 우선순위표\n\n### Must (첫 버전에 포함)\n${must}\n\n### Later (다음 버전에)\n${later}\n\n### Out (이번엔 제외)\n${out}\n\n---\n\n## 4. 화면 구조 정리\n\n${scr}\n`;
+      
+      const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `1주차_미션_제출_${date.replace(/\. /g, '-').replace(/\.$/, '')}.md`;
+      a.click();
+    }
+
+    // ── BOOTSTRAP / DOMContentLoaded ──
     document.addEventListener('DOMContentLoaded', () => {
-      const pages = ['orientation', 'prep-checklist', 'antigravity-setup', 'ollama-setup', 'slack-guide', 'step1', 'step2', 'step3', 'step4', 'step5', 'step6', 'step7', 'step8', 'step9', 'step10', 'step11', 'step12', 'bonus1', 'bonus2', 'bonus3', 'bonus4', 'faq'];
+      // 1. Restore form inputs
+      const ids = ['in-step3-flow', 'in-step4-must', 'in-step4-later', 'in-step4-out', 'in-step6-screen', 'm1-pd', 'm1-flow', 'm1-must', 'm1-later', 'm1-out', 'm1-screen', 'pd-user', 'pd-sit', 'pd-prob', 'pd-cause'];
+      ids.forEach(id => {
+        const val = localStorage.getItem('lc_' + id);
+        const el = document.getElementById(id);
+        if (el && val) el.value = val;
+      });
+      
+      // 2. Dynamic injection of Completion toggle buttons for all main content pages
+      const pages = ['orientation', 'prep-checklist', 'antigravity-setup', 'ollama-setup', 'slack-guide', 'step1', 'step2', 'step3', 'step4', 'step6', 'step7', 'step8', 'step9', 'step10', 'step11', 'step12', 'bonus1', 'bonus2', 'bonus3', 'bonus4', 'faq'];
       pages.forEach(pid => {
         const page = document.getElementById('page-' + pid);
         if (!page) return;
@@ -3822,126 +4002,13 @@
         wrapper.appendChild(btn);
         nav.parentNode.insertBefore(wrapper, nav);
       });
-      loadProgress();
 
-      // Initialize proper visibility on boot
-      const initialActive = document.querySelector('.sb-item.active');
-      if (initialActive) goPage(initialActive);
-
+      // 3. Initialize sub-system UIs
+      if (typeof updatePD === 'function') updatePD();
+      if (typeof updatePrepUI === 'function') updatePrepUI();
+      setTimeout(checkMissionComplete, 200);
     });
+</script>
 
-    // ── 이어하기 배너 ──
-    function showResumeBanner() {
-      const lastPage = localStorage.getItem('lc_last_page');
-      if (!lastPage || lastPage === 'orientation') return;
-      const labels = {
-        'slack-guide': '슬랙 질문 양식', 'step1': 'STEP 1', 'step2': 'STEP 2', 'step3': 'STEP 3',
-        'step4': 'STEP 4', 'step5': 'STEP 5', 'step6': 'STEP 6', 'step7': 'STEP 7',
-        'mission1': '1주차 미션 제출', 'step8': 'STEP 7', 'step9': 'STEP 8', 'step10': 'STEP 9',
-        'step11': 'STEP 10', 'step12': 'STEP 11', 'step13': 'STEP 12', 'mission2': '최종 제출',
-        'bonus1': 'BONUS 1', 'bonus2': 'BONUS 2', 'bonus3': 'BONUS 3', 'bonus4': 'BONUS 4',
-      };
-      const label = labels[lastPage] || lastPage;
-      const orientPage = document.getElementById('page-orientation');
-      if (!orientPage) return;
-      const banner = document.createElement('div');
-      banner.className = 'resume-banner show';
-      banner.innerHTML = `<div class="resume-text">마지막으로 <b>${label}</b>까지 보셨어요.</div>
-      <button class="resume-btn" onclick="goPageById('${lastPage}');this.closest('.resume-banner').remove()">이어서 보기 →</button>`;
-      orientPage.insertBefore(banner, orientPage.firstChild);
-    }
-
-    // ── STEP 2 문제정의 실시간 미리보기 ──
-    function updatePD() {
-      const u = document.getElementById('pd-user')?.value.trim();
-      const s = document.getElementById('pd-sit')?.value.trim();
-      const p = document.getElementById('pd-prob')?.value.trim();
-      const ca = document.getElementById('pd-cause')?.value.trim();
-      const preview = document.getElementById('pd-preview');
-      const result = document.getElementById('pd-result');
-      if (!preview || !result) return;
-      if (u || s || p || ca) {
-        preview.style.display = 'block';
-        const user = u || '___';
-        const sit = s || '___';
-        const prob = p || '___';
-        const cause = ca || '___';
-        result.innerHTML = `<span class="ct-user" style="font-size:13px">${user}</span>는 <span class="ct-sit" style="font-size:13px">${sit}</span>에서 <span class="ct-prob" style="font-size:13px">${prob}</span>를 겪고 있으며, 그 이유는 <span class="ct-cause" style="font-size:13px">${cause}</span> 때문이다.`;
-      } else {
-        preview.style.display = 'none';
-      }
-    }
-
-    function copyPD() {
-      const u = document.getElementById('pd-user')?.value.trim() || '___';
-      const s = document.getElementById('pd-sit')?.value.trim() || '___';
-      const p = document.getElementById('pd-prob')?.value.trim() || '___';
-      const ca = document.getElementById('pd-cause')?.value.trim() || '___';
-      const text = `${u}는 ${s}에서 ${p}를 겪고 있으며, 그 이유는 ${ca} 때문이다.`;
-      navigator.clipboard.writeText(text).then(() => {
-        const msg = document.getElementById('pd-copy-msg');
-        if (msg) { msg.style.display = 'inline'; setTimeout(() => msg.style.display = 'none', 2000); }
-      });
-    }
-
-    // ── 1주차 미션 마크다운 다운로드 ──
-    function downloadMission1() {
-      const pd = document.getElementById('m1-pd')?.value || '(미작성)';
-      const flow = document.getElementById('m1-flow')?.value || '(미작성)';
-      const must = document.getElementById('m1-must')?.value || '(미작성)';
-      const later = document.getElementById('m1-later')?.value || '(미작성)';
-      const out = document.getElementById('m1-out')?.value || '(미작성)';
-      const prd = document.getElementById('m1-prd')?.value || '(미작성)';
-      const scr = document.getElementById('m1-screen')?.value || '(미작성)';
-      const date = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
-
-      const md = `# 1주차 미션 제출
-제출일: ${date}
-
----
-
-## 1. 문제정의 문장
-
-${pd}
-
----
-
-## 2. 사용자 흐름
-
-${flow}
-
----
-
-## 3. 기능 우선순위표
-
-### Must (첫 버전에 포함)
-${must}
-
-### Later (다음 버전에)
-${later}
-
-### Out (이번엔 제외)
-${out}
-
----
-
-## 4. PRD Lite
-
-${prd}
-
----
-
-## 5. 화면 구조 정리
-
-${scr}
-`;
-      const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `1주차_미션_제출_${date.replace(/\. /g, '-').replace(/\.$/, '')}md`;
-      a.click();
-    }
-  </script>
 </body>
-
 </html>
