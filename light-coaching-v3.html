@@ -1535,28 +1535,25 @@
         <div class="sb-item" data-page="step6" onclick="goPage(this)">
           <div class="sb-dot"></div>STEP 6. 화면 구조 설계
         </div>
-        <div class="sb-item" data-page="mission1" onclick="goPage(this)">
-          <div class="sb-dot"></div>1주차 미션 제출
-        </div>
         <div class="sb-divider"></div>
         <div class="sb-sec-label">2주차 — 대시보드 MVP 만들기</div>
         <div class="sb-item" data-page="step7" onclick="goPage(this)">
-          <div class="sb-dot"></div>STEP 7. PRD를 구현 프롬프트로 바꾸기
+          <div class="sb-dot"></div>STEP 7. 1주차 MD를 구현용 PRD로 변환하기
         </div>
         <div class="sb-item" data-page="step8" onclick="goPage(this)">
-          <div class="sb-dot"></div>STEP 7. 업무 입력/완료 체크 기능 만들기
+          <div class="sb-dot"></div>STEP 8. 업무 입력/완료 체크 기능 만들기
         </div>
         <div class="sb-item" data-page="step9" onclick="goPage(this)">
-          <div class="sb-dot"></div>STEP 8. 업무일지 생성 기능 만들기
+          <div class="sb-dot"></div>STEP 9. 업무일지 생성 기능 만들기
         </div>
         <div class="sb-item" data-page="step10" onclick="goPage(this)">
-          <div class="sb-dot"></div>STEP 9. 저장 기능과 기본 UX 점검
+          <div class="sb-dot"></div>STEP 10. 저장 기능과 기본 UX 점검
         </div>
         <div class="sb-item" data-page="step11" onclick="goPage(this)">
-          <div class="sb-dot"></div>STEP 10. 오류 수정 및 사용성 개선
+          <div class="sb-dot"></div>STEP 11. 오류 수정 및 사용성 개선
         </div>
         <div class="sb-item" data-page="step12" onclick="goPage(this)">
-          <div class="sb-dot"></div>STEP 11. 최종 제출 및 회고
+          <div class="sb-dot"></div>STEP 12. 최종 제출 및 회고
         </div>
         <div class="sb-divider"></div>
         <div class="sb-sec-label">BONUS — 선택 확장</div>
@@ -2756,7 +2753,7 @@
           </div>
           <div class="page-nav">
             <button class="nav-btn" onclick="goPageById('step5')">← STEP 5</button>
-            <button class="nav-btn primary" onclick="goPageById('step7')">STEP 7 — PRD를 구현 프롬프트로 바꾸기 →</button>
+            <button class="nav-btn primary" onclick="goPageById('step7')">STEP 7 — 1주차 MD를 구현용 PRD로 변환하기 →</button>
           </div>
         </div>
 
@@ -2823,7 +2820,7 @@
           </div>
 
           <div class="page-nav">
-            <button class="nav-btn" onclick="goPageById('mission1')">← 1주차 미션 제출</button>
+            <button class="nav-btn" onclick="goPageById('step6')">← STEP 6</button>
             <button class="nav-btn primary" onclick="goPageById('step8')">STEP 8 — 첫 구현 시작 →</button>
           </div>
         </div>
@@ -3188,10 +3185,47 @@
         </div>
 
         <!-- ══ BONUS 3 ══ -->
+        
         <div class="page" id="page-bonus3">
-          <div class="week-badge badge-neutral">BONUS</div>
+          <div class="week-badge badge-neutral">BONUS 3</div>
           <div class="page-title">AI 문장 고도화</div>
-          <div class="page-desc">Ollama 또는 AI 모델을 활용해 업무일지 문장을 더욱 매끄럽고 구체적으로 작성해봅니다. 프롬프트를 세밀하게 조정해보세요.</div>
+          <div class="page-desc">Ollama 로컬 AI 엔진을 이용하거나, 프롬프트를 정교하게 다듬어 생성되는 업무일지의 품질을 극적으로 향상시킵니다.</div>
+          
+          <div class="sec">
+            <div class="sec-title">단순 나열을 프로페셔널한 문장으로</div>
+            <div class="compare-grid">
+              <div class="compare-card">
+                <div class="compare-card-label" style="color:var(--muted)">기본 템플릿</div>
+                <div class="compare-card-desc" style="margin-top:8px">
+                  - 회의 참석<br>- 제안서 제출<br>- 담당자 통화
+                </div>
+              </div>
+              <div class="compare-card" style="border-color:var(--blue-bd)">
+                <div class="compare-card-label" style="color:var(--blue)">AI 고도화 적용</div>
+                <div class="compare-card-desc" style="margin-top:8px; color:var(--title);">
+                  "주간 협력사 회의를 성공적으로 주관했으며, 신규 마케팅 제안서의 최종 버전을 제출하였습니다."
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sec">
+            <div class="sec-title">구현 요청 프롬프트 예시</div>
+            <div class="prompt-block">
+              <div class="prompt-header">
+                <div class="prompt-label">AI 문장 다듬기 프롬프트</div><button class="copy-btn" onclick="copyText(this,'p-bonus3')">복사하기</button>
+              </div>
+              <div class="prompt-body" id="p-bonus3">
+              내가 완료한 할일 목록을 가지고 업무일지를 생성할 때, 
+              다음의 '페르소나'를 적용해서 문장을 생성해줘:
+              
+              - 어조: 비즈니스용, 격식 있는, 프로페셔널함
+              - 규칙: 단답형 나열 대신, 하나의 자연스러운 보고 문장으로 변환해줘.
+              - 추가 요구사항: 긍정적이고 성과 중심적인 단어를 선택해줘.
+              </div>
+            </div>
+          </div>
+
           <div class="page-nav">
             <button class="nav-btn" onclick="goPageById('bonus2')">← BONUS 2</button>
             <button class="nav-btn primary" onclick="goPageById('bonus4')">BONUS 4 — 디자인 커스텀 →</button>
@@ -3199,16 +3233,61 @@
         </div>
 
         <!-- ══ BONUS 4 ══ -->
+        
         <div class="page" id="page-bonus4">
-          <div class="week-badge badge-neutral">BONUS</div>
+          <div class="week-badge badge-neutral">BONUS 4</div>
           <div class="page-title">디자인 커스텀</div>
-          <div class="page-desc">브랜드 컬러, 카드 스타일, 레이아웃 등을 나만의 스타일로 변경해보세요.</div>
+          <div class="page-desc">만들어진 결과물에 나만의 개성을 입혀 완성도를 높입니다. 컬러, 폰트, 그림자 효과 등을 세밀하게 다듬어보세요.</div>
+          
+          <div class="sec">
+            <div class="sec-title">대표적인 디자인 커스텀 방법</div>
+            <div class="step-list">
+              <div class="step-card">
+                <div class="step-num a">1</div>
+                <div class="step-content">
+                  <div class="step-card-title">컬러 스키마 변경</div>
+                  <div class="step-card-desc">Antigravity에게 "현재 테마를 다크 모드로 변경하고, 포인트 컬러를 형광 연두색으로 적용해줘"라고 요청할 수 있습니다.</div>
+                </div>
+              </div>
+              <div class="step-card">
+                <div class="step-num a">2</div>
+                <div class="step-content">
+                  <div class="step-card-title">폰트 적용</div>
+                  <div class="step-card-desc">"Google Fonts의 'Pretendard' 또는 'Noto Sans KR'을 적용해서 타이포그래피를 세련되게 만들어줘."</div>
+                </div>
+              </div>
+              <div class="step-card">
+                <div class="step-num a">3</div>
+                <div class="step-content">
+                  <div class="step-card-title">인터랙티브 요소</div>
+                  <div class="step-card-desc">"버튼에 마우스를 올렸을 때(hover) 살짝 떠오르는 애니메이션과 부드러운 그림자를 추가해줘."</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sec">
+            <div class="sec-title">추천 디자인 프롬프트</div>
+            <div class="prompt-block">
+              <div class="prompt-header">
+                <div class="prompt-label">비주얼 업그레이드 요청</div><button class="copy-btn" onclick="copyText(this,'p-bonus4')">복사하기</button>
+              </div>
+              <div class="prompt-body" id="p-bonus4">
+              현재 웹사이트의 전체적인 UI 디자인을 현대적인 SaaS 대시보드 스타일로 개선해줘.
+              
+              - 둥근 모서리(Rounded-xl) 적극 활용
+              - 은은하고 세련된 다단계 박스 쉐도우(soft box shadows) 적용
+              - 글자간 간격 및 줄간격을 조정하여 가독성 극대화
+              - 여백(Padding/Margin)을 충분히 주어 시원한 레이아웃 구현
+              </div>
+            </div>
+          </div>
+
           <div class="page-nav">
             <button class="nav-btn" onclick="goPageById('bonus3')">← BONUS 3</button>
             <button class="nav-btn primary" onclick="goPageById('faq')">자주 막히는 FAQ →</button>
           </div>
         </div>
-
 
         <!-- ══ STEP 11 ══ -->
         <div class="page" id="page-step11">
@@ -3284,7 +3363,7 @@
           </div>
           <div class="page-nav">
             <button class="nav-btn" onclick="goPageById('step10')">← STEP 10</button>
-            <button class="nav-btn primary" onclick="goPageById('step12')">STEP 11 — 개선 + 회고 →</button>
+            <button class="nav-btn primary" onclick="goPageById('step12')">STEP 12 — 최종 제출 및 회고 →</button>
           </div>
         </div>
 
@@ -3740,15 +3819,20 @@
         localStorage.setItem('lc_last_page', pageId);
       }
 
-      // 우측 패널 토글
+      // 우측 패널 토글 (시작 전 페이지 제외)
+      const beforePages = ['orientation', 'prep-checklist', 'antigravity-setup', 'ollama-setup', 'slack-guide'];
       const w2Pages = ['step7', 'step8', 'step9', 'step10', 'step11', 'step12', 'bonus1', 'bonus2', 'bonus3', 'bonus4', 'faq'];
       const p1 = document.getElementById('panel-week1');
       const p2 = document.getElementById('panel-week2');
+      
       if(p1 && p2) {
-        if (w2Pages.includes(pageId)) {
+        if (beforePages.includes(pageId)) {
+          p1.style.display = 'none';
+          p2.style.display = 'none';
+        } else if (w2Pages.includes(pageId)) {
           p1.style.display = 'none';
           p2.style.display = 'block';
-          // 하이라이트
+          // 하이라이트 및 스크롤
           document.querySelectorAll('.chk-sec').forEach(s => s.classList.remove('active-sec'));
           if (pageId.startsWith('step')) {
             const num = pageId.replace('step', '');
@@ -3759,25 +3843,65 @@
             }
           }
         } else {
+          // Week 1 pages
           p1.style.display = 'block';
           p2.style.display = 'none';
         }
       }
     }
 
-    // 체크리스트 저장 함수
-    function saveCheck(el) {
-      const checks = document.querySelectorAll('#panel-week2 input[type="checkbox"]');
-      const state = Array.from(checks).map(c => c.checked);
+    // 체크리스트 상태 업데이트 (이전 스탭 강제 종속 포함)
+    function updateChecklistFlow() {
+      const steps = [7, 8, 9, 10, 11, 12];
+      let previousStepCompleted = true; // STEP 7 is always available by default
+      
+      steps.forEach((stepNum, idx) => {
+        const sec = document.getElementById('chk-s' + stepNum);
+        if (!sec) return;
+        
+        const checks = sec.querySelectorAll('input[type="checkbox"]');
+        const labels = sec.querySelectorAll('label');
+        
+        if (previousStepCompleted) {
+          sec.style.opacity = '1';
+          sec.style.pointerEvents = 'auto';
+          checks.forEach(c => c.disabled = false);
+        } else {
+          sec.style.opacity = '0.4';
+          sec.style.pointerEvents = 'none';
+          checks.forEach(c => {
+            c.disabled = true;
+            c.checked = false; // 이전 단계 안 깼으면 해제
+          });
+        }
+        
+        // Check if CURRENT step is completed to allow NEXT step
+        const currentFilled = Array.from(checks).every(c => c.checked);
+        previousStepCompleted = currentFilled;
+      });
+      
+      // Save current state after processing
+      const allChecks = document.querySelectorAll('#panel-week2 input[type="checkbox"]');
+      const state = Array.from(allChecks).map(c => c.checked);
       localStorage.setItem('lc_checks', JSON.stringify(state));
+    }
+
+    // 체크리스트 저장 핸들러
+    function saveCheck(el) {
+      updateChecklistFlow();
     }
 
     document.addEventListener('DOMContentLoaded', () => {
       const saved = JSON.parse(localStorage.getItem('lc_checks') || '[]');
       const checks = document.querySelectorAll('#panel-week2 input[type="checkbox"]');
+      
+      // Initial raw mapping
       checks.forEach((c, i) => {
         if (saved[i] !== undefined) c.checked = saved[i];
       });
+      
+      // Run flow validation once
+      updateChecklistFlow();
     });
 
 
