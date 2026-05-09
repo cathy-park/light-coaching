@@ -1454,6 +1454,20 @@
       font-family: var(--font-display);
     }
   </style>
+
+  <style>
+    .chip-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .chip {
+      font-size: 12px; font-weight: 500; padding: 6px 12px; border-radius: 20px;
+      background: var(--card3); border: 1px solid var(--border); color: var(--muted);
+      cursor: pointer; transition: all 0.2s ease; user-select: none;
+    }
+    .chip:hover { background: var(--bg); border-color: var(--blue-bd); color: var(--title); }
+    .chip.selected {
+      background: var(--blue-bg); border-color: var(--blue); color: var(--blue); font-weight: 700;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -1878,36 +1892,67 @@
                 훨씬 빠르고 정확해집니다.</p>
             </div>
           </div>
-          <div class="sec">
-            <div class="sec-title">질문 양식 — 슬랙에 복붙해서 사용하세요</div>
-            <div class="prompt-block">
-              <div class="prompt-header">
-                <div class="prompt-label">슬랙 질문 양식</div><button class="copy-btn"
-                  onclick="copyText(this,'tpl-slack')">복사하기</button>
+                    <div class="sec">
+            <div class="sec-title">실시간 슬랙 질문 생성기</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+              
+              <!-- LEFT: Form Container -->
+              <div style="background: var(--card2); padding: 20px; border-radius: var(--r-md); border: 1px solid var(--border-dk);">
+                
+                <div style="font-size: 12px; font-weight: 700; margin-bottom: 8px; color: var(--title2);">【질문 유형】</div>
+                <input type="hidden" id="slack-type" value="">
+                <div class="chip-grid" id="chips-type">
+                  <div class="chip" onclick="selectChip('type', '오류', this)">💥 오류 발생</div>
+                  <div class="chip" onclick="selectChip('type', '기능 구현', this)">🛠️ 기능 구현</div>
+                  <div class="chip" onclick="selectChip('type', 'UX 흐름', this)">🗺️ UX 흐름</div>
+                  <div class="chip" onclick="selectChip('type', '프롬프트 수정', this)">📝 프롬프트 수정</div>
+                  <div class="chip" onclick="selectChip('type', '커스텀', this)">🎨 커스텀</div>
+                  <div class="chip" onclick="selectChip('type', '기타', this)">❓ 기타</div>
+                </div>
+
+                <div style="font-size: 12px; font-weight: 700; margin-top: 8px; margin-bottom: 8px; color: var(--title2);">【현재 단계】</div>
+                <input type="hidden" id="slack-step" value="">
+                <div class="chip-grid" id="chips-step">
+                  <div class="chip" onclick="selectChip('step', '1주차 STEP 1', this)">W1 S1</div>
+                  <div class="chip" onclick="selectChip('step', '1주차 STEP 2', this)">W1 S2</div>
+                  <div class="chip" onclick="selectChip('step', '1주차 STEP 3', this)">W1 S3</div>
+                  <div class="chip" onclick="selectChip('step', '1주차 STEP 4', this)">W1 S4</div>
+                  <div class="chip" onclick="selectChip('step', '1주차 STEP 5', this)">W1 S5</div>
+                  <div class="chip" onclick="selectChip('step', '2주차 STEP 7', this)">W2 S7</div>
+                  <div class="chip" onclick="selectChip('step', '2주차 STEP 8', this)">W2 S8</div>
+                  <div class="chip" onclick="selectChip('step', '2주차 STEP 9', this)">W2 S9</div>
+                  <div class="chip" onclick="selectChip('step', '2주차 STEP 10', this)">W2 S10</div>
+                  <div class="chip" onclick="selectChip('step', '2주차 STEP 11', this)">W2 S11</div>
+                  <div class="chip" onclick="selectChip('step', '2주차 STEP 12', this)">W2 S12</div>
+                </div>
+
+                <div style="margin-top: 16px; font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--title2);">【하고 싶었던 것】</div>
+                <textarea id="slack-wish" class="input-textarea" style="height: 60px; margin-bottom: 16px;" placeholder="예: 문제정의 문장을 완성하고 싶었습니다." oninput="updateSlackPreview()"></textarea>
+
+                <div style="font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--title2);">【현재 발생한 문제】</div>
+                <textarea id="slack-prob" class="input-textarea" style="height: 60px; margin-bottom: 16px;" placeholder="예: 어떤 표현을 써야 할지 헷갈립니다." oninput="updateSlackPreview()"></textarea>
+
+                <div style="font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--title2);">【시도해본 것】</div>
+                <textarea id="slack-tried" class="input-textarea" style="height: 60px; margin-bottom: 16px;" placeholder="예: 가이드를 읽고 직접 써봤습니다." oninput="updateSlackPreview()"></textarea>
+
+                <div style="font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--title2);">【원하는 답변】</div>
+                <textarea id="slack-want" class="input-textarea" style="height: 60px;" placeholder="예: 제가 쓴 문장이 적절한지 피드백 받고 싶습니다." oninput="updateSlackPreview()"></textarea>
               </div>
-              <div class="prompt-body" id="tpl-slack">【질문 유형】
-                오류 / 기능 구현 / UX 흐름 / 프롬프트 수정 / 커스텀 / 기타
 
-                【현재 단계】
-                예: 1주차 STEP 2 문제정의 작성 중
+              <!-- RIGHT: Formatted Preview Container -->
+              <div class="prompt-block" style="margin-top: 0; display: flex; flex-direction: column; height: 100%;">
+                <div class="prompt-header">
+                  <div class="prompt-label">미리보기 (완성 후 복사)</div>
+                  <button id="slack-copy-btn" class="copy-btn" disabled onclick="copySlackText(this)" style="opacity: 0.5; cursor: not-allowed;">복사하기</button>
+                </div>
+                <div id="slack-preview-body" class="prompt-body" style="flex-grow: 1; white-space: pre-wrap; font-family: 'Pretendard', sans-serif; font-size: 13px; line-height: 1.6; color: var(--muted);">
+(왼쪽 정보를 입력하면 슬랙 질문 양식이 자동으로 생성됩니다.)
+                </div>
+              </div>
 
-                【하고 싶었던 것】
-                예: 문제정의 문장을 완성하고 싶었습니다.
-
-                【현재 발생한 문제】
-                예: 사용자와 상황은 썼는데 '원인' 부분을 어떻게 써야 할지 모르겠습니다.
-
-                【시도해본 것】
-                예: 가이드 예시를 참고해서 써봤는데 너무 추상적인 것 같습니다.
-
-                【첨부】
-                작성한 내용 또는 화면 캡처
-
-                【원하는 답변】
-                예: 제가 쓴 문장이 맞는 방향인지 확인해주세요.</div>
             </div>
           </div>
-          <div class="sec">
+<div class="sec">
             <div class="sec-title">응대 범위</div>
             <div class="info-box">
               <p><b>가능</b> — UX 흐름 판단 / 프롬프트 수정 방향 / 기능 범위 조정 / 막힌 구간 다음 단계 안내</p>
@@ -1915,7 +1960,7 @@
             </div>
           </div>
           <div class="page-nav">
-            <button class="nav-btn" onclick="goPageById('orientation')">← 오리엔테이션</button>
+            <button class="nav-btn" onclick="goPageById('ollama-setup')">← Ollama 준비</button>
             <button class="nav-btn primary" onclick="goPageById('step1')">STEP 1 시작하기 →</button>
           </div>
         </div>
@@ -3435,7 +3480,7 @@
       </div><!-- /.main -->
 
       <!-- 1주차 미션 우측 패널 -->
-      <div class="mission-panel" id="panel-week1">
+      <div class="mission-panel" id="panel-week1" style="display: none;">
         <div class="week-badge badge-w1" style="font-size:9px; padding:2px 8px;">1주차 · 미션 제출</div>
         <div class="page-title">1주차 미션 제출</div>
         <div class="page-desc">좌측 스텝에서 작성한 내용이 이곳에 자동으로 모입니다. 모든 항목이 채워지면 다운로드가 가능합니다.</div>
@@ -3586,6 +3631,18 @@
         document.getElementById('lock-screen').style.display = 'none';
         document.getElementById('app').style.display = 'flex';
         loadProgress();
+
+      // Trigger initial panel sync based on current sidebar item highlight
+      const currentActiveSb = document.querySelector('.sb-item.active');
+      if (currentActiveSb) {
+        goPage(currentActiveSb);
+      } else {
+        const manualP1 = document.getElementById('panel-week1');
+        const manualP2 = document.getElementById('panel-week2');
+        if (manualP1) manualP1.style.display = 'none';
+        if (manualP2) manualP2.style.display = 'none';
+      }
+
         showResumeBanner();
       } else {
         err.style.display = 'block';
@@ -3693,6 +3750,84 @@
     });
 
 
+    
+    // ── 슬랙 빌더 전용 칩 선택 로직 ──
+    function selectChip(category, value, el) {
+      const input = document.getElementById('slack-' + category);
+      if (input) { input.value = value; }
+      
+      const parent = el.parentElement;
+      parent.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      
+      updateSlackPreview();
+    }
+
+    function updateSlackPreview() {
+      const type = document.getElementById('slack-type')?.value || '';
+      const step = document.getElementById('slack-step')?.value || '';
+      const wish = document.getElementById('slack-wish')?.value.trim() || '';
+      const prob = document.getElementById('slack-prob')?.value.trim() || '';
+      const tried = document.getElementById('slack-tried')?.value.trim() || '';
+      const want = document.getElementById('slack-want')?.value.trim() || '';
+      
+      const body = document.getElementById('slack-preview-body');
+      const btn = document.getElementById('slack-copy-btn');
+      
+      if (!body || !btn) return;
+
+      if (!type && !step && !wish && !prob && !tried && !want) {
+         body.innerText = "(왼쪽 정보를 입력하면 슬랙 질문 양식이 자동으로 생성됩니다.)";
+         body.style.color = "var(--muted)";
+         btn.disabled = true;
+         btn.style.opacity = "0.5";
+         btn.style.cursor = "not-allowed";
+         return;
+      }
+
+      body.style.color = "var(--title2)";
+      
+      const text = `【질문 유형】
+${type || '___'}
+
+【현재 단계】
+${step || '___'}
+
+【하고 싶었던 것】
+${wish || '___'}
+
+【현재 발생한 문제】
+${prob || '___'}
+
+【시도해본 것】
+${tried || '___'}
+
+【원하는 답변】
+${want || '___'}`;
+
+      body.innerText = text;
+
+      if (type && step && wish && prob && tried && want) {
+        btn.disabled = false;
+        btn.style.opacity = "1";
+        btn.style.cursor = "pointer";
+      } else {
+        btn.disabled = true;
+        btn.style.opacity = "0.5";
+        btn.style.cursor = "not-allowed";
+      }
+    }
+
+    function copySlackText(btn) {
+      const body = document.getElementById('slack-preview-body');
+      if (!body) return;
+      navigator.clipboard.writeText(body.innerText).then(() => {
+        const orig = btn.innerText;
+        btn.innerText = "복사 완료! ✓";
+        setTimeout(() => btn.innerText = orig, 1500);
+      });
+    }
+
     function goPageById(id) {
       const el = document.querySelector(`.sb-item[data-page="${id}"]`);
       if (el) goPage(el);
@@ -3769,6 +3904,18 @@
         nav.parentNode.insertBefore(wrapper, nav);
       });
       loadProgress();
+
+      // Trigger initial panel sync based on current sidebar item highlight
+      const currentActiveSb = document.querySelector('.sb-item.active');
+      if (currentActiveSb) {
+        goPage(currentActiveSb);
+      } else {
+        const manualP1 = document.getElementById('panel-week1');
+        const manualP2 = document.getElementById('panel-week2');
+        if (manualP1) manualP1.style.display = 'none';
+        if (manualP2) manualP2.style.display = 'none';
+      }
+
     });
 
     // ── 이어하기 배너 ──
