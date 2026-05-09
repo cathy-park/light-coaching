@@ -1529,11 +1529,8 @@
         <div class="sb-item" data-page="step4" onclick="goPage(this)">
           <div class="sb-dot"></div>STEP 4. 기능 우선순위
         </div>
-        <div class="sb-item" data-page="step5" onclick="goPage(this)">
-          <div class="sb-dot"></div>STEP 5. PRD Lite 작성
-        </div>
-        <div class="sb-item" data-page="step6" onclick="goPage(this)">
-          <div class="sb-dot"></div>STEP 6. 화면 구조 설계
+                <div class="sb-item" data-page="step6" onclick="goPage(this)">
+          <div class="sb-dot"></div>STEP 5. 화면 구조 설계
         </div>
         <div class="sb-divider"></div>
         <div class="sb-sec-label">2주차 — 대시보드 MVP 만들기</div>
@@ -2523,129 +2520,14 @@
           </div>
           <div class="page-nav">
             <button class="nav-btn" onclick="goPageById('step3')">← STEP 3</button>
-            <button class="nav-btn primary" onclick="goPageById('step5')">STEP 5 — PRD Lite →</button>
-          </div>
-        </div>
-
-        <!-- ══ STEP 5 ══ -->
-        <div class="page" id="page-step5">
-          <div class="week-badge badge-w1">1주차 · STEP 5</div>
-          <div class="page-title">PRD Lite 작성</div>
-          <div class="page-desc">지금까지 만든 것들을 하나의 문서로 통합합니다. 이 PRD Lite가 2주차 바이브코딩 프롬프트의 재료가 됩니다.</div>
-          <details
-            style="background:var(--card2); border:1px solid var(--border-dk); border-radius:var(--r-md); padding:16px; margin-bottom:28px;">
-            <summary
-              style="font-size:14px; font-weight:600; color:var(--title); cursor:pointer; list-style:none; outline:none; display:flex; align-items:center; gap:8px; font-family:var(--font-display);">
-              💡 WorkLog PRD Lite (정답 예시 열어보기) <span
-                style="font-size:11px; color:var(--muted); font-weight:400; margin-left:auto;">클릭해서 펼치기 ▼</span>
-            </summary>
-            <div style="margin-top:16px; padding-top:16px; border-top:1px solid var(--border-nm);">
-              <div class="prompt-block" style="margin-top:0">
-                <div class="prompt-header">
-                  <div class="prompt-label">예시 — WorkLog</div><button class="copy-btn"
-                    onclick="copyText(this,'ex-prd')">복사하기</button>
-                </div>
-                <div class="prompt-body" id="ex-prd">## 제품명
-                  WorkLog
-
-                  ## 제품 목적
-                  직장인과 프리랜서가 하루 업무를 완료 체크하면
-                  AI가 자동으로 업무일지를 생성해주는 개인용 업무 관리 앱
-
-                  ## 대상 사용자
-                  직장인, 프리랜서, 1인 사업자
-
-                  ## 핵심 문제
-                  직장인은 하루가 끝날 때 업무일지 작성에 어려움을 겪고 있으며,
-                  그 이유는 업무 기록이 실시간으로 남지 않아 기억에 의존해야 하기 때문이다.
-
-                  ## 사용자 흐름
-                  1. 앱을 열면 오늘 날짜와 업무 목록이 보인다
-                  2. 업무를 입력하고 카테고리를 선택한다
-                  3. 완료 시 체크한다
-                  4. 완료 업무 기반 업무일지가 자동 생성된다
-                  5. (확장) 캘린더에서 지난 기록을 확인한다
-
-                  ## Must 기능
-                  - 업무 입력 + 카테고리 선택
-                  - 완료 체크 (완료 목록으로 이동)
-                  - 날짜별 localStorage 저장
-                  - AI 업무일지 자동 생성
-
-                  ## Later 기능
-                  - 월간 캘린더 / 통계 차트 / 카테고리 커스텀
-
-                  ## Out 기능
-                  - 로그인, 팀 공유, 알림, 모바일, 결제
-
-                  ## UI 톤
-                  다크 모드, 미니멀, 카테고리별 색상 강조</div>
-              </div>
-            </div>
-          </details>
-          <div class="divider"></div>
-          <div class="sec">
-            <div class="sec-title">직접 작성해보기</div>
-            <div class="tip-box">
-              <div class="tip-icon">✏️</div>
-              <div>아래 템플릿에 내용을 직접 채워보세요. 우측 1주차 미션 제출 패널에 자동으로 동기화됩니다.</div>
-            </div>
-            <textarea id="in-step5-prd" class="input-textarea"
-              style="height:420px; font-family:'SF Mono', 'Fira Code', 'Consolas', monospace; font-size:13px; line-height:1.7; background:#070a10;"
-              placeholder="PRD 템플릿 로딩 중..." oninput="saveInput('in-step5-prd')">## 제품명
-[내 앱 이름]
-
-## 제품 목적
-[누가, 무슨 문제를, 어떻게 해결하는 앱인지 한 문장]
-
-## 대상 사용자
-[직장인 / 프리랜서 / 1인 사업자 등]
-
-## 핵심 문제
-[STEP 2의 문제정의 문장]
-
-## 사용자 흐름
-[STEP 3의 번호별 행동 순서]
-
-## Must 기능
-- [기능 1]
-- [기능 2]
-
-## Later 기능
-- [기능 1]
-
-## Out 기능
-- [기능 1]
-
-## UI 톤
-[심플하고 다크한 느낌 / 밝고 깔끔한 느낌 등]</textarea>
-          </div>
-          <div class="mission-box">
-            <div class="mission-header"><span class="step-tag tag-mission">STEP 5 미션</span>
-              <div class="mission-title">PRD Lite 완성 후 슬랙 공유</div>
-            </div>
-            <div class="mission-items">
-              <div class="mission-item">
-                <div class="mission-dot"></div>템플릿에 내 내용 채워서 완성
-              </div>
-              <div class="mission-item">
-                <div class="mission-dot"></div>이 PRD Lite가 2주차 Antigravity 프롬프트의 재료가 됩니다
-              </div>
-              <div class="mission-item">
-                <div class="mission-dot"></div>1주차 미션 제출 시 한번에 제출합니다
-              </div>
-            </div>
-          </div>
-          <div class="page-nav">
-            <button class="nav-btn" onclick="goPageById('step4')">← STEP 4</button>
-            <button class="nav-btn primary" onclick="goPageById('step6')">STEP 6 — 화면 구조 →</button>
+            <button class="nav-btn primary" onclick="goPageById('step6')">STEP 5 — 화면 구조 설계 →</button>
           </div>
         </div>
 
         <!-- ══ STEP 6 ══ -->
         <div class="page" id="page-step6">
-          <div class="week-badge badge-w1">1주차 · STEP 6</div>
-          <div class="page-title">화면 구조 설계</div>
+          <div class="week-badge badge-w1">1주차 · STEP 5</div>
+          <div class="page-title">STEP 5. 화면 구조 설계</div>
           <div class="page-desc">기능을 화면 단위로 정리합니다. Figma 없어도 됩니다. 텍스트로 화면 이름과 역할만 쓰면 됩니다.</div>
 
           <div class="sec">
@@ -2752,7 +2634,7 @@
             </div>
           </div>
           <div class="page-nav">
-            <button class="nav-btn" onclick="goPageById('step5')">← STEP 5</button>
+            <button class="nav-btn" onclick="goPageById('step4')">← STEP 4</button>
             <button class="nav-btn primary" onclick="goPageById('step7')">STEP 7 — 1주차 MD를 구현용 PRD로 변환하기 →</button>
           </div>
         </div>
@@ -2820,7 +2702,7 @@
           </div>
 
           <div class="page-nav">
-            <button class="nav-btn" onclick="goPageById('step6')">← STEP 6</button>
+            <button class="nav-btn" onclick="goPageById('step6')">← STEP 5</button>
             <button class="nav-btn primary" onclick="goPageById('step8')">STEP 8 — 첫 구현 시작 →</button>
           </div>
         </div>
@@ -3583,101 +3465,7 @@
           <textarea id="m1-out" class="input-textarea" placeholder="(Out 기능)"
             oninput="checkMissionComplete(); saveInput('m1-out');"></textarea>
         </div>
-        <div class="sec">
-          <div class="sec-title">4. PRD Lite (STEP 5)</div>
-          <textarea id="m1-prd" class="input-textarea" style="height:120px;" placeholder="(STEP 5에서 입력 시 자동 완성)"
-            oninput="checkMissionComplete(); saveInput('m1-prd');"></textarea>
-        </div>
-        <div class="sec">
-          <div class="sec-title">5. 화면 구조 (STEP 6)</div>
-          <textarea id="m1-screen" class="input-textarea" placeholder="(STEP 6에서 입력 시 자동 완성)"
-            oninput="checkMissionComplete(); saveInput('m1-screen');"></textarea>
-        </div>
-
-        <button id="btn-download-mission" class="btn-download" onclick="downloadMission1()" disabled>모든 항목을
-          입력해주세요</button>
-      </div>
-
-      <!-- 2주차 실행 체크리스트 우측 패널 -->
-      <div class="mission-panel" id="panel-week2" style="display:none;">
-        <div class="week-badge badge-w2" style="font-size:9px; padding:2px 8px;">2주차 · 실행 체크리스트</div>
-        <div class="page-title">구현 실행 체크</div>
-        <div class="page-desc">2주차 구현 과정의 진도를 스스로 체크하고 점검합니다.</div>
-
-        <style>
-          .chk-sec { margin-bottom: 28px; padding: 16px; background: var(--card2); border-radius: var(--r-md); border: 1px solid var(--border-dk); }
-          .chk-title { font-size: 13px; font-weight: 700; color: var(--title); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--border-nm); padding-bottom: 8px;}
-          .chk-item { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--title2); margin-bottom: 8px; cursor: pointer; line-height: 1.5;}
-          .chk-item input { margin-top: 3px; }
-          .chk-sec.active-sec { border-color: var(--green-bd); box-shadow: 0 0 0 1px var(--green-bg); }
-        </style>
-
-        <!-- STEP 7 -->
-        <div class="chk-sec" id="chk-s7">
-          <div class="chk-title"><span class="step-tag tag-blue">STEP 7</span> 구현용 PRD 준비</div>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>1주차 미션 MD 파일을 다운로드했다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>GPTs에 MD 파일을 업로드했다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>구현용 PRD Lite가 생성되었다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>Must 기능이 너무 많지 않은지 확인했다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>캘린더/통계/AI가 Later로 빠졌는지 확인했다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>Antigravity에 붙여넣을 최종 요청문을 준비했다</span></label>
-        </div>
-
-        <!-- STEP 8 -->
-        <div class="chk-sec" id="chk-s8">
-          <div class="chk-title"><span class="step-tag tag-blue">STEP 8</span> 첫 구현 시작 체크</div>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>Antigravity에서 새 프로젝트를 열었다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>구현용 PRD Lite를 붙여넣었다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>전체 구현 계획을 먼저 확인했다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>업무 입력 기능이 생성되었다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>업무 목록이 화면에 표시된다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>저장 방식이 적용되었다</span></label>
-        </div>
-
-        <!-- STEP 9 -->
-        <div class="chk-sec" id="chk-s9">
-          <div class="chk-title"><span class="step-tag tag-blue">STEP 9</span> 업무 관리 기능 체크</div>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>업무를 추가할 수 있다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>업무를 수정할 수 있다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>업무를 삭제할 수 있다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>완료 체크를 할 수 있다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>완료된 업무가 별도로 보인다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>새로고침 후에도 업무가 남아 있다</span></label>
-        </div>
-
-        <!-- STEP 10 -->
-        <div class="chk-sec" id="chk-s10">
-          <div class="chk-title"><span class="step-tag tag-blue">STEP 10</span> 업무일지 생성 체크</div>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>완료된 업무를 기준으로 업무일지가 생성된다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>완료 업무가 없을 때 안내 문구가 나온다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>생성된 업무일지를 복사할 수 있다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>업무일지 문장이 너무 어색하지 않다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>AI 없이도 기본 템플릿 방식으로 작동한다</span></label>
-        </div>
-
-        <!-- STEP 11 -->
-        <div class="chk-sec" id="chk-s11">
-          <div class="chk-title"><span class="step-tag tag-blue">STEP 11</span> UX 점검 체크</div>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>처음 보는 사람도 어디에 입력할지 알 수 있다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>완료 체크 버튼이 명확하다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>오늘 업무와 완료 업무가 구분된다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>업무일지 생성 위치가 자연스럽다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>불필요한 기능이 너무 많이 들어가지 않았다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>모바일 또는 작은 화면에서 크게 깨지지 않는다</span></label>
-        </div>
-
-        <!-- STEP 12 -->
-        <div class="chk-sec" id="chk-s12">
-          <div class="chk-title"><span class="step-tag tag-mission">STEP 12</span> 최종 제출 체크</div>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>작동 화면 캡처를 준비했다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>구현용 PRD Lite를 저장했다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>사용한 주요 프롬프트를 정리했다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>기본 UX 점검 결과를 작성했다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>짧은 회고를 작성했다</span></label>
-          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>선택 확장 여부를 체크했다</span></label>
-        </div>
-
-      </div>
+        
     </div><!-- /.body-wrap -->
 
 
@@ -3691,7 +3479,7 @@
 
     // ── 미션 완료 체크 ──
     function checkMissionComplete() {
-      const ids = ['m1-pd', 'm1-flow', 'm1-must', 'm1-later', 'm1-out', 'm1-prd', 'm1-screen'];
+      const ids = ['m1-pd', 'm1-flow', 'm1-must', 'm1-later', 'm1-out', 'm1-screen'];
       let allFilled = true;
       for (let id of ids) {
         const el = document.getElementById(id);
@@ -4044,7 +3832,6 @@
       const must = document.getElementById('m1-must')?.value || '(미작성)';
       const later = document.getElementById('m1-later')?.value || '(미작성)';
       const out = document.getElementById('m1-out')?.value || '(미작성)';
-      const prd = document.getElementById('m1-prd')?.value || '(미작성)';
       const scr = document.getElementById('m1-screen')?.value || '(미작성)';
       const date = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
 
@@ -4078,13 +3865,7 @@ ${out}
 
 ---
 
-## 4. PRD Lite
-
-${prd}
-
----
-
-## 5. 화면 구조 정리
+## 4. 화면 구조 정리
 
 ${scr}
 `;
