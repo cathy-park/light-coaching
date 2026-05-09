@@ -3366,6 +3366,16 @@
           <div class="week-badge badge-neutral">참고 자료</div>
           <div class="page-title">자주 막히는 FAQ</div>
           <div class="page-desc">슬랙 질문 전에 먼저 확인해보세요. 기수가 쌓일수록 계속 업데이트됩니다.</div>
+
+          <!-- FAQ 키워드 검색 필드 -->
+          <div style="margin: 16px 0 24px 0; position: relative;">
+            <input type="text" id="faq-search" class="input-textarea" 
+                   style="height: 48px; padding-left: 42px; border-radius: 24px; border-color: var(--border-dk); font-size: 14px;" 
+                   placeholder="궁금한 키워드를 검색하세요... (예: 저장, 프롬프트)"
+                   oninput="filterFAQ()">
+            <span style="position: absolute; left: 16px; top: 14px; opacity: 0.6; font-size:16px;">🔍</span>
+          </div>
+
           <div class="sec">
             <div class="step-list">
               <div class="step-card">
@@ -3758,6 +3768,21 @@
       checkMissionComplete();
     }
 
+    
+    // ── FAQ 실시간 필터링 ──
+    function filterFAQ() {
+      const query = document.getElementById('faq-search')?.value.toLowerCase().trim() || '';
+      const cards = document.querySelectorAll('#page-faq .step-card');
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        if (text.includes(query)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
     function copyPD() {
       const u = document.getElementById('pd-user')?.value.trim() || '___';
       const s = document.getElementById('pd-sit')?.value.trim() || '___';
@@ -3816,13 +3841,16 @@
       [pPrep, pSlack, pW1, pW2].forEach(p => p.style.display = 'none');
 
       const beforeGroup = ['orientation', 'prep-checklist', 'antigravity-setup', 'ollama-setup'];
-      const week2Group = ['step7', 'step8', 'step9', 'step10', 'step11', 'step12', 'bonus1', 'bonus2', 'bonus3', 'bonus4', 'faq'];
+      const week2Group = ['step7', 'step8', 'step9', 'step10', 'step11', 'step12'];
+      const noPanelGroup = ['bonus1', 'bonus2', 'bonus3', 'bonus4', 'faq', 'mission2'];
 
       if (pageId === 'slack-guide') {
         pSlack.style.display = 'block';
         updateSlackPreview(); // force real-time refresh sync
       } else if (beforeGroup.includes(pageId)) {
         pPrep.style.display = 'block';
+      } else if (noPanelGroup.includes(pageId)) {
+        // Explicitly leave blank (No Panel)
       } else if (week2Group.includes(pageId)) {
         pW2.style.display = 'block';
         // Scroll and highlight active checklist step
