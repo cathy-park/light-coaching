@@ -1464,7 +1464,10 @@
     }
     .chip:hover { background: var(--bg); border-color: var(--blue-bd); color: var(--title); }
     .chip.selected {
-      background: var(--blue-bg); border-color: var(--blue); color: var(--blue); font-weight: 700;
+      background: var(--blue); border-color: var(--blue); color: #ffffff; font-weight: 700;
+    }
+    #slack-copy-btn.enabled {
+      background: var(--blue) !important; color: #ffffff !important; opacity: 1 !important; cursor: pointer !important; font-weight: bold;
     }
   </style>
 
@@ -1543,28 +1546,28 @@
         <div class="sb-item" data-page="step4" onclick="goPage(this)">
           <div class="sb-dot"></div>STEP 4. 기능 우선순위
         </div>
-                <div class="sb-item" data-page="step6" onclick="goPage(this)">
+        <div class="sb-item" data-page="step6" onclick="goPage(this)">
           <div class="sb-dot"></div>STEP 5. 화면 구조 설계
         </div>
         <div class="sb-divider"></div>
         <div class="sb-sec-label">2주차 — 대시보드 MVP 만들기</div>
         <div class="sb-item" data-page="step7" onclick="goPage(this)">
-          <div class="sb-dot"></div>STEP 7. 1주차 MD를 구현용 PRD로 변환하기
+          <div class="sb-dot"></div>STEP 6. 1주차 MD를 구현용 PRD로 변환하기
         </div>
         <div class="sb-item" data-page="step8" onclick="goPage(this)">
-          <div class="sb-dot"></div>STEP 8. 업무 입력/완료 체크 기능 만들기
+          <div class="sb-dot"></div>STEP 7. 업무 입력/완료 체크 기능 만들기
         </div>
         <div class="sb-item" data-page="step9" onclick="goPage(this)">
-          <div class="sb-dot"></div>STEP 9. 업무일지 생성 기능 만들기
+          <div class="sb-dot"></div>STEP 8. 업무일지 생성 기능 만들기
         </div>
         <div class="sb-item" data-page="step10" onclick="goPage(this)">
-          <div class="sb-dot"></div>STEP 10. 저장 기능과 기본 UX 점검
+          <div class="sb-dot"></div>STEP 9. 저장 기능과 기본 UX 점검
         </div>
         <div class="sb-item" data-page="step11" onclick="goPage(this)">
-          <div class="sb-dot"></div>STEP 11. 오류 수정 및 사용성 개선
+          <div class="sb-dot"></div>STEP 10. 오류 수정 및 사용성 개선
         </div>
         <div class="sb-item" data-page="step12" onclick="goPage(this)">
-          <div class="sb-dot"></div>STEP 12. 최종 제출 및 회고
+          <div class="sb-dot"></div>STEP 11. 최종 제출 및 회고
         </div>
         <div class="sb-divider"></div>
         <div class="sb-sec-label">BONUS — 선택 확장</div>
@@ -1895,17 +1898,15 @@
                     <div class="sec">
             <div class="sec-title">실시간 슬랙 질문 생성기</div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
-              
-              <!-- LEFT: Form Container -->
+              <!-- LEFT: Form -->
               <div style="background: var(--card2); padding: 20px; border-radius: var(--r-md); border: 1px solid var(--border-dk);">
-                
                 <div style="font-size: 12px; font-weight: 700; margin-bottom: 8px; color: var(--title2);">【질문 유형】</div>
                 <input type="hidden" id="slack-type" value="">
                 <div class="chip-grid" id="chips-type">
-                  <div class="chip" onclick="selectChip('type', '오류', this)">💥 오류 발생</div>
+                  <div class="chip" onclick="selectChip('type', '오류', this)">💥 오류</div>
                   <div class="chip" onclick="selectChip('type', '기능 구현', this)">🛠️ 기능 구현</div>
                   <div class="chip" onclick="selectChip('type', 'UX 흐름', this)">🗺️ UX 흐름</div>
-                  <div class="chip" onclick="selectChip('type', '프롬프트 수정', this)">📝 프롬프트 수정</div>
+                  <div class="chip" onclick="selectChip('type', '프롬프트', this)">📝 프롬프트</div>
                   <div class="chip" onclick="selectChip('type', '커스텀', this)">🎨 커스텀</div>
                   <div class="chip" onclick="selectChip('type', '기타', this)">❓ 기타</div>
                 </div>
@@ -1913,43 +1914,38 @@
                 <div style="font-size: 12px; font-weight: 700; margin-top: 8px; margin-bottom: 8px; color: var(--title2);">【현재 단계】</div>
                 <input type="hidden" id="slack-step" value="">
                 <div class="chip-grid" id="chips-step">
-                  <div class="chip" onclick="selectChip('step', '1주차 STEP 1', this)">W1 S1</div>
-                  <div class="chip" onclick="selectChip('step', '1주차 STEP 2', this)">W1 S2</div>
-                  <div class="chip" onclick="selectChip('step', '1주차 STEP 3', this)">W1 S3</div>
-                  <div class="chip" onclick="selectChip('step', '1주차 STEP 4', this)">W1 S4</div>
-                  <div class="chip" onclick="selectChip('step', '1주차 STEP 5', this)">W1 S5</div>
-                  <div class="chip" onclick="selectChip('step', '2주차 STEP 7', this)">W2 S7</div>
-                  <div class="chip" onclick="selectChip('step', '2주차 STEP 8', this)">W2 S8</div>
-                  <div class="chip" onclick="selectChip('step', '2주차 STEP 9', this)">W2 S9</div>
-                  <div class="chip" onclick="selectChip('step', '2주차 STEP 10', this)">W2 S10</div>
-                  <div class="chip" onclick="selectChip('step', '2주차 STEP 11', this)">W2 S11</div>
-                  <div class="chip" onclick="selectChip('step', '2주차 STEP 12', this)">W2 S12</div>
+                  <div class="chip" onclick="selectChip('step', '1주차 S1', this)">W1 S1</div>
+                  <div class="chip" onclick="selectChip('step', '1주차 S2', this)">W1 S2</div>
+                  <div class="chip" onclick="selectChip('step', '1주차 S3', this)">W1 S3</div>
+                  <div class="chip" onclick="selectChip('step', '1주차 S4', this)">W1 S4</div>
+                  <div class="chip" onclick="selectChip('step', '1주차 S5', this)">W1 S5</div>
+                  <div class="chip" onclick="selectChip('step', '2주차 S6', this)">W2 S6</div>
+                  <div class="chip" onclick="selectChip('step', '2주차 S7', this)">W2 S7</div>
+                  <div class="chip" onclick="selectChip('step', '2주차 S8', this)">W2 S8</div>
+                  <div class="chip" onclick="selectChip('step', '2주차 S9', this)">W2 S9</div>
+                  <div class="chip" onclick="selectChip('step', '2주차 S10', this)">W2 S10</div>
                 </div>
 
                 <div style="margin-top: 16px; font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--title2);">【하고 싶었던 것】</div>
-                <textarea id="slack-wish" class="input-textarea" style="height: 60px; margin-bottom: 16px;" placeholder="예: 문제정의 문장을 완성하고 싶었습니다." oninput="updateSlackPreview()"></textarea>
+                <textarea id="slack-wish" class="input-textarea" style="height: 60px; margin-bottom: 16px;" placeholder="하고 싶었던 동작을 적어주세요" oninput="updateSlackPreview()"></textarea>
 
                 <div style="font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--title2);">【현재 발생한 문제】</div>
-                <textarea id="slack-prob" class="input-textarea" style="height: 60px; margin-bottom: 16px;" placeholder="예: 어떤 표현을 써야 할지 헷갈립니다." oninput="updateSlackPreview()"></textarea>
-
-                <div style="font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--title2);">【시도해본 것】</div>
-                <textarea id="slack-tried" class="input-textarea" style="height: 60px; margin-bottom: 16px;" placeholder="예: 가이드를 읽고 직접 써봤습니다." oninput="updateSlackPreview()"></textarea>
+                <textarea id="slack-prob" class="input-textarea" style="height: 60px; margin-bottom: 16px;" placeholder="어떤 에러나 막힘이 있나요?" oninput="updateSlackPreview()"></textarea>
 
                 <div style="font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--title2);">【원하는 답변】</div>
-                <textarea id="slack-want" class="input-textarea" style="height: 60px;" placeholder="예: 제가 쓴 문장이 적절한지 피드백 받고 싶습니다." oninput="updateSlackPreview()"></textarea>
+                <textarea id="slack-want" class="input-textarea" style="height: 60px;" placeholder="어떤 피드백을 원하시나요?" oninput="updateSlackPreview()"></textarea>
               </div>
 
               <!-- RIGHT: Formatted Preview Container -->
               <div class="prompt-block" style="margin-top: 0; display: flex; flex-direction: column; height: 100%;">
                 <div class="prompt-header">
-                  <div class="prompt-label">미리보기 (완성 후 복사)</div>
-                  <button id="slack-copy-btn" class="copy-btn" disabled onclick="copySlackText(this)" style="opacity: 0.5; cursor: not-allowed;">복사하기</button>
+                  <div class="prompt-label">미리보기</div>
+                  <button id="slack-copy-btn" class="copy-btn" disabled onclick="copySlackText(this)" style="opacity: 0.4; cursor: not-allowed; transition:all 0.3s;">복사하기</button>
                 </div>
-                <div id="slack-preview-body" class="prompt-body" style="flex-grow: 1; white-space: pre-wrap; font-family: 'Pretendard', sans-serif; font-size: 13px; line-height: 1.6; color: var(--muted);">
-(왼쪽 정보를 입력하면 슬랙 질문 양식이 자동으로 생성됩니다.)
+                <div id="slack-preview-body" class="prompt-body" style="flex-grow: 1; white-space: pre-wrap; font-size: 13px; line-height: 1.6; color: var(--muted);">
+(왼쪽 내용을 모두 입력하면 완성된 질문이 보이며 복사 버튼이 활성화됩니다.)
                 </div>
               </div>
-
             </div>
           </div>
 <div class="sec">
@@ -2680,16 +2676,16 @@
           </div>
           <div class="page-nav">
             <button class="nav-btn" onclick="goPageById('step4')">← STEP 4</button>
-            <button class="nav-btn primary" onclick="goPageById('step7')">STEP 7 — 1주차 MD를 구현용 PRD로 변환하기 →</button>
+            <button class="nav-btn primary" onclick="goPageById('step7')">STEP 6 — 구현용 PRD 변환 →</button>
           </div>
         </div>
 
         
         <div class="page" id="page-step7">
-          <div class="week-badge badge-w2">2주차 · STEP 7</div>
+          <div class="week-badge badge-w2">2주차 · STEP 6</div>
           <div class="context-banner">💡 2주차부터는 결과물이 사람마다 달라질 수 있습니다.<br>AI 코딩 도구는 같은 프롬프트를 입력해도 환경과 이전 코드 상태에 따라 결과가 달라질 수 있습니다.<br>그래서 이 과정에서는 ‘정답 코드’를 외우는 것이 아니라, 원하는 결과를 설명하고, 오류를 좁히고, 기능을 하나씩 완성하는 방식을 연습합니다.</div>
           
-          <div class="page-title">STEP 7. 1주차 MD를 구현용 PRD로 변환하기</div>
+          <div class="page-title">STEP 6. 1주차 MD를 구현용 PRD로 변환하기</div>
           <div class="page-desc">1주차에서 작성한 미션 MD 파일은 바로 구현에 사용할 수 있는 문서라기보다, 기획 초안에 가깝습니다.<br><br>
 2주차에서는 이 MD 파일을 먼저 GPTs에 업로드해 Antigravity가 이해하기 쉬운 구현용 PRD Lite로 정리합니다.<br><br>
 정리된 PRD Lite를 바탕으로 Antigravity에 첫 구현을 요청하면, 업무 대시보드 MVP를 더 안정적으로 시작할 수 있습니다.</div>
@@ -2747,13 +2743,13 @@
           </div>
 
           <div class="page-nav">
-            <button class="nav-btn" onclick="goPageById('step6')">← STEP 5</button>
+            <button class="nav-btn" onclick="goPageById('mission1')">← 1주차 미션 제출</button>
             <button class="nav-btn primary" onclick="goPageById('step8')">STEP 8 — 첫 구현 시작 →</button>
           </div>
         </div>
 <div class="page" id="page-step8">
-          <div class="week-badge badge-w2">2주차 · STEP 8</div>
-          <div class="page-title">업무 입력/완료 체크 기능 만들기</div>
+          <div class="week-badge badge-w2">2주차 · STEP 7</div>
+          <div class="page-title">STEP 7. 업무 입력/완료 체크 기능 만들기</div>
           <div class="page-desc">뼈대가 만들어졌으면 핵심 기능이 제대로 동작하는지 확인하고, 안 되는 부분을 프롬프트로 수정합니다.</div>
 
           <div class="sec">
@@ -2851,7 +2847,7 @@
         <div class="page" id="page-step9">
           <div class="week-badge badge-w2">2주차 · STEP 9 <span class="time-badge">⏱ 약 30분</span></div>
           <div class="context-banner">💡 1주차 STEP 7에서 설치한 Ollama를 앱에 연결하는 단계입니다.</div>
-          <div class="page-title">업무일지 생성 기능 만들기</div>
+          <div class="page-title">STEP 8. 업무일지 생성 기능 만들기</div>
           <div class="page-desc">이 단계가 WorkLog의 핵심 가치입니다. 완료된 업무를 AI가 읽고 업무일지로 만들어줍니다. 그리고 API 비용 없이 내 컴퓨터에서만 돌아가는 로컬
             AI를 연결합니다.</div>
 
@@ -3004,8 +3000,8 @@
 
         <!-- ══ STEP 10 ══ -->
         <div class="page" id="page-step10">
-          <div class="week-badge badge-w2">2주차 · STEP 10</div>
-          <div class="page-title">저장 기능과 기본 UX 점검</div>
+          <div class="week-badge badge-w2">2주차 · STEP 9</div>
+          <div class="page-title">STEP 9. 저장 기능과 기본 UX 점검</div>
           <div class="page-desc">새로고침해도 데이터가 유지되는지 확인하고, 기본적인 사용성을 점검합니다.</div>
           <div class="sec">
             <div class="sec-title">확인할 점</div>
@@ -3112,47 +3108,10 @@
         </div>
 
         <!-- ══ BONUS 3 ══ -->
-        
         <div class="page" id="page-bonus3">
-          <div class="week-badge badge-neutral">BONUS 3</div>
+          <div class="week-badge badge-neutral">BONUS</div>
           <div class="page-title">AI 문장 고도화</div>
-          <div class="page-desc">Ollama 로컬 AI 엔진을 이용하거나, 프롬프트를 정교하게 다듬어 생성되는 업무일지의 품질을 극적으로 향상시킵니다.</div>
-          
-          <div class="sec">
-            <div class="sec-title">단순 나열을 프로페셔널한 문장으로</div>
-            <div class="compare-grid">
-              <div class="compare-card">
-                <div class="compare-card-label" style="color:var(--muted)">기본 템플릿</div>
-                <div class="compare-card-desc" style="margin-top:8px">
-                  - 회의 참석<br>- 제안서 제출<br>- 담당자 통화
-                </div>
-              </div>
-              <div class="compare-card" style="border-color:var(--blue-bd)">
-                <div class="compare-card-label" style="color:var(--blue)">AI 고도화 적용</div>
-                <div class="compare-card-desc" style="margin-top:8px; color:var(--title);">
-                  "주간 협력사 회의를 성공적으로 주관했으며, 신규 마케팅 제안서의 최종 버전을 제출하였습니다."
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="sec">
-            <div class="sec-title">구현 요청 프롬프트 예시</div>
-            <div class="prompt-block">
-              <div class="prompt-header">
-                <div class="prompt-label">AI 문장 다듬기 프롬프트</div><button class="copy-btn" onclick="copyText(this,'p-bonus3')">복사하기</button>
-              </div>
-              <div class="prompt-body" id="p-bonus3">
-              내가 완료한 할일 목록을 가지고 업무일지를 생성할 때, 
-              다음의 '페르소나'를 적용해서 문장을 생성해줘:
-              
-              - 어조: 비즈니스용, 격식 있는, 프로페셔널함
-              - 규칙: 단답형 나열 대신, 하나의 자연스러운 보고 문장으로 변환해줘.
-              - 추가 요구사항: 긍정적이고 성과 중심적인 단어를 선택해줘.
-              </div>
-            </div>
-          </div>
-
+          <div class="page-desc">Ollama 또는 AI 모델을 활용해 업무일지 문장을 더욱 매끄럽고 구체적으로 작성해봅니다. 프롬프트를 세밀하게 조정해보세요.</div>
           <div class="page-nav">
             <button class="nav-btn" onclick="goPageById('bonus2')">← BONUS 2</button>
             <button class="nav-btn primary" onclick="goPageById('bonus4')">BONUS 4 — 디자인 커스텀 →</button>
@@ -3160,66 +3119,21 @@
         </div>
 
         <!-- ══ BONUS 4 ══ -->
-        
         <div class="page" id="page-bonus4">
-          <div class="week-badge badge-neutral">BONUS 4</div>
+          <div class="week-badge badge-neutral">BONUS</div>
           <div class="page-title">디자인 커스텀</div>
-          <div class="page-desc">만들어진 결과물에 나만의 개성을 입혀 완성도를 높입니다. 컬러, 폰트, 그림자 효과 등을 세밀하게 다듬어보세요.</div>
-          
-          <div class="sec">
-            <div class="sec-title">대표적인 디자인 커스텀 방법</div>
-            <div class="step-list">
-              <div class="step-card">
-                <div class="step-num a">1</div>
-                <div class="step-content">
-                  <div class="step-card-title">컬러 스키마 변경</div>
-                  <div class="step-card-desc">Antigravity에게 "현재 테마를 다크 모드로 변경하고, 포인트 컬러를 형광 연두색으로 적용해줘"라고 요청할 수 있습니다.</div>
-                </div>
-              </div>
-              <div class="step-card">
-                <div class="step-num a">2</div>
-                <div class="step-content">
-                  <div class="step-card-title">폰트 적용</div>
-                  <div class="step-card-desc">"Google Fonts의 'Pretendard' 또는 'Noto Sans KR'을 적용해서 타이포그래피를 세련되게 만들어줘."</div>
-                </div>
-              </div>
-              <div class="step-card">
-                <div class="step-num a">3</div>
-                <div class="step-content">
-                  <div class="step-card-title">인터랙티브 요소</div>
-                  <div class="step-card-desc">"버튼에 마우스를 올렸을 때(hover) 살짝 떠오르는 애니메이션과 부드러운 그림자를 추가해줘."</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="sec">
-            <div class="sec-title">추천 디자인 프롬프트</div>
-            <div class="prompt-block">
-              <div class="prompt-header">
-                <div class="prompt-label">비주얼 업그레이드 요청</div><button class="copy-btn" onclick="copyText(this,'p-bonus4')">복사하기</button>
-              </div>
-              <div class="prompt-body" id="p-bonus4">
-              현재 웹사이트의 전체적인 UI 디자인을 현대적인 SaaS 대시보드 스타일로 개선해줘.
-              
-              - 둥근 모서리(Rounded-xl) 적극 활용
-              - 은은하고 세련된 다단계 박스 쉐도우(soft box shadows) 적용
-              - 글자간 간격 및 줄간격을 조정하여 가독성 극대화
-              - 여백(Padding/Margin)을 충분히 주어 시원한 레이아웃 구현
-              </div>
-            </div>
-          </div>
-
+          <div class="page-desc">브랜드 컬러, 카드 스타일, 레이아웃 등을 나만의 스타일로 변경해보세요.</div>
           <div class="page-nav">
             <button class="nav-btn" onclick="goPageById('bonus3')">← BONUS 3</button>
             <button class="nav-btn primary" onclick="goPageById('faq')">자주 막히는 FAQ →</button>
           </div>
         </div>
 
+
         <!-- ══ STEP 11 ══ -->
         <div class="page" id="page-step11">
-          <div class="week-badge badge-w2">2주차 · STEP 11</div>
-          <div class="page-title">오류 수정 및 사용성 개선</div>
+          <div class="week-badge badge-w2">2주차 · STEP 10</div>
+          <div class="page-title">STEP 10. 오류 수정 및 사용성 개선</div>
           <div class="page-desc">코드가 아니라 사용자 흐름 기준으로 다시 봅니다. "작동하는가"와 "잘 쓸 수 있는가"는 다릅니다.</div>
 
           <div class="sec">
@@ -3290,14 +3204,14 @@
           </div>
           <div class="page-nav">
             <button class="nav-btn" onclick="goPageById('step10')">← STEP 10</button>
-            <button class="nav-btn primary" onclick="goPageById('step12')">STEP 12 — 최종 제출 및 회고 →</button>
+            <button class="nav-btn primary" onclick="goPageById('step12')">STEP 11 — 개선 + 회고 →</button>
           </div>
         </div>
 
         <!-- ══ STEP 12 ══ -->
         <div class="page" id="page-step12">
-          <div class="week-badge badge-w2">2주차 · STEP 12</div>
-          <div class="page-title">최종 제출 및 회고</div>
+          <div class="week-badge badge-w2">2주차 · STEP 11</div>
+          <div class="page-title">STEP 11. 최종 제출 및 회고</div>
           <div class="page-desc">UX 점검 결과를 바탕으로 한 번 더 개선하고, 이 과정 전체를 돌아봅니다.</div>
           <div class="sec">
             <div class="sec-title">개선 1라운드</div>
@@ -3480,7 +3394,7 @@
       </div><!-- /.main -->
 
       <!-- 1주차 미션 우측 패널 -->
-      <div class="mission-panel" id="panel-week1" style="display: none;">
+      <div class="mission-panel" id="panel-week1" style="display:none;">
         <div class="week-badge badge-w1" style="font-size:9px; padding:2px 8px;">1주차 · 미션 제출</div>
         <div class="page-title">1주차 미션 제출</div>
         <div class="page-desc">좌측 스텝에서 작성한 내용이 이곳에 자동으로 모입니다. 모든 항목이 채워지면 다운로드가 가능합니다.</div>
@@ -3510,7 +3424,96 @@
           <textarea id="m1-out" class="input-textarea" placeholder="(Out 기능)"
             oninput="checkMissionComplete(); saveInput('m1-out');"></textarea>
         </div>
-        
+        <div class="sec">
+          <div class="sec-title">4. 화면 구조 (STEP 5)</div>
+          <textarea id="m1-screen" class="input-textarea" placeholder="(STEP 6에서 입력 시 자동 완성)"
+            oninput="checkMissionComplete(); saveInput('m1-screen');"></textarea>
+        </div>
+
+        <button id="btn-download-mission" class="btn-download" onclick="downloadMission1()" disabled>모든 항목을
+          입력해주세요</button>
+      </div>
+
+      <!-- 2주차 실행 체크리스트 우측 패널 -->
+      <div class="mission-panel" id="panel-week2" style="display:none;">
+        <div class="week-badge badge-w2" style="font-size:9px; padding:2px 8px;">2주차 · 실행 체크리스트</div>
+        <div class="page-title">구현 실행 체크</div>
+        <div class="page-desc">2주차 구현 과정의 진도를 스스로 체크하고 점검합니다.</div>
+
+        <style>
+          .chk-sec { margin-bottom: 28px; padding: 16px; background: var(--card2); border-radius: var(--r-md); border: 1px solid var(--border-dk); }
+          .chk-title { font-size: 13px; font-weight: 700; color: var(--title); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--border-nm); padding-bottom: 8px;}
+          .chk-item { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--title2); margin-bottom: 8px; cursor: pointer; line-height: 1.5;}
+          .chk-item input { margin-top: 3px; }
+          .chk-sec.active-sec { border-color: var(--green-bd); box-shadow: 0 0 0 1px var(--green-bg); }
+        </style>
+
+        <!-- STEP 7 -->
+        <div class="chk-sec" id="chk-s7">
+          <div class="chk-title"><span class="step-tag tag-blue">STEP 6</span> 구현용 PRD 준비</div>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>1주차 미션 MD 파일을 다운로드했다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>GPTs에 MD 파일을 업로드했다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>구현용 PRD Lite가 생성되었다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>Must 기능이 너무 많지 않은지 확인했다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>캘린더/통계/AI가 Later로 빠졌는지 확인했다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>Antigravity에 붙여넣을 최종 요청문을 준비했다</span></label>
+        </div>
+
+        <!-- STEP 8 -->
+        <div class="chk-sec" id="chk-s8">
+          <div class="chk-title"><span class="step-tag tag-blue">STEP 7</span> 첫 구현 시작 체크</div>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>Antigravity에서 새 프로젝트를 열었다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>구현용 PRD Lite를 붙여넣었다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>전체 구현 계획을 먼저 확인했다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>업무 입력 기능이 생성되었다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>업무 목록이 화면에 표시된다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>저장 방식이 적용되었다</span></label>
+        </div>
+
+        <!-- STEP 9 -->
+        <div class="chk-sec" id="chk-s9">
+          <div class="chk-title"><span class="step-tag tag-blue">STEP 9</span> 업무 관리 기능 체크</div>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>업무를 추가할 수 있다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>업무를 수정할 수 있다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>업무를 삭제할 수 있다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>완료 체크를 할 수 있다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>완료된 업무가 별도로 보인다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>새로고침 후에도 업무가 남아 있다</span></label>
+        </div>
+
+        <!-- STEP 10 -->
+        <div class="chk-sec" id="chk-s10">
+          <div class="chk-title"><span class="step-tag tag-blue">STEP 10</span> 업무일지 생성 체크</div>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>완료된 업무를 기준으로 업무일지가 생성된다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>완료 업무가 없을 때 안내 문구가 나온다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>생성된 업무일지를 복사할 수 있다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>업무일지 문장이 너무 어색하지 않다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>AI 없이도 기본 템플릿 방식으로 작동한다</span></label>
+        </div>
+
+        <!-- STEP 11 -->
+        <div class="chk-sec" id="chk-s11">
+          <div class="chk-title"><span class="step-tag tag-blue">STEP 11</span> UX 점검 체크</div>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>처음 보는 사람도 어디에 입력할지 알 수 있다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>완료 체크 버튼이 명확하다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>오늘 업무와 완료 업무가 구분된다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>업무일지 생성 위치가 자연스럽다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>불필요한 기능이 너무 많이 들어가지 않았다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>모바일 또는 작은 화면에서 크게 깨지지 않는다</span></label>
+        </div>
+
+        <!-- STEP 12 -->
+        <div class="chk-sec" id="chk-s12">
+          <div class="chk-title"><span class="step-tag tag-mission">STEP 11</span> 최종 제출 체크</div>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>작동 화면 캡처를 준비했다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>구현용 PRD Lite를 저장했다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>사용한 주요 프롬프트를 정리했다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>기본 UX 점검 결과를 작성했다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>짧은 회고를 작성했다</span></label>
+          <label class="chk-item"><input type="checkbox" onchange="saveCheck(this)"> <span>선택 확장 여부를 체크했다</span></label>
+        </div>
+
+      </div>
     </div><!-- /.body-wrap -->
 
 
@@ -3518,13 +3521,64 @@
 
   <script>
 
+    // ── 슬랙 빌더 로직 ──
+    function selectChip(category, value, el) {
+      const ipt = document.getElementById('slack-' + category);
+      if (ipt) ipt.value = value;
+      const parent = el.parentElement;
+      parent.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      updateSlackPreview();
+    }
+    function updateSlackPreview() {
+      const t = document.getElementById('slack-type')?.value || '';
+      const s = document.getElementById('slack-step')?.value || '';
+      const w = document.getElementById('slack-wish')?.value.trim() || '';
+      const p = document.getElementById('slack-prob')?.value.trim() || '';
+      const wt = document.getElementById('slack-want')?.value.trim() || '';
+      
+      const body = document.getElementById('slack-preview-body');
+      const btn = document.getElementById('slack-copy-btn');
+      if (!body || !btn) return;
+
+      if (!t && !s && !w && !p && !wt) {
+         body.innerText = "(왼쪽 내용을 모두 입력하면 완성된 질문이 보이며 복사 버튼이 활성화됩니다.)";
+         body.style.color = "var(--muted)";
+         btn.disabled = true; btn.classList.remove('enabled');
+         return;
+      }
+      
+      body.style.color = "var(--title2)";
+      body.innerText = `【질문 유형】\n${t || '___'}\n\n【현재 단계】\n${s || '___'}\n\n【하고 싶었던 것】\n${w || '___'}\n\n【현재 발생한 문제】\n${p || '___'}\n\n【원하는 답변】\n${wt || '___'}`;
+
+      // REQUIRED fields logic for vivid colored copy button
+      if (t && s && w && p && wt) {
+        btn.disabled = false;
+        btn.classList.add('enabled');
+      } else {
+        btn.disabled = true;
+        btn.classList.remove('enabled');
+      }
+    }
+    function copySlackText(btn) {
+      const body = document.getElementById('slack-preview-body');
+      if (!body) return;
+      navigator.clipboard.writeText(body.innerText).then(() => {
+        const orig = btn.innerText;
+        btn.innerText = "복사 완료! ✓";
+        setTimeout(() => btn.innerText = orig, 1500);
+      });
+    }
+
+
+
     // 다크모드 고정
     document.documentElement.setAttribute('data-theme', 'dark');
 
 
     // ── 미션 완료 체크 ──
     function checkMissionComplete() {
-      const ids = ['m1-pd', 'm1-flow', 'm1-must', 'm1-later', 'm1-out', 'm1-screen'];
+      const ids = ['m1-pd', 'm1-flow', 'm1-must', 'm1-later', 'm1-out', 'm1-prd', 'm1-screen'];
       let allFilled = true;
       for (let id of ids) {
         const el = document.getElementById(id);
@@ -3631,18 +3685,6 @@
         document.getElementById('lock-screen').style.display = 'none';
         document.getElementById('app').style.display = 'flex';
         loadProgress();
-
-      // Trigger initial panel sync based on current sidebar item highlight
-      const currentActiveSb = document.querySelector('.sb-item.active');
-      if (currentActiveSb) {
-        goPage(currentActiveSb);
-      } else {
-        const manualP1 = document.getElementById('panel-week1');
-        const manualP2 = document.getElementById('panel-week2');
-        if (manualP1) manualP1.style.display = 'none';
-        if (manualP2) manualP2.style.display = 'none';
-      }
-
         showResumeBanner();
       } else {
         err.style.display = 'block';
@@ -3664,20 +3706,15 @@
         localStorage.setItem('lc_last_page', pageId);
       }
 
-      // 우측 패널 토글 (시작 전 페이지 제외)
-      const beforePages = ['orientation', 'prep-checklist', 'antigravity-setup', 'ollama-setup', 'slack-guide'];
+      // 우측 패널 토글
       const w2Pages = ['step7', 'step8', 'step9', 'step10', 'step11', 'step12', 'bonus1', 'bonus2', 'bonus3', 'bonus4', 'faq'];
       const p1 = document.getElementById('panel-week1');
       const p2 = document.getElementById('panel-week2');
-      
       if(p1 && p2) {
-        if (beforePages.includes(pageId)) {
-          p1.style.display = 'none';
-          p2.style.display = 'none';
-        } else if (w2Pages.includes(pageId)) {
+        if (w2Pages.includes(pageId)) {
           p1.style.display = 'none';
           p2.style.display = 'block';
-          // 하이라이트 및 스크롤
+          // 하이라이트
           document.querySelectorAll('.chk-sec').forEach(s => s.classList.remove('active-sec'));
           if (pageId.startsWith('step')) {
             const num = pageId.replace('step', '');
@@ -3688,145 +3725,27 @@
             }
           }
         } else {
-          // Week 1 pages
           p1.style.display = 'block';
           p2.style.display = 'none';
         }
       }
     }
 
-    // 체크리스트 상태 업데이트 (이전 스탭 강제 종속 포함)
-    function updateChecklistFlow() {
-      const steps = [7, 8, 9, 10, 11, 12];
-      let previousStepCompleted = true; // STEP 7 is always available by default
-      
-      steps.forEach((stepNum, idx) => {
-        const sec = document.getElementById('chk-s' + stepNum);
-        if (!sec) return;
-        
-        const checks = sec.querySelectorAll('input[type="checkbox"]');
-        const labels = sec.querySelectorAll('label');
-        
-        if (previousStepCompleted) {
-          sec.style.opacity = '1';
-          sec.style.pointerEvents = 'auto';
-          checks.forEach(c => c.disabled = false);
-        } else {
-          sec.style.opacity = '0.4';
-          sec.style.pointerEvents = 'none';
-          checks.forEach(c => {
-            c.disabled = true;
-            c.checked = false; // 이전 단계 안 깼으면 해제
-          });
-        }
-        
-        // Check if CURRENT step is completed to allow NEXT step
-        const currentFilled = Array.from(checks).every(c => c.checked);
-        previousStepCompleted = currentFilled;
-      });
-      
-      // Save current state after processing
-      const allChecks = document.querySelectorAll('#panel-week2 input[type="checkbox"]');
-      const state = Array.from(allChecks).map(c => c.checked);
-      localStorage.setItem('lc_checks', JSON.stringify(state));
-    }
-
-    // 체크리스트 저장 핸들러
+    // 체크리스트 저장 함수
     function saveCheck(el) {
-      updateChecklistFlow();
+      const checks = document.querySelectorAll('#panel-week2 input[type="checkbox"]');
+      const state = Array.from(checks).map(c => c.checked);
+      localStorage.setItem('lc_checks', JSON.stringify(state));
     }
 
     document.addEventListener('DOMContentLoaded', () => {
       const saved = JSON.parse(localStorage.getItem('lc_checks') || '[]');
       const checks = document.querySelectorAll('#panel-week2 input[type="checkbox"]');
-      
-      // Initial raw mapping
       checks.forEach((c, i) => {
         if (saved[i] !== undefined) c.checked = saved[i];
       });
-      
-      // Run flow validation once
-      updateChecklistFlow();
     });
 
-
-    
-    // ── 슬랙 빌더 전용 칩 선택 로직 ──
-    function selectChip(category, value, el) {
-      const input = document.getElementById('slack-' + category);
-      if (input) { input.value = value; }
-      
-      const parent = el.parentElement;
-      parent.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
-      el.classList.add('selected');
-      
-      updateSlackPreview();
-    }
-
-    function updateSlackPreview() {
-      const type = document.getElementById('slack-type')?.value || '';
-      const step = document.getElementById('slack-step')?.value || '';
-      const wish = document.getElementById('slack-wish')?.value.trim() || '';
-      const prob = document.getElementById('slack-prob')?.value.trim() || '';
-      const tried = document.getElementById('slack-tried')?.value.trim() || '';
-      const want = document.getElementById('slack-want')?.value.trim() || '';
-      
-      const body = document.getElementById('slack-preview-body');
-      const btn = document.getElementById('slack-copy-btn');
-      
-      if (!body || !btn) return;
-
-      if (!type && !step && !wish && !prob && !tried && !want) {
-         body.innerText = "(왼쪽 정보를 입력하면 슬랙 질문 양식이 자동으로 생성됩니다.)";
-         body.style.color = "var(--muted)";
-         btn.disabled = true;
-         btn.style.opacity = "0.5";
-         btn.style.cursor = "not-allowed";
-         return;
-      }
-
-      body.style.color = "var(--title2)";
-      
-      const text = `【질문 유형】
-${type || '___'}
-
-【현재 단계】
-${step || '___'}
-
-【하고 싶었던 것】
-${wish || '___'}
-
-【현재 발생한 문제】
-${prob || '___'}
-
-【시도해본 것】
-${tried || '___'}
-
-【원하는 답변】
-${want || '___'}`;
-
-      body.innerText = text;
-
-      if (type && step && wish && prob && tried && want) {
-        btn.disabled = false;
-        btn.style.opacity = "1";
-        btn.style.cursor = "pointer";
-      } else {
-        btn.disabled = true;
-        btn.style.opacity = "0.5";
-        btn.style.cursor = "not-allowed";
-      }
-    }
-
-    function copySlackText(btn) {
-      const body = document.getElementById('slack-preview-body');
-      if (!body) return;
-      navigator.clipboard.writeText(body.innerText).then(() => {
-        const orig = btn.innerText;
-        btn.innerText = "복사 완료! ✓";
-        setTimeout(() => btn.innerText = orig, 1500);
-      });
-    }
 
     function goPageById(id) {
       const el = document.querySelector(`.sb-item[data-page="${id}"]`);
@@ -3905,16 +3824,9 @@ ${want || '___'}`;
       });
       loadProgress();
 
-      // Trigger initial panel sync based on current sidebar item highlight
-      const currentActiveSb = document.querySelector('.sb-item.active');
-      if (currentActiveSb) {
-        goPage(currentActiveSb);
-      } else {
-        const manualP1 = document.getElementById('panel-week1');
-        const manualP2 = document.getElementById('panel-week2');
-        if (manualP1) manualP1.style.display = 'none';
-        if (manualP2) manualP2.style.display = 'none';
-      }
+      // Initialize proper visibility on boot
+      const initialActive = document.querySelector('.sb-item.active');
+      if (initialActive) goPage(initialActive);
 
     });
 
@@ -3979,6 +3891,7 @@ ${want || '___'}`;
       const must = document.getElementById('m1-must')?.value || '(미작성)';
       const later = document.getElementById('m1-later')?.value || '(미작성)';
       const out = document.getElementById('m1-out')?.value || '(미작성)';
+      const prd = document.getElementById('m1-prd')?.value || '(미작성)';
       const scr = document.getElementById('m1-screen')?.value || '(미작성)';
       const date = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
 
@@ -4012,7 +3925,13 @@ ${out}
 
 ---
 
-## 4. 화면 구조 정리
+## 4. PRD Lite
+
+${prd}
+
+---
+
+## 5. 화면 구조 정리
 
 ${scr}
 `;
@@ -4025,3 +3944,4 @@ ${scr}
   </script>
 </body>
 
+</html>
