@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DDOK 라이트 코칭</title>
+<style>
+    :root{
+      --bg:#070a12;--bg2:#0c1020;--surface:#101522;--surface2:#151b2b;--surface3:#1b2235;
+      --line:rgba(255,255,255,.10);--line2:rgba(255,255,255,.06);--text:#eef2ff;--text2:#c8d0e8;--muted:#8892ad;--muted2:#59627a;
+      --blue:#5968ff;--blue2:#7c6dff;--blue-bg:rgba(89,104,255,.14);--blue-line:rgba(89,104,255,.34);
+      --purple:#b084ff;--purple-bg:rgba(176,132,255,.13);--purple-line:rgba(176,132,255,.32);
+      --gold:#ffc857;--gold-bg:rgba(255,200,87,.12);--gold-line:rgba(255,200,87,.36);
+      --green:#26d67c;--green-bg:rgba(38,214,124,.10);--green-line:rgba(38,214,124,.28);
+      --red:#ff6b7b;--red-bg:rgba(255,107,123,.12);--red-line:rgba(255,107,123,.28);
+      --radius-xs:8px;--radius-sm:12px;--radius-md:18px;--radius-lg:26px;--radius-pill:999px;
+      --shadow:0 24px 70px rgba(0,0,0,.45);--side-w:292px;--panel-w:360px;--top-h:64px;
+      --font:'Pretendard','Inter','Apple SD Gothic Neo','Noto Sans KR',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+      --mono:'SFMono-Regular','Consolas','Liberation Mono',monospace;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}html,body{height:100%;font-family:var(--font);background:radial-gradient(circle at 35% 0%,rgba(77,87,255,.16),transparent 34%),linear-gradient(135deg,#070a12 0%,#090e19 44%,#0b1224 100%);color:var(--text);font-size:15px;line-height:1.72;-webkit-font-smoothing:antialiased}button,input,textarea{font-family:inherit}a{color:inherit}
+    ::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:20px}
+    #lock-screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 0%,rgba(89,104,255,.18),transparent 40%),var(--bg);z-index:1000}.lock-card{width:420px;background:rgba(16,21,34,.86);border:1px solid var(--line);border-radius:30px;padding:42px;box-shadow:var(--shadow);backdrop-filter:blur(20px)}.brand{display:flex;align-items:center;gap:12px}.logo-text{font-size:24px;font-weight:900;letter-spacing:-.05em}.brand-sub{font-weight:750;color:var(--text2)}.lock-title{font-size:27px;font-weight:800;letter-spacing:-.03em;margin-top:28px}.lock-sub{font-size:14px;color:var(--muted);margin-top:8px}.lock-label{font-size:12px;color:var(--muted);font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin:26px 0 8px}.lock-input{width:100%;height:48px;border:1px solid var(--line);background:var(--surface2);border-radius:14px;color:var(--text);padding:0 16px;outline:none}.lock-input:focus{border-color:var(--blue);box-shadow:0 0 0 4px var(--blue-bg)}.lock-error{display:none;color:var(--red);font-size:13px;margin-top:8px}.lock-hint{font-size:12px;color:var(--muted2);text-align:center;margin-top:16px}.primary-btn{border:0;background:linear-gradient(135deg,var(--blue),var(--blue2));color:white;border-radius:14px;height:48px;padding:0 18px;font-weight:800;cursor:pointer;transition:.15s;margin-top:18px}.primary-btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+    #app{display:none;height:100vh;flex-direction:column}.topbar{height:var(--top-h);display:flex;align-items:center;padding:0 28px;border-bottom:1px solid var(--line2);background:rgba(7,10,18,.78);backdrop-filter:blur(18px);position:fixed;top:0;left:0;right:0;z-index:30}.topbar .brand{gap:14px}.topbar .logo-text{font-size:23px}.status-badge{font-size:12px;font-weight:800;color:#9ea8ff;background:var(--blue-bg);border:1px solid var(--blue-line);border-radius:var(--radius-pill);padding:5px 12px}.top-actions{margin-left:auto;display:flex;gap:10px}.top-link{height:36px;display:inline-flex;align-items:center;gap:8px;padding:0 15px;border-radius:var(--radius-pill);border:1px solid var(--line);background:rgba(255,255,255,.04);text-decoration:none;color:var(--text2);font-weight:750;font-size:13px}.top-link.gold{color:var(--gold);background:var(--gold-bg);border-color:var(--gold-line)}
+    .layout{display:grid;grid-template-columns:var(--side-w) minmax(560px,1fr) var(--panel-w);height:calc(100vh - var(--top-h));margin-top:var(--top-h)}.sidebar{border-right:1px solid var(--line2);background:rgba(14,19,31,.72);padding:24px 18px 70px;overflow:auto}.sb-label{font-size:11px;color:var(--muted2);font-weight:850;letter-spacing:.06em;margin:24px 8px 8px}.sb-item{display:flex;align-items:center;gap:10px;min-height:34px;padding:7px 10px;border-radius:11px;color:var(--muted);cursor:pointer;font-size:13px;font-weight:650;transition:.14s}.sb-item:hover{color:var(--text);background:rgba(255,255,255,.05)}.sb-item.active{color:white;background:linear-gradient(135deg,rgba(89,104,255,.38),rgba(124,109,255,.22));box-shadow:inset 0 0 0 1px rgba(126,140,255,.32)}.sb-icon{width:17px;height:17px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.22);border-radius:50%;font-size:10px;color:var(--muted)}.sb-item.active .sb-icon{border-color:rgba(255,255,255,.5);color:white}.sb-divider{height:1px;background:var(--line2);margin:16px 8px}
+    .main{overflow:auto;padding:34px 34px 90px}.page{display:none;max-width:860px;margin:0 auto;animation:fade .18s ease}.page.active{display:block}@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}.week-badge{display:inline-flex;align-items:center;gap:7px;border-radius:var(--radius-pill);padding:5px 12px;font-size:12px;font-weight:850;margin-bottom:12px}.badge-neutral{background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--text2)}.badge-w1{background:var(--blue-bg);border:1px solid var(--blue-line);color:#aeb7ff}.badge-w2{background:var(--green-bg);border:1px solid var(--green-line);color:#9ff2c8}.badge-bonus{background:var(--purple-bg);border:1px solid var(--purple-line);color:#d4bcff}.page-title{font-size:32px;font-weight:900;letter-spacing:-.045em;line-height:1.2;margin-bottom:10px}.page-desc{color:var(--muted);font-size:15px;margin-bottom:28px}.sec{margin:28px 0}.sec-title{font-size:12px;letter-spacing:.08em;color:var(--muted2);font-weight:900;text-transform:uppercase;margin-bottom:12px}.info-card,.hero-card,.prompt-card,.mini-card{border:1px solid var(--line);border-radius:var(--radius-md);background:rgba(16,21,34,.76);box-shadow:0 12px 34px rgba(0,0,0,.18)}.info-card{padding:20px}.hero-card{padding:22px;background:linear-gradient(135deg,rgba(89,104,255,.14),rgba(176,132,255,.07));border-color:var(--blue-line)}.notice-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;background:linear-gradient(135deg,rgba(89,104,255,.21),rgba(124,109,255,.12));border:1px solid var(--blue-line);border-radius:18px;padding:15px 18px;margin-bottom:22px}.notice-left{display:flex;align-items:center;gap:12px;color:var(--text2);font-weight:750}.notice-icon{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.07);color:#adbbff}.pill-btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:linear-gradient(135deg,var(--blue),var(--blue2));color:white;border-radius:var(--radius-pill);padding:9px 16px;font-weight:850;font-size:13px;border:0;cursor:pointer}.ghost-btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--text2);border-radius:var(--radius-pill);padding:8px 14px;font-weight:800;font-size:13px;cursor:pointer}.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.compare{position:relative}.compare::after{content:'VS';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--surface3);border:1px solid var(--line);color:var(--muted);font-size:12px;font-weight:900}.feature-card{padding:20px;border-radius:18px;border:1px solid var(--blue-line);background:linear-gradient(135deg,rgba(89,104,255,.14),rgba(89,104,255,.04))}.feature-card.bonus{border-color:var(--purple-line);background:linear-gradient(135deg,rgba(176,132,255,.13),rgba(176,132,255,.04))}.card-title{font-weight:900;margin-bottom:12px;color:var(--text)}.check-list{list-style:none;display:flex;flex-direction:column;gap:8px}.check-list li{position:relative;padding-left:24px;color:var(--text2);font-size:14px}.check-list li::before{content:'✓';position:absolute;left:0;top:0;color:#94a3ff;font-weight:900}.bonus .check-list li::before{color:var(--purple)}.cta-card{display:flex;align-items:center;gap:18px;padding:18px 20px;text-decoration:none;border-radius:18px;background:linear-gradient(135deg,rgba(38,214,124,.12),rgba(38,214,124,.04));border:1px solid var(--green-line);margin-top:18px}.cta-icon{font-size:34px}.cta-title{color:var(--green);font-size:17px;font-weight:900}.cta-text{color:var(--text2);font-size:13px}.cta-arrow{margin-left:auto;color:var(--green);font-size:26px}.thumb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.thumb{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.04)}.mock-img{height:118px;background:linear-gradient(135deg,#0d1324,#172139);position:relative}.mock-img::before{content:'';position:absolute;inset:14px;border-radius:10px;background:linear-gradient(90deg,rgba(89,104,255,.22),transparent),repeating-linear-gradient(0deg,rgba(255,255,255,.08) 0 1px,transparent 1px 22px)}.mock-img.calendar::before{background:repeating-linear-gradient(90deg,rgba(89,104,255,.18) 0 1px,transparent 1px 32px),repeating-linear-gradient(0deg,rgba(255,255,255,.10) 0 1px,transparent 1px 24px)}.mock-img.stats::before{background:linear-gradient(90deg,transparent 0 10%,rgba(89,104,255,.35) 10% 22%,transparent 22% 34%,rgba(89,104,255,.18) 34% 48%,transparent 48% 60%,rgba(38,214,124,.26) 60% 76%,transparent 76%)}.thumb-label{padding:10px 12px;text-align:center;color:var(--text2);font-size:13px;font-weight:800}.step-list{display:flex;flex-direction:column;gap:12px}.step-card{display:flex;gap:14px;padding:18px;border:1px solid var(--line2);border-radius:18px;background:rgba(16,21,34,.62)}.step-num{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:11px;background:var(--blue-bg);color:#b5bdff;font-weight:900;flex-shrink:0}.step-num.green{background:var(--green-bg);color:var(--green)}.step-num.purple{background:var(--purple-bg);color:var(--purple)}.step-card-title{font-weight:900;margin-bottom:4px}.step-card-desc{color:var(--muted);font-size:14px}.prompt-card{overflow:hidden;margin:14px 0}.prompt-head{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,255,255,.04);border-bottom:1px solid var(--line2)}.prompt-label{font-size:12px;color:var(--muted);font-weight:900;letter-spacing:.05em}.copy-btn{background:var(--blue-bg);color:#b4bdff;border:1px solid var(--blue-line);border-radius:var(--radius-pill);padding:5px 11px;font-size:12px;font-weight:850;cursor:pointer}.prompt-body{white-space:pre-wrap;padding:16px;color:#9fb0d5;font-family:var(--mono);font-size:13px;line-height:1.65;word-break:keep-all}.input-label{display:block;color:var(--text2);font-size:13px;font-weight:850;margin:14px 0 6px}.input-textarea{width:100%;min-height:76px;border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:14px;color:var(--text);padding:12px 14px;resize:vertical;outline:none;line-height:1.6}.input-textarea:focus{border-color:var(--blue);box-shadow:0 0 0 4px var(--blue-bg)}.small-note{font-size:13px;color:var(--muted);margin-top:8px}.page-nav{display:flex;justify-content:space-between;align-items:center;margin-top:40px;padding-top:22px;border-top:1px solid var(--line2)}.nav-btn{border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text2);padding:10px 16px;border-radius:13px;font-weight:850;cursor:pointer}.nav-btn.primary{background:var(--blue);color:white;border-color:transparent}.done-btn{border:1px solid var(--green-line);color:var(--green);background:var(--green-bg);border-radius:var(--radius-pill);font-weight:850;padding:8px 15px;cursor:pointer}.done-btn.checked{background:var(--green);color:#06110b;border-color:transparent}.mission-panel{border-left:1px solid var(--line2);background:rgba(14,19,31,.72);padding:26px 22px 70px;overflow:auto}.panel-kicker{display:inline-flex;background:var(--blue-bg);border:1px solid var(--blue-line);color:#adb7ff;border-radius:var(--radius-pill);font-size:12px;font-weight:850;padding:4px 10px;margin-bottom:12px}.panel-title{font-size:24px;font-weight:900;letter-spacing:-.04em;margin-bottom:8px}.panel-desc{color:var(--muted);font-size:13px;margin-bottom:18px}.panel-card{border:1px solid var(--line);border-radius:18px;background:rgba(16,21,34,.76);padding:16px}.panel-check{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--line2);color:var(--text2);font-size:13px}.panel-check:last-child{border-bottom:0}.panel-check input{margin-top:4px;accent-color:var(--blue)}.progress-row{display:flex;align-items:center;gap:10px;margin-top:14px;color:var(--muted);font-size:12px}.progress-bar{flex:1;height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--green));border-radius:99px}.panel-actions{display:flex;flex-direction:column;gap:10px;margin-top:16px}.panel-link{display:flex;justify-content:center;align-items:center;text-align:center;min-height:42px;border-radius:13px;background:rgba(255,255,255,.05);border:1px solid var(--line);text-decoration:none;font-weight:850;color:var(--text2)}.panel-link.primary{background:linear-gradient(135deg,var(--blue),var(--blue2));color:white;border:0}.panel-form .input-textarea{min-height:66px;font-size:13px}.table{width:100%;border-collapse:collapse;font-size:14px}.table th,.table td{padding:11px 12px;border-bottom:1px solid var(--line2);text-align:left;vertical-align:top}.table th{color:var(--muted);font-size:12px}.table td{color:var(--text2)}.resume-banner{display:none}.resume-banner.show{display:flex}.hidden{display:none!important}
+    
+    /* ── 복구: 1주차 누적 워크북 패널 ── */
+    .panel-section{border:1px solid var(--line2);border-radius:16px;background:rgba(255,255,255,.035);padding:14px;margin-bottom:12px;transition:.15s}
+    .panel-section.active{border-color:var(--blue-line);background:linear-gradient(135deg,rgba(89,104,255,.13),rgba(255,255,255,.035));box-shadow:0 0 0 1px rgba(89,104,255,.08) inset}
+    .panel-section.done{border-color:rgba(38,214,124,.23)}
+    .panel-section.locked{opacity:.48;background:rgba(255,255,255,.02)}
+    .panel-step-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+    .panel-step-title{font-size:13px;font-weight:900;color:var(--text2)}
+    .panel-step-chip{font-size:10px;font-weight:900;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 8px;white-space:nowrap}
+    .panel-section.active .panel-step-chip{color:#b8c0ff;border-color:var(--blue-line);background:var(--blue-bg)}
+    .panel-section.done .panel-step-chip{color:var(--green);border-color:var(--green-line);background:var(--green-bg)}
+    .panel-section.locked textarea{pointer-events:none}
+    .panel-mini-actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:14px}
+    .panel-link.secondary{background:var(--gold-bg);border-color:var(--gold-line);color:var(--gold)}
+    .mission-preview{white-space:pre-wrap;font-family:var(--mono);font-size:11px;line-height:1.55;color:#92a3c9;max-height:220px;overflow:auto;border:1px solid var(--line2);border-radius:14px;background:#070a10;padding:12px;margin-top:12px}
+    .workbook-progress{display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:12px;font-weight:800;margin:2px 0 12px}
+    .workbook-progress b{color:var(--text2)}
+    .inline-tip{border:1px solid var(--blue-line);background:var(--blue-bg);border-radius:16px;padding:14px 16px;color:var(--text2);font-size:14px;margin:14px 0}
+    .mini-kicker{display:inline-flex;font-size:11px;font-weight:900;color:#aeb7ff;background:var(--blue-bg);border:1px solid var(--blue-line);border-radius:999px;padding:4px 9px;margin-bottom:8px}
+@media(max-width:1180px){.layout{grid-template-columns:250px 1fr}.mission-panel{display:none}.page{max-width:840px}.sidebar{padding-left:12px;padding-right:12px}}@media(max-width:820px){.layout{display:block}.sidebar{display:none}.main{padding:24px 18px 80px}.grid-2,.thumb-grid{grid-template-columns:1fr}.compare::after{display:none}.topbar{padding:0 16px}.top-link:not(.gold){display:none}.page-title{font-size:27px}}
+  
+
+    /* STEP 5 — 대시보드 와이어프레임 빌더 */
+    .wireframe-guide{display:grid;grid-template-columns:1.05fr .95fr;gap:16px;margin-bottom:18px}
+    .wireframe-shell{border:1px solid var(--line);border-radius:22px;overflow:hidden;background:rgba(10,14,25,.72);box-shadow:0 18px 46px rgba(0,0,0,.24)}
+    .wf-browser-bar{min-height:44px;background:rgba(255,255,255,.045);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:8px 12px}
+    .wf-dots{display:flex;gap:5px;flex-shrink:0}.wf-dot{width:10px;height:10px;border-radius:50%}.wf-dot.red{background:#ff5f57}.wf-dot.yellow{background:#ffbd2e}.wf-dot.green{background:#28c840}
+    .wf-address{flex:1;min-width:0;background:rgba(0,0,0,.18);border:1px solid var(--line2);border-radius:999px;color:var(--muted);font-size:12px;text-align:center;padding:3px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .wf-toolbar{display:flex;gap:8px;align-items:center;flex-shrink:0}.wf-tool-btn{height:28px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.05);color:var(--text2);font-size:12px;font-weight:850;padding:0 11px;cursor:pointer}.wf-tool-btn.primary{background:var(--blue-bg);border-color:var(--blue-line);color:#b5bdff}.wf-tool-btn:hover{filter:brightness(1.12)}
+    .wf-app-frame{display:grid;grid-template-columns:58px minmax(0,1fr);background:var(--bg2)}.wf-app-sidebar{border-right:1px solid var(--line);background:rgba(16,21,34,.9);padding:14px 0;display:flex;flex-direction:column;align-items:center;gap:12px}.wf-app-icon{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06);border:1px solid var(--line);font-size:14px}.wf-app-icon.active{background:linear-gradient(135deg,var(--blue),var(--blue2));border-color:transparent}
+    #wf-canvas{position:relative;width:100%;height:470px;min-height:420px;background:linear-gradient(135deg,rgba(7,10,18,.96),rgba(12,18,36,.98));background-image:radial-gradient(circle,rgba(255,255,255,.08) 1px,transparent 1px);background-size:22px 22px;overflow:hidden;user-select:none;touch-action:none}.wf-canvas-label{position:absolute;left:18px;top:14px;color:rgba(255,255,255,.28);font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}.wf-block{position:absolute;border:2px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;cursor:grab;box-shadow:0 12px 26px rgba(0,0,0,.18);min-width:120px;min-height:64px}.wf-block.dragging{cursor:grabbing;z-index:50;box-shadow:0 20px 44px rgba(0,0,0,.34)}.wf-block-head{height:32px;display:flex;align-items:center;gap:7px;padding:0 9px;border-bottom:1px solid rgba(255,255,255,.08);cursor:grab}.wf-block-title{flex:1;min-width:0;font-size:12px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.wf-icon-btn{border:0;background:transparent;cursor:pointer;font-size:12px;line-height:1;opacity:.75;padding:0;color:inherit}.wf-icon-btn:hover{opacity:1}.wf-block-body{flex:1;padding:8px 10px;display:flex}.wf-block-desc{width:100%;height:100%;resize:none;background:transparent;border:0;outline:0;color:var(--text2);font-size:12px;line-height:1.55}.wf-block-desc::placeholder{color:rgba(255,255,255,.32)}.wf-resize{position:absolute;right:3px;bottom:2px;width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:11px;opacity:.55;cursor:se-resize}.wf-text-card{margin-top:12px;border:1px solid var(--line);border-radius:18px;background:rgba(16,21,34,.76);overflow:hidden}.wf-text-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;background:rgba(255,255,255,.045);border-bottom:1px solid var(--line2)}.wf-text-title{font-size:12px;font-weight:900;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}.wf-text-sub{font-size:12px;color:var(--muted2)}#wf-text-preview{padding:14px 16px;min-height:96px;white-space:pre-wrap;font-family:var(--mono);font-size:12px;line-height:1.75;color:var(--text2)}
+    @media(max-width:860px){.wireframe-guide{grid-template-columns:1fr}.wf-browser-bar{flex-wrap:wrap}.wf-toolbar{width:100%;justify-content:flex-end}.wf-app-frame{grid-template-columns:44px minmax(0,1fr)}#wf-canvas{height:520px}.wf-app-icon{width:26px;height:26px;font-size:12px}}
+
+  
+
+    /* ── 슬랙 질문 생성기 복구 ── */
+    .slack-form-card{background:var(--surface2);border:1px solid var(--line);border-radius:22px;padding:22px;margin-top:14px;box-shadow:0 18px 42px rgba(0,0,0,.18)}
+    .slack-field-label{font-size:13px;font-weight:900;color:var(--text2);margin:18px 0 10px}.slack-field-label:first-child{margin-top:0}
+    .chip-grid{display:flex;flex-wrap:wrap;gap:9px}.chip{border:1px solid var(--line2);background:rgba(255,255,255,.045);color:var(--muted);border-radius:999px;padding:7px 12px;font-size:13px;font-weight:750;cursor:pointer;user-select:none;transition:.15s}.chip:hover{color:var(--text);border-color:var(--blue-line);background:var(--blue-bg)}.chip.selected{background:linear-gradient(135deg,var(--blue),var(--blue2));border-color:transparent;color:white}
+    .slack-textarea{width:100%;min-height:86px;border:1px solid var(--line);background:rgba(12,16,28,.88);border-radius:14px;color:var(--text);padding:13px 14px;resize:vertical;outline:none;font-size:14px;line-height:1.7}.slack-textarea:focus{border-color:var(--blue);box-shadow:0 0 0 4px var(--blue-bg)}
+    .slack-copy-main{display:flex;justify-content:flex-end;margin-top:16px}.copy-btn.big{height:40px;padding:0 18px;font-size:13px}
+    .slack-preview-box{min-height:520px;white-space:pre-wrap;line-height:1.75;color:var(--text2);font-size:13px}.slack-preview-box.empty{color:var(--muted)}
+
+    /* ── STEP 5 단순 대시보드 블록 빌더 ── */
+    .simple-wf-shell{border:1px solid var(--line);border-radius:22px;background:rgba(10,14,25,.74);overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,.22)}
+    .simple-wf-top{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.045)}
+    .simple-wf-title{flex:1;color:var(--text2);font-size:13px;font-weight:850}.simple-wf-actions{display:flex;gap:8px}
+    .wf-simple-btn{height:30px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.055);color:var(--text2);font-size:12px;font-weight:850;padding:0 12px;cursor:pointer}.wf-simple-btn.primary{background:var(--blue-bg);border-color:var(--blue-line);color:#b5bdff}.wf-simple-btn:hover{filter:brightness(1.12)}
+    #wf-board{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px;min-height:430px;background:linear-gradient(135deg,rgba(7,10,18,.96),rgba(12,18,36,.98))}
+    .simple-wf-block{border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:18px;padding:14px;min-height:128px;display:flex;flex-direction:column;gap:10px;cursor:grab;transition:.16s}.simple-wf-block:hover{border-color:var(--blue-line);background:rgba(89,104,255,.075)}.simple-wf-block.dragging{opacity:.46;transform:scale(.98)}
+    .simple-wf-head{display:flex;align-items:center;gap:8px}.drag-handle{color:var(--muted);font-weight:900}.simple-wf-title-input{flex:1;min-width:0;background:transparent;border:0;border-bottom:1px solid transparent;color:var(--text);font-size:14px;font-weight:900;outline:none}.simple-wf-title-input:focus{border-bottom-color:var(--blue-line)}.simple-wf-delete{width:26px;height:26px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.04);color:var(--muted);cursor:pointer}.simple-wf-delete:hover{color:var(--red);border-color:var(--red-line);background:var(--red-bg)}
+    .simple-wf-desc{width:100%;flex:1;min-height:68px;background:rgba(0,0,0,.14);border:1px solid var(--line2);border-radius:12px;color:var(--text2);padding:10px;resize:vertical;outline:none;font-size:13px;line-height:1.6}.simple-wf-desc:focus{border-color:var(--blue-line)}
+    .wf-text-card.simple{margin-top:16px}
+    @media (max-width:900px){#wf-board{grid-template-columns:1fr}.simple-wf-actions{flex-wrap:wrap;justify-content:flex-end}.simple-wf-top{align-items:flex-start}}
+
+
+
+    /* ── 1주차 본문 입력형 워크북 복구 ── */
+    .inline-workbook-card{border:1px solid var(--line);background:rgba(16,21,34,.72);border-radius:22px;padding:20px;margin:18px 0;box-shadow:0 18px 42px rgba(0,0,0,.16)}
+    .inline-workbook-title{font-size:14px;font-weight:900;color:var(--text);margin-bottom:8px}.inline-workbook-desc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px}
+    .inline-field{margin-top:16px}.inline-field:first-child{margin-top:0}.inline-field label{display:block;font-size:12px;font-weight:900;color:var(--text2);margin-bottom:8px}.inline-help{font-size:12px;color:var(--muted);line-height:1.65;margin-top:6px}
+    .input-textarea[data-field], .input-textarea.inline-sync{background:rgba(12,16,28,.9);border:1px solid var(--line);border-radius:14px;color:var(--text);padding:13px 14px;width:100%;min-height:86px;resize:vertical;outline:none;font-size:14px;line-height:1.7}.input-textarea[data-field]:focus{border-color:var(--blue);box-shadow:0 0 0 4px var(--blue-bg)}
+    .pd-formula{border:1px solid var(--line);border-radius:18px;background:rgba(16,21,34,.76);padding:18px 20px;margin:16px 0;font-size:15px;line-height:1.9;color:var(--text2)}
+    .pd-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.pd-input-card{border:1px solid var(--line2);border-radius:16px;background:rgba(255,255,255,.035);padding:13px}.pd-input-card label{display:inline-flex;align-items:center;font-size:12px;font-weight:900;margin-bottom:8px}.pd-input-card input{width:100%;height:38px;border:1px solid var(--line);background:rgba(7,10,18,.72);border-radius:11px;color:var(--text);padding:0 12px;outline:none}.pd-input-card input:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-bg)}
+    .ct-user{color:#60a5fa;background:rgba(96,165,250,.13);border:1px solid rgba(96,165,250,.25);border-radius:7px;padding:2px 8px;font-weight:900}.ct-sit{color:#34d399;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.24);border-radius:7px;padding:2px 8px;font-weight:900}.ct-prob{color:#f87171;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.24);border-radius:7px;padding:2px 8px;font-weight:900}.ct-cause{color:#facc15;background:rgba(250,204,21,.12);border:1px solid rgba(250,204,21,.24);border-radius:7px;padding:2px 8px;font-weight:900}
+    .pd-result{margin-top:14px;border:1px solid var(--blue-line);background:var(--blue-bg);border-radius:16px;padding:14px 16px;color:var(--text);font-size:14px;line-height:1.8}.pd-result .muted{color:var(--muted)}
+    @media(max-width:760px){.pd-grid{grid-template-columns:1fr}}
+
+    /* ── STEP 5 자유형 그리드 와이어프레임 빌더 ── */
+    .wf-free-shell{border:1px solid var(--line);border-radius:22px;background:rgba(10,14,25,.78);overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,.24);margin-top:16px}.wf-browser-bar{height:48px;display:flex;align-items:center;gap:10px;padding:0 14px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.045)}.wf-dots{display:flex;gap:5px}.wf-dot{width:10px;height:10px;border-radius:99px}.wf-url{flex:1;min-width:0;background:rgba(7,10,18,.72);border:1px solid var(--line2);border-radius:999px;padding:4px 12px;text-align:center;color:var(--muted);font-size:12px;font-weight:750}.wf-toolbar{display:flex;gap:8px}.wf-simple-btn{height:30px;border:1px solid var(--line);background:rgba(255,255,255,.045);color:var(--text2);border-radius:999px;padding:0 12px;font-size:12px;font-weight:850;cursor:pointer}.wf-simple-btn.primary{background:var(--blue);border-color:transparent;color:#fff}.wf-simple-btn:hover{border-color:var(--blue-line);background:var(--blue-bg);color:var(--text)}
+    .wf-app-frame{display:grid;grid-template-columns:58px minmax(0,1fr);background:var(--bg2)}.wf-app-sidebar{border-right:1px solid var(--line);background:rgba(16,21,34,.92);padding:14px 0;display:flex;flex-direction:column;align-items:center;gap:12px}.wf-app-icon{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06);border:1px solid var(--line);font-size:14px}.wf-app-icon.active{background:linear-gradient(135deg,var(--blue),var(--blue2));border-color:transparent}
+    #wf-canvas{position:relative;width:100%;height:520px;min-height:460px;background:linear-gradient(135deg,rgba(7,10,18,.96),rgba(12,18,36,.98));background-image:linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px, transparent 1px);background-size:20px 20px;overflow:hidden;user-select:none;touch-action:none}.wf-canvas-label{position:absolute;left:18px;top:14px;color:rgba(255,255,255,.28);font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}.wf-block{position:absolute;border:2px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;cursor:grab;box-shadow:0 12px 26px rgba(0,0,0,.18);min-width:92px;min-height:64px}.wf-block.dragging{cursor:grabbing;z-index:50;box-shadow:0 20px 44px rgba(0,0,0,.38)}.wf-block-head{height:32px;display:flex;align-items:center;gap:7px;padding:0 9px;border-bottom:1px solid rgba(255,255,255,.08);cursor:grab}.wf-block-title-input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:inherit;font-size:12px;font-weight:900}.wf-icon-btn{border:0;background:transparent;cursor:pointer;font-size:12px;line-height:1;opacity:.75;padding:0;color:inherit}.wf-icon-btn:hover{opacity:1}.wf-block-body{flex:1;padding:8px 10px;display:flex}.wf-block-desc{width:100%;height:100%;resize:none;background:transparent;border:0;outline:0;color:var(--text2);font-size:12px;line-height:1.55}.wf-resize{position:absolute;right:3px;bottom:2px;width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-size:11px;opacity:.65;cursor:se-resize}.wf-text-card{margin-top:12px;border:1px solid var(--line);border-radius:18px;background:rgba(16,21,34,.76);overflow:hidden}.wf-text-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;background:rgba(255,255,255,.045);border-bottom:1px solid var(--line2)}.wf-text-title{font-size:12px;font-weight:900;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}.wf-text-sub{font-size:12px;color:var(--muted2)}#wf-text-preview{padding:14px 16px;min-height:96px;white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;line-height:1.75;color:var(--text2)}
+    @media(max-width:860px){.wf-browser-bar{flex-wrap:wrap;height:auto;padding:12px}.wf-toolbar{width:100%;justify-content:flex-end}.wf-app-frame{grid-template-columns:44px minmax(0,1fr)}#wf-canvas{height:560px}.wf-app-icon{width:26px;height:26px;font-size:12px}}
+
+
+
+/* ── v4 보강: 본문 입력형 워크북 / 흐름 빌더 / 우선순위 빌더 ── */
+.guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0 24px}.muted-copy{color:var(--muted);font-size:14px;line-height:1.75}.field-stack{display:flex;flex-direction:column;gap:14px}.body-input-card{border:1px solid var(--line);background:rgba(16,21,34,.74);border-radius:20px;padding:18px;box-shadow:0 14px 34px rgba(0,0,0,.18)}.body-input-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px}.body-input-head b{display:block;color:var(--text);font-size:15px;margin-bottom:3px}.body-input-head p{color:var(--muted);font-size:13px;line-height:1.65}.builder-card{border:1px solid var(--line);background:rgba(16,21,34,.76);border-radius:22px;padding:18px;margin:20px 0;box-shadow:0 14px 36px rgba(0,0,0,.18)}.builder-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:14px}.builder-title{font-size:17px;font-weight:900;color:var(--text);margin-top:2px}.builder-foot{margin-top:12px;color:var(--muted);font-size:13px;line-height:1.65}.small-action{height:32px;border:1px solid var(--line);background:rgba(255,255,255,.045);color:var(--text2);border-radius:999px;padding:0 12px;font-size:12px;font-weight:850;cursor:pointer;white-space:nowrap}.small-action.primary{background:linear-gradient(135deg,var(--blue),var(--blue2));border-color:transparent;color:#fff}.small-action:hover{border-color:var(--blue-line);background:var(--blue-bg);color:var(--text)}
+.flow-builder{display:flex;flex-direction:column;gap:10px}.flow-row{display:grid;grid-template-columns:34px minmax(0,1fr) 34px;gap:10px;align-items:start;border:1px solid var(--line2);background:rgba(7,10,18,.44);border-radius:16px;padding:12px}.flow-number{width:30px;height:30px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:var(--blue-bg);border:1px solid var(--blue-line);color:#b8c0ff;font-weight:900}.flow-inputs{display:grid;grid-template-columns:1fr;gap:8px}.flow-action-input,.feature-title-input{width:100%;height:38px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.045);color:var(--text);padding:0 12px;outline:none}.flow-desc-input,.feature-desc-input{width:100%;min-height:56px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.035);color:var(--text2);padding:10px 12px;outline:none;resize:vertical;line-height:1.55}.flow-action-input:focus,.flow-desc-input:focus,.feature-title-input:focus,.feature-desc-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-bg)}.row-delete{width:30px;height:30px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.04);color:var(--muted);cursor:pointer}.row-delete:hover{color:var(--red);border-color:var(--red-line);background:var(--red-bg)}
+.priority-guide-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.priority-guide{border:1px solid var(--line);border-radius:16px;padding:14px;background:rgba(255,255,255,.04)}.priority-guide b{display:block;font-size:14px;margin-bottom:5px}.priority-guide span{font-size:12px;color:var(--muted);line-height:1.55}.priority-guide.must{border-color:var(--green-line);background:var(--green-bg)}.priority-guide.later{border-color:var(--blue-line);background:var(--blue-bg)}.priority-guide.out{border-color:var(--red-line);background:var(--red-bg)}.priority-builder-grid{display:grid;grid-template-columns:1fr;gap:14px}.priority-card{border:1px solid var(--line);background:rgba(16,21,34,.74);border-radius:20px;padding:16px}.priority-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}.priority-card h3{font-size:15px;margin-top:3px}.priority-label{display:inline-flex;font-size:11px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:999px}.priority-label.must{color:#98f7c6;background:var(--green-bg);border:1px solid var(--green-line)}.priority-label.later{color:#b8c0ff;background:var(--blue-bg);border:1px solid var(--blue-line)}.priority-label.out{color:#ffc0c8;background:var(--red-bg);border:1px solid var(--red-line)}.priority-list{display:flex;flex-direction:column;gap:10px}.priority-item{display:grid;grid-template-columns:minmax(0,1fr) 34px;gap:10px;border:1px solid var(--line2);background:rgba(7,10,18,.42);border-radius:16px;padding:12px}.priority-item-fields{display:grid;grid-template-columns:1fr;gap:8px}
+/* STEP 5: PC 대시보드 1장 전용 자유 그리드 */
+.wf-app-frame{display:grid!important;grid-template-columns:1fr!important;background:var(--bg2)}.wf-app-sidebar{display:none!important}.wf-free-shell{overflow:visible}.wf-browser-bar{min-height:50px;height:auto;flex-wrap:wrap}.wf-toolbar{margin-left:auto}.wf-block-title-input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:inherit;font-size:12px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.wf-block-head{cursor:grab}.wf-block{touch-action:none}.wf-block-desc{font-family:var(--font)}
+@media(max-width:900px){.guide-grid,.priority-guide-grid{grid-template-columns:1fr}.flow-row{grid-template-columns:30px minmax(0,1fr) 30px}.builder-head{flex-direction:column}.priority-card-head{align-items:flex-start}.wf-toolbar{width:100%;justify-content:flex-end}.wf-browser-bar{align-items:flex-start}}
+
+    .beginner-guide{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}.beginner-card{border:1px solid var(--line);background:linear-gradient(135deg,rgba(89,104,255,.08),rgba(255,255,255,.025));border-radius:18px;padding:16px}.beginner-card h3{font-size:15px;margin-bottom:8px;color:var(--text)}.beginner-card ol,.beginner-card ul{margin-left:18px;color:var(--text2);font-size:14px;line-height:1.85}.example-box{border:1px solid var(--green-line);background:var(--green-bg);border-radius:16px;padding:14px 16px;color:var(--text2);font-size:14px;line-height:1.8;margin:12px 0}.example-box b{color:var(--green)}.mini-warning{border:1px solid var(--yellow-line);background:var(--yellow-bg);border-radius:16px;padding:14px 16px;color:var(--text2);font-size:14px;line-height:1.75;margin:12px 0}.wf-helper-note{font-size:12px;color:var(--muted);padding:8px 14px;border-top:1px solid var(--line2);background:rgba(255,255,255,.025)}
+
+
+/* v9: STEP 5 grid drag improvements */
+.wf-drag-handle{width:24px;height:24px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.18);font-size:12px;font-weight:900;letter-spacing:-3px;cursor:grab;user-select:none}
+.wf-drag-handle:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.32)}
+.wf-block.dragging .wf-drag-handle{cursor:grabbing;background:rgba(255,255,255,.18)}
+.wf-block{will-change:left,top,width,height}
+.wf-block-head{cursor:default!important}
+.wf-block-title-input{cursor:text}
+.wf-helper-note b{color:var(--text)}
+.beginner-deep-card{border:1px solid var(--blue-line);border-radius:18px;background:linear-gradient(135deg,rgba(89,104,255,.12),rgba(89,104,255,.035));padding:18px 20px;margin:18px 0;color:var(--text2);font-size:14px;line-height:1.75}
+.beginner-deep-card h3{font-size:15px;color:var(--text);margin-bottom:8px}
+.beginner-deep-card ol,.beginner-deep-card ul{padding-left:20px;margin-top:8px}
+.beginner-deep-card li{margin:5px 0}
+
+
+
+/* FAQ 검색 / 외부 링크 / 이미지 슬롯 보강 */
+.search-box {
+  width: 100%;
+  padding: 13px 16px;
+  background: var(--card2);
+  border: 1px solid var(--border-dk);
+  border-radius: var(--r-md);
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+  margin-bottom: 12px;
+}
+.search-box:focus { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-bg); }
+.search-meta { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
+.faq-empty { display:none; padding:18px 20px; border:1px dashed var(--border-dk); border-radius:var(--r-md); color:var(--muted); background:var(--card2); }
+.link-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin: 12px 0 4px; }
+.external-link-card {
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:14px 16px; border:1px solid var(--blue-bd); border-radius:var(--r-md);
+  background:var(--blue-bg); color:var(--text); text-decoration:none;
+}
+.external-link-card:hover { border-color:var(--blue); background:rgba(74,92,255,.18); }
+.external-link-card .link-title { font-size:13px; font-weight:700; color:var(--title); }
+.external-link-card .link-sub { font-size:12px; color:var(--text2); margin-top:2px; }
+.image-slot-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:12px; }
+.image-slot {
+  min-height:128px; border:1.5px dashed var(--border-dk); border-radius:var(--r-md);
+  background:linear-gradient(135deg, rgba(255,255,255,.03), rgba(74,92,255,.06));
+  display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:18px;
+}
+.image-slot .slot-icon { font-size:24px; opacity:.75; margin-bottom:8px; }
+.image-slot .slot-title { font-size:13px; font-weight:700; color:var(--title); }
+.image-slot .slot-desc { font-size:12px; color:var(--muted); margin-top:4px; line-height:1.55; }
+@media (max-width: 900px) { .link-grid, .image-slot-grid { grid-template-columns: 1fr; } }
+
+</style>
+
+<style id="final-polish-v11">
+/* ── v11 최종 가독성/위계 보정 ── */
+.page{max-width:900px;}
+.main{padding:42px 42px 100px;}
+.page-title{font-size:34px;letter-spacing:-.055em;margin-bottom:12px;}
+.page-desc{font-size:15.5px;line-height:1.85;color:#a7b0ca;max-width:760px;margin-bottom:34px;}
+.sec{margin:34px 0;}
+.sec-title{display:flex;align-items:center;gap:8px;color:#aeb7ff;margin-bottom:14px;}
+.sec-title::before{content:"";width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));box-shadow:0 0 12px rgba(89,104,255,.6);}
+.info-card,.hero-card,.prompt-card,.mini-card,.step-card,.beginner-deep-card{box-shadow:0 14px 36px rgba(0,0,0,.22);}
+.info-card,.hero-card{padding:24px;}
+.step-list{gap:14px;}
+.step-card{padding:19px 20px;border-color:rgba(255,255,255,.085);background:linear-gradient(135deg,rgba(16,21,34,.86),rgba(16,21,34,.58));}
+.step-card:hover{border-color:rgba(138,150,255,.28);background:linear-gradient(135deg,rgba(21,28,45,.9),rgba(16,21,34,.66));}
+.step-card-title{font-size:15px;letter-spacing:-.01em;}
+.step-card-desc{line-height:1.75;color:#a2acc7;}
+.beginner-deep-card{padding:22px 24px;margin:22px 0;border-color:rgba(89,104,255,.42);background:linear-gradient(135deg,rgba(89,104,255,.17),rgba(176,132,255,.055));}
+.beginner-deep-card h3{font-size:16px;margin-bottom:10px;}
+.beginner-deep-card li{margin:7px 0;}
+.input-label{margin-top:18px;color:#d5dcf4;}
+.input-textarea{background:rgba(255,255,255,.055);border-color:rgba(255,255,255,.13);}
+.input-textarea::placeholder{color:#65708a;}
+.prompt-card{border-color:rgba(255,255,255,.12);}
+.prompt-head{padding:12px 16px;}
+.prompt-body{padding:18px 20px;line-height:1.75;}
+.page-nav{margin-top:50px;}
+.nav-btn,.pill-btn,.ghost-btn,.copy-btn,.primary-btn{transition:transform .12s ease,filter .12s ease,background .12s ease,border-color .12s ease;}
+.nav-btn:hover,.pill-btn:hover,.ghost-btn:hover,.copy-btn:hover,.primary-btn:hover{transform:translateY(-1px);}
+.sidebar{background:linear-gradient(180deg,rgba(14,19,31,.88),rgba(10,14,25,.82));}
+.sb-label{color:#6d7896;margin-top:28px;}
+.sb-item{min-height:36px;margin:2px 0;}
+.mission-panel{background:linear-gradient(180deg,rgba(14,19,31,.9),rgba(9,13,24,.86));}
+.panel-card{padding:18px;border-color:rgba(255,255,255,.105);}
+.panel-title{font-size:23px;line-height:1.24;}
+.panel-desc{line-height:1.7;}
+/* 외부 링크 카드는 명확한 버튼처럼 보이고, 클릭 영역을 최상위로 둡니다. */
+.external-link-card{position:relative;z-index:5;cursor:pointer;pointer-events:auto;min-height:78px;border:1px solid var(--blue-line)!important;border-radius:18px!important;background:linear-gradient(135deg,rgba(89,104,255,.20),rgba(124,109,255,.08))!important;color:var(--text)!important;text-decoration:none!important;box-shadow:0 12px 32px rgba(0,0,0,.20);transition:transform .14s ease,border-color .14s ease,background .14s ease;}
+.external-link-card:hover{transform:translateY(-2px);border-color:rgba(158,168,255,.65)!important;background:linear-gradient(135deg,rgba(89,104,255,.27),rgba(124,109,255,.12))!important;}
+.external-link-card .link-title{font-size:14px!important;font-weight:900!important;color:var(--text)!important;}
+.external-link-card .link-sub{font-size:12.5px!important;color:#a9b4d1!important;}
+/* FAQ 검색 영역 */
+.faq-search-section{margin-top:30px;}
+.faq-search-card{border:1px solid var(--blue-line);border-radius:20px;background:linear-gradient(135deg,rgba(89,104,255,.16),rgba(16,21,34,.78));padding:18px 20px;box-shadow:0 16px 44px rgba(0,0,0,.23);}
+.faq-search-guide{font-size:13px;font-weight:800;color:#cdd5ff;margin-bottom:10px;}
+.faq-search-wrap{height:52px;display:flex;align-items:center;gap:10px;padding:0 10px 0 16px;border:1px solid rgba(255,255,255,.16);border-radius:16px;background:rgba(5,8,16,.72);box-shadow:inset 0 0 0 1px rgba(89,104,255,.08);}
+.faq-search-icon{font-size:18px;opacity:.9;flex:0 0 auto;}
+.faq-search-wrap .search-box{height:100%;flex:1;width:auto;border:0!important;background:transparent!important;box-shadow:none!important;padding:0!important;font-size:15px;color:var(--text);outline:none;}
+.faq-search-wrap .search-box::placeholder{color:#78839f;}
+.faq-search-wrap:focus-within{border-color:rgba(135,147,255,.72);box-shadow:0 0 0 4px rgba(89,104,255,.16);}
+.faq-clear-btn{height:34px;padding:0 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);color:#b7c0dc;font-size:12px;font-weight:850;cursor:pointer;}
+.faq-clear-btn:hover{background:rgba(255,255,255,.1);color:white;}
+.search-meta{margin-top:10px!important;color:#9ca7c7!important;font-size:12.5px!important;}
+.faq-empty{margin-top:14px;}
+@media (max-width:1200px){.main{padding:32px 28px 90px}.page-title{font-size:30px}.layout{grid-template-columns:260px minmax(480px,1fr) 330px}}
+@media (max-width:900px){.main{padding:28px 22px 80px}.grid-2,.thumb-grid,.link-grid{grid-template-columns:1fr}.page-title{font-size:28px}}
+</style>
+</head>
+<body>
+<div id="lock-screen">
+<div class="lock-card">
+<div class="brand"><div class="logo-text">DDOK</div><div class="brand-sub">라이트 코칭</div></div>
+<div class="lock-title">수강생 전용 페이지</div>
+<div class="lock-sub">현재 진행 중인 기수 수강생에게만 제공됩니다.<br/>담당자로부터 받은 비밀번호를 입력해주세요.</div>
+<div class="lock-label">비밀번호</div>
+<input class="lock-input" id="pw-input" onkeydown="if(event.key==='Enter')unlock()" placeholder="비밀번호를 입력하세요" type="password"/>
+<div class="lock-error" id="pw-error">비밀번호가 올바르지 않습니다.</div>
+<button class="primary-btn" id="unlock-btn" onclick="unlock()" style="width:100%" type="button">입장하기</button>
+<div class="lock-hint">비밀번호를 모르신다면 슬랙으로 문의해주세요</div>
+</div>
+</div>
+<div id="app">
+<header class="topbar">
+<div class="brand"><div class="logo-text">DDOK</div><div class="brand-sub">라이트 코칭</div><span class="status-badge">1기 진행 중</span></div>
+<div class="top-actions">
+<a class="top-link gold" href="https://worklog-ten-chi.vercel.app/" rel="noreferrer" target="_blank">완성 예시 보기 ↗</a>
+<a class="top-link" href="#" rel="noreferrer" target="_blank">슬랙 채널 ▾</a>
+</div>
+</header>
+<div class="layout">
+<aside class="sidebar" id="sidebar"></aside>
+<main class="main">
+<section class="page active" id="page-orientation">
+<div class="notice-bar resume-banner" id="resume-banner"></div>
+<div class="week-badge badge-neutral">시작 전</div>
+<h1 class="page-title">코칭 시작 전에 꼭 읽어주세요 👋</h1>
+<p class="page-desc">2주 동안 무엇을 배우는지, 어떤 흐름으로 진행되는지, 슬랙은 어떻게 쓰는지 안내합니다.</p>
+<div class="hero-card">
+<div class="card-title">이 과정의 필수 완성 목표는 ‘업무 대시보드 MVP’입니다.</div>
+<p style="color:var(--text2)">2주 동안 업무 입력, 완료 체크, 업무일지 생성, 기본 저장 기능이 작동하는 첫 번째 버전을 완성합니다. 캘린더와 통계, AI 문장 고도화는 기본 기능을 완성한 뒤 원하는 분들이 확장해볼 수 있는 선택 기능입니다.</p>
+</div>
+<div class="sec">
+<div class="sec-title">필수 MVP 기능 VS 선택 확장 기능</div>
+<div class="grid-2 compare">
+<div class="feature-card">
+<div class="card-title">💎 필수 MVP 기능</div>
+<ul class="check-list">
+<li>업무 입력</li><li>업무 수정/삭제</li><li>완료 체크</li><li>완료된 업무 목록 확인</li><li>완료된 업무를 바탕으로 업무일지 생성</li><li>새로고침해도 기록이 유지되는 기본 저장 기능</li><li>오늘 업무 / 완료 업무 / 업무일지 영역이 구분된 기본 대시보드 화면</li>
+</ul>
+</div>
+<div class="feature-card bonus">
+<div class="card-title">⭐ 선택 확장 기능</div>
+<ul class="check-list">
+<li>날짜별 기록을 보는 캘린더</li><li>완료율, 카테고리별 업무량, 주간 업무량 통계</li><li>Ollama 또는 AI 모델을 활용한 업무일지 문장 고도화</li><li>브랜드 컬러, 카드 스타일, 레이아웃 디자인 커스텀</li>
+</ul>
+</div>
+</div>
+<a class="cta-card" href="https://worklog-ten-chi.vercel.app/" rel="noreferrer" target="_blank">
+<div class="cta-icon">📋</div>
+<div><div class="cta-title">WorkLog 완성 예시 보기 ↗</div><div class="cta-text">업무 입력 → 완료 체크 → 업무일지 생성까지 작동하는 대시보드 MVP를 먼저 완성합니다. 캘린더와 통계는 선택 기능입니다.</div></div>
+<div class="cta-arrow">→</div>
+</a>
+</div>
+<div class="sec">
+<div class="sec-title">완성 앱 화면 미리보기</div>
+<div class="thumb-grid">
+<div class="thumb"><div class="mock-img"></div><div class="thumb-label">업무 입력 / 완료 체크</div></div>
+<div class="thumb"><div class="mock-img calendar"></div><div class="thumb-label">캘린더 뷰 (선택)</div></div>
+<div class="thumb"><div class="mock-img stats"></div><div class="thumb-label">통계 뷰 (선택)</div></div>
+</div>
+</div>
+<div class="page-nav"><div></div><button class="nav-btn primary" onclick="goPageById('prep')">사전 준비로 이동 →</button></div>
+</section>
+<section class="page" id="page-prep">
+<div class="week-badge badge-neutral">시작 전 준비</div><h1 class="page-title">사전 준비 체크리스트</h1>
+<p class="page-desc">1주차에는 문제정의와 기획 MD를 작성하고, 2주차부터 Antigravity를 활용해 실제 대시보드 MVP를 구현합니다.</p>
+<div class="step-list">
+<div class="step-card"><div class="step-num">1</div><div><div class="step-card-title">Chrome 브라우저 준비</div><div class="step-card-desc">실습은 Chrome 기준으로 안내합니다. 다른 브라우저를 써도 되지만 화면과 메뉴명이 다를 수 있습니다.</div></div></div>
+<div class="step-card"><div class="step-num">2</div><div><div class="step-card-title">작업용 폴더 만들기</div><div class="step-card-desc">바탕화면이나 문서 폴더 안에 <b>worklog-mvp</b> 같은 작업 폴더를 미리 만들어두세요.</div></div></div>
+<div class="step-card"><div class="step-num">3</div><div><div class="step-card-title">Antigravity 계정/접속 준비</div><div class="step-card-desc">2주차 구현 실습에 필요한 필수 도구입니다. 접속과 계정 연동을 미리 확인합니다.</div></div></div>
+<div class="step-card"><div class="step-num purple">선택</div><div><div class="step-card-title">Ollama 설치 여부 결정</div><div class="step-card-desc">Ollama는 필수가 아닙니다. 기본 MVP는 Ollama 없이도 완성할 수 있습니다.</div></div></div>
+</div>
+<div class="page-nav"><button class="nav-btn" onclick="goPageById('orientation')">← 이전</button><button class="nav-btn primary" onclick="goPageById('antigravity')">다음 →</button></div>
+</section>
+<section class="page" id="page-antigravity">
+<div class="week-badge badge-neutral">필수 도구</div><h1 class="page-title">Antigravity 설치 및 접속</h1>
+<p class="page-desc">Antigravity는 2주차 구현 실습에서 사용하는 필수 도구입니다. 1주차에는 기획 MD를 만들고, 2주차부터 이 문서를 Antigravity에 전달해 업무 대시보드 MVP를 구현합니다.</p>
+<div class="info-card"><p><b>Antigravity는 ‘코드를 대신 짜주는 마법 도구’가 아니라, 내가 작성한 기획 문서를 바탕으로 구현을 함께 진행하는 AI 개발 도구입니다.</b></p><p style="color:var(--text2);margin-top:8px">처음부터 완벽한 코드를 기대하지 않아도 됩니다. 원하는 결과를 설명하고, 나온 결과를 확인하고, 다시 수정 요청하는 방식으로 첫 번째 MVP를 완성합니다.</p></div>
+<div class="sec"><div class="sec-title">공식 링크</div>
+<div class="link-grid">
+<a class="external-link-card" href="https://antigravity.google/download" target="_blank" rel="noopener noreferrer" onclick="return openExternalLink(this)"><div><div class="link-title">Antigravity 공식 다운로드 ↗</div><div class="link-sub">Mac / Windows / Linux 설치 파일</div></div><div>↗</div></a>
+<a class="external-link-card" href="https://codelabs.developers.google.com/getting-started-google-antigravity" target="_blank" rel="noopener noreferrer" onclick="return openExternalLink(this)"><div><div class="link-title">공식 시작 가이드 ↗</div><div class="link-sub">설치와 기본 사용 흐름 확인</div></div><div>↗</div></a>
+</div></div>
+<div class="sec"><div class="sec-title">처음 하는 분은 이 순서대로</div><div class="step-list"><div class="step-card"><div class="step-num">1</div><div><div class="step-card-title">공식 다운로드 페이지 접속</div><div class="step-card-desc">위의 공식 다운로드 버튼을 눌러 내 컴퓨터 운영체제에 맞는 버전을 설치합니다. 검색해서 아무 사이트에서 받지 말고, 공식 주소에서만 받으세요.</div></div></div><div class="step-card"><div class="step-num">2</div><div><div class="step-card-title">로그인/계정 연동 확인</div><div class="step-card-desc">실습 전에 Antigravity가 정상 실행되고 계정 로그인이 되는지 확인합니다. 이 단계에서 막히면 슬랙 질문 양식으로 먼저 질문하세요.</div></div></div><div class="step-card"><div class="step-num">3</div><div><div class="step-card-title">작업 폴더 열기</div><div class="step-card-desc">2주차에 구현할 프로젝트 폴더를 열어둡니다. 폴더명은 예: <b>worklog-mvp</b>처럼 짧고 영문으로 만드는 것을 권장합니다.</div></div></div><div class="step-card"><div class="step-num">4</div><div><div class="step-card-title">Gemini 3 Flash 선택</div><div class="step-card-desc">모델 선택이 필요하다면 가벼운 실습에 적합한 Flash 계열 모델을 우선 선택합니다. 모델명은 사용 시점에 UI에서 보이는 이름을 기준으로 선택하세요.</div></div></div></div></div>
+<div class="sec"><div class="sec-title">이미지로 넣으면 좋은 캡처 자리</div><div class="image-slot-grid"><div class="image-slot"><div class="slot-icon">🖥️</div><div class="slot-title">Antigravity 다운로드 화면</div><div class="slot-desc">운영체제별 다운로드 버튼이 보이는 캡처를 넣으면 왕초보가 덜 헤맵니다.</div></div><div class="image-slot"><div class="slot-icon">🤖</div><div class="slot-title">모델 선택 / 새 프로젝트 화면</div><div class="slot-desc">2주차 시작 전에 어떤 화면을 봐야 하는지 보여주는 캡처 자리입니다.</div></div></div></div>
+<div class="page-nav"><button class="nav-btn" onclick="goPageById('prep')">← 이전</button><button class="nav-btn primary" onclick="goPageById('ollama')">다음 →</button></div>
+</section>
+<section class="page" id="page-ollama">
+<div class="week-badge badge-neutral">선택 준비</div><h1 class="page-title">Ollama 설치 — 선택 준비</h1>
+<p class="page-desc">Ollama는 로컬 AI 실행 도구입니다. 기본 MVP 구현에는 필수가 아니며, BONUS 3. AI 문장 고도화에서 활용할 수 있습니다.</p>
+<div class="hero-card"><div class="card-title">Ollama는 필수 설치가 아닙니다.</div><p style="color:var(--text2)">기본 업무 대시보드 MVP는 Ollama 없이도 완성할 수 있습니다. 업무일지 문장을 더 자연스럽게 다듬거나 로컬 AI를 연결해보고 싶은 분들만 설치해두세요.</p></div>
+<div class="sec"><div class="sec-title">공식 링크</div>
+<div class="link-grid">
+<a class="external-link-card" href="https://ollama.com/download" target="_blank" rel="noopener noreferrer" onclick="return openExternalLink(this)"><div><div class="link-title">Ollama 공식 다운로드 ↗</div><div class="link-sub">macOS / Linux / Windows 설치</div></div><div>↗</div></a>
+<a class="external-link-card" href="https://ollama.com/library" target="_blank" rel="noopener noreferrer" onclick="return openExternalLink(this)"><div><div class="link-title">Ollama 모델 라이브러리 ↗</div><div class="link-sub">설치 가능한 모델 목록 확인</div></div><div>↗</div></a>
+</div></div>
+<div class="sec"><div class="sec-title">설치가 필요한 경우</div><div class="step-list"><div class="step-card"><div class="step-num purple">선택</div><div><div class="step-card-title">BONUS 3까지 진행하고 싶은 경우</div><div class="step-card-desc">업무일지 문장을 로컬 AI로 자연스럽게 다듬는 실습을 하고 싶다면 설치합니다.</div></div></div><div class="step-card"><div class="step-num">확인</div><div><div class="step-card-title">기본 MVP만 만들 거라면 건너뛰기</div><div class="step-card-desc">2주차 필수 제출 기준에는 Ollama가 포함되지 않습니다. 설치에서 막혀도 기본 과정 진행에는 문제가 없습니다.</div></div></div></div></div>
+<div class="prompt-card"><div class="prompt-head"><span class="prompt-label">설치 확인 예시</span><button class="copy-btn" onclick="copyText(this,'ollama-check')">복사</button></div><div class="prompt-body" id="ollama-check">ollama --version
+ollama list</div></div>
+<div class="sec"><div class="sec-title">이미지로 넣으면 좋은 캡처 자리</div><div class="image-slot-grid"><div class="image-slot"><div class="slot-icon">⬇️</div><div class="slot-title">Ollama 다운로드 화면</div><div class="slot-desc">수강생 운영체제에 맞는 다운로드 버튼 위치를 보여주세요.</div></div><div class="image-slot"><div class="slot-icon">✅</div><div class="slot-title">설치 확인 화면</div><div class="slot-desc">터미널에서 버전 확인이 되는 화면 캡처를 넣으면 좋습니다.</div></div></div></div>
+<div class="page-nav"><button class="nav-btn" onclick="goPageById('antigravity')">← 이전</button><button class="nav-btn primary" onclick="goPageById('slack-guide')">다음 →</button></div>
+</section>
+<section class="page" id="page-slack-guide">
+<div class="week-badge badge-neutral">시작 전</div><h1 class="page-title">슬랙 질문 양식</h1>
+<p class="page-desc">질문은 아래 양식에 맞춰 작성해야 피드백을 받을 수 있습니다. 왼쪽에서 항목을 채우면 오른쪽 패널에 슬랙용 문장이 실시간으로 생성됩니다.</p>
+<div class="sec"><div class="sec-title">왜 양식으로 질문해야 하나요?</div><div class="info-card"><p>양식을 채우는 과정 자체가 문제를 스스로 정리하는 연습입니다. <b>“안 돼요”</b>보다 <b>“이걸 하려 했는데, 이렇게 시도했고, 이런 결과가 나왔어요”</b>로 정리하면 피드백이 훨씬 빠르고 정확해집니다.</p></div></div>
+<div class="sec">
+<div class="sec-title">실시간 슬랙 질문 생성기</div>
+<div class="slack-form-card">
+<div class="slack-field-label">【질문 유형】</div>
+<input id="slack-type" type="hidden" value=""/>
+<div class="chip-grid" id="chips-type">
+<button class="chip" onclick="selectSlackChip('type','오류',this)" type="button">💥 오류</button>
+<button class="chip" onclick="selectSlackChip('type','기능 구현',this)" type="button">🛠️ 기능 구현</button>
+<button class="chip" onclick="selectSlackChip('type','UX 흐름',this)" type="button">🗺️ UX 흐름</button>
+<button class="chip" onclick="selectSlackChip('type','프롬프트',this)" type="button">📝 프롬프트</button>
+<button class="chip" onclick="selectSlackChip('type','커스텀',this)" type="button">🎨 커스텀</button>
+<button class="chip" onclick="selectSlackChip('type','기타',this)" type="button">❓ 기타</button>
+</div>
+<div class="slack-field-label">【현재 단계】</div>
+<input id="slack-step" type="hidden" value=""/>
+<div class="chip-grid" id="chips-step">
+<button class="chip" onclick="selectSlackChip('step','1주차 STEP 1',this)" type="button">W1 S1</button>
+<button class="chip" onclick="selectSlackChip('step','1주차 STEP 2',this)" type="button">W1 S2</button>
+<button class="chip" onclick="selectSlackChip('step','1주차 STEP 3',this)" type="button">W1 S3</button>
+<button class="chip" onclick="selectSlackChip('step','1주차 STEP 4',this)" type="button">W1 S4</button>
+<button class="chip" onclick="selectSlackChip('step','1주차 STEP 5',this)" type="button">W1 S5</button>
+<button class="chip" onclick="selectSlackChip('step','2주차 STEP 6',this)" type="button">W2 S6</button>
+<button class="chip" onclick="selectSlackChip('step','2주차 STEP 7',this)" type="button">W2 S7</button>
+<button class="chip" onclick="selectSlackChip('step','2주차 STEP 8',this)" type="button">W2 S8</button>
+<button class="chip" onclick="selectSlackChip('step','2주차 STEP 9',this)" type="button">W2 S9</button>
+<button class="chip" onclick="selectSlackChip('step','2주차 STEP 10',this)" type="button">W2 S10</button>
+<button class="chip" onclick="selectSlackChip('step','2주차 STEP 11',this)" type="button">W2 S11</button>
+</div>
+<div class="slack-field-label">【하고 싶었던 것】</div>
+<textarea class="slack-textarea" id="slack-want" oninput="updateSlackPreview()" placeholder="하고 싶었던 동작을 적어주세요"></textarea>
+<div class="slack-field-label">【현재 발생한 문제】</div>
+<textarea class="slack-textarea" id="slack-problem" oninput="updateSlackPreview()" placeholder="어떤 에러나 막힘이 있나요?"></textarea>
+<div class="slack-field-label">【원하는 답변】</div>
+<textarea class="slack-textarea" id="slack-answer" oninput="updateSlackPreview()" placeholder="어떤 피드백을 원하시나요?"></textarea>
+<div class="slack-copy-main"><button class="copy-btn big" disabled="" id="slack-copy-main" onclick="copySlackGenerated()">슬랙에 복사하기</button></div>
+</div>
+</div>
+<div class="sec"><div class="sec-title">응대 범위</div><div class="info-card"><p><b>가능</b> — UX 흐름 판단 / 프롬프트 수정 방향 / 기능 범위 조정 / 막힌 구간 다음 단계 안내</p><p><b>불가</b> — PC·브라우저·계정 환경 직접 해결 / 코칭 주제 외 별도 앱 제작 / 한 이슈 3회 왕복 초과</p></div></div>
+<div class="page-nav"><button class="nav-btn" onclick="goPageById('ollama')">← 이전</button><button class="nav-btn primary" onclick="goPageById('step1')">1주차 시작 →</button></div>
+</section>
+<section class="page" id="page-step1">
+<div class="week-badge badge-w1">1주차 — UX 설계</div>
+<h1 class="page-title">STEP 1. 업무 기록 돌아보기</h1>
+<p class="page-desc">앱을 만들기 전에 지금 업무를 어떻게 기록하고 있는지 관찰합니다. 아래 입력칸에 적은 내용은 우측 워크북과 1주차 미션 제출 MD에 자동 반영됩니다.</p>
+<div class="inline-tip"><span class="mini-kicker">이번 단계 결과물</span><br/>현재 기록 방식, 자주 놓치는 순간, 반복되는 불편을 정리합니다. 이 내용이 다음 단계의 문제정의 근거가 됩니다.</div>
+<div class="guide-grid">
+<div class="info-card">
+<div class="card-title">어떻게 적으면 좋을까요?</div>
+<ul class="check-list">
+<li>멋진 문장보다 실제 장면을 적습니다.</li>
+<li>“언제”, “어디서”, “무엇이 불편했는지”가 보이면 좋습니다.</li>
+<li>완벽하게 정리하지 않아도 됩니다. 나중에 문제정의에서 다시 다듬습니다.</li>
+</ul>
+</div>
+<div class="info-card">
+<div class="card-title">예시</div>
+<p class="muted-copy">“업무는 노션에 적지만 급한 요청은 카톡, 메일, 머릿속에 흩어져 있어 하루가 끝나면 뭘 처리했는지 다시 찾게 된다.”</p>
+</div>
+</div>
+<div class="field-stack">
+<div class="body-input-card">
+<div class="body-input-head"><span class="step-num">1</span><div><b>현재 기록 방식 적기</b><p>메모앱, 노션, 종이, 카카오톡 나에게 보내기, 머릿속 기억 등 지금 실제로 쓰는 방식을 적어주세요.</p></div></div>
+<textarea class="input-textarea" data-field="m1-record" oninput="saveField(this)" placeholder="예: 클라이언트 요청은 카카오톡에 있고, 업무 계획은 노션에 쓰지만 완료 기록은 따로 남기지 않는다."></textarea>
+</div>
+<div class="body-input-card">
+<div class="body-input-head"><span class="step-num">2</span><div><b>자주 놓치는 순간 적기</b><p>언제 기록이 끊기거나 기억이 흐려지는지 구체적인 상황을 적어주세요.</p></div></div>
+<textarea class="input-textarea" data-field="m1-moments" oninput="saveField(this)" placeholder="예: 수정 요청을 처리하고 바로 다음 업무로 넘어가면, 밤에 업무일지를 쓸 때 어떤 내용을 반영했는지 기억나지 않는다."></textarea>
+</div>
+<div class="body-input-card">
+<div class="body-input-head"><span class="step-num">3</span><div><b>반복되는 불편 정리</b><p>이 앱이 해결해야 할 공통 불편을 한두 문장으로 적어주세요.</p></div></div>
+<textarea class="input-textarea" data-field="m1-pain" oninput="saveField(this)" placeholder="예: 업무를 완료할 때마다 간단히 남겨두지 않으면, 하루가 끝난 뒤 기록을 복원하는 데 시간이 오래 걸린다."></textarea>
+</div>
+</div>
+<div class="page-nav"><button class="nav-btn" onclick="goPageById('slack-guide')">← 이전</button><button class="nav-btn primary" onclick="goPageById('step2')">다음 →</button></div>
+</section>
+<section class="page" id="page-step2">
+<div class="week-badge badge-w1">1주차 — UX 설계</div>
+<h1 class="page-title">STEP 2. 문제정의</h1>
+<p class="page-desc">사용자, 상황, 문제, 원인을 한 문장으로 좁힙니다. 각 칸을 채우면 문제정의 문장이 자동 생성되어 우측 워크북과 1주차 미션 제출 MD에 반영됩니다.</p>
+<div class="inline-tip"><span class="mini-kicker">이번 단계 결과물</span><br/>문제정의 문장 1개를 완성합니다. 너무 멋진 문장보다 “누가, 언제, 어떤 문제를, 왜 겪는지”가 보이는 문장이 좋습니다.</div>
+<div class="pd-formula">
+<span class="ct-user">[사용자]</span>는 <span class="ct-sit">[상황]</span>에서 <span class="ct-prob">[문제]</span>를 겪고 있으며, 그 이유는 <span class="ct-cause">[원인]</span> 때문이다.
+</div>
+<div class="pd-grid">
+<div class="pd-input-card"><label class="ct-user">사용자</label><input data-field="pd-user" oninput="savePDPart(this)" placeholder="예: 프리랜서"/></div>
+<div class="pd-input-card"><label class="ct-sit">상황</label><input data-field="pd-sit" oninput="savePDPart(this)" placeholder="예: 하루가 끝날 때 / 업무일지를 작성하려고 할 때"/></div>
+<div class="pd-input-card"><label class="ct-prob">문제</label><input data-field="pd-prob" oninput="savePDPart(this)" placeholder="예: 수행한 업무 내용을 자주 잊어버리는 문제"/></div>
+<div class="pd-input-card"><label class="ct-cause">원인</label><input data-field="pd-cause" oninput="savePDPart(this)" placeholder="예: 업무 기록을 오로지 기억에 의존하기 때문"/></div>
+</div>
+<div class="pd-result" id="pd-result"><span class="muted">각 항목을 입력하면 문제정의 문장이 여기에 생성됩니다.</span></div>
+<textarea class="input-textarea inline-sync" data-field="m1-pd" oninput="saveField(this)" placeholder="자동 생성된 문장을 직접 다듬어도 됩니다." style="margin-top:14px;min-height:70px"></textarea>
+<div class="sec"><div class="sec-title">예시</div><div class="mini-card" style="padding:18px;color:var(--text2)">프리랜서는 하루가 끝날 때 수행한 업무 내용을 자주 잊어버리는 문제를 겪고 있으며, 업무 기록을 오로지 기억에 의존하기 때문에 업무일지 작성이 어려워진다.</div></div>
+<div class="page-nav"><button class="nav-btn" onclick="goPageById('step1')">← 이전</button><button class="nav-btn primary" onclick="goPageById('step3')">다음 →</button></div>
+</section>
+<section class="page" id="page-step3">
+<div class="week-badge badge-w1">1주차 — UX 설계</div>
+<h1 class="page-title">STEP 3. 사용자 흐름 설계</h1>
+<p class="page-desc">기능 목록이 아니라 사용자가 앱을 쓰는 행동 순서를 정리합니다. 흐름은 3개일 수도, 10개일 수도 있습니다. 필요한 만큼 추가하거나 삭제하세요.</p>
+<div class="inline-tip"><span class="mini-kicker">이번 단계 결과물</span><br/>사용자가 앱을 여는 순간부터 업무일지를 생성하는 순간까지의 행동 순서를 번호로 정리합니다. 이 흐름이 이후 Antigravity가 화면과 기능을 만드는 기준이 됩니다.</div>
+<div class="beginner-guide"><div class="beginner-card"><h3>따라하기 순서</h3><ol><li>먼저 기본 예시 4개를 읽습니다.</li><li>내 앱에 필요 없는 순서는 삭제합니다.</li><li>중간에 필요한 행동이 있으면 <b>+ 순서 추가</b>를 누릅니다.</li><li>왼쪽 칸에는 사용자의 행동, 아래 칸에는 화면이 보여줘야 할 내용을 적습니다.</li></ol></div><div class="example-box"><b>좋은 작성 예시</b><br/>사용자 행동: 오늘 할 업무를 입력한다<br/>화면 표시 내용: 업무명 입력창, 카테고리 선택, 추가 버튼을 보여준다.</div></div>
+<div class="guide-grid">
+<div class="info-card">
+<div class="card-title">작성 기준</div>
+<ul class="check-list">
+<li>사용자가 실제로 하는 행동 순서대로 씁니다.</li>
+<li>기능명보다 “사용자가 무엇을 한다”로 적습니다.</li>
+<li>너무 자세한 예외 상황은 Later로 미뤄도 됩니다.</li>
+</ul>
+</div>
+<div class="info-card">
+<div class="card-title">좋은 예시</div>
+<p class="muted-copy">1. 앱을 연다 → 2. 오늘 할 업무를 입력한다 → 3. 완료한 업무를 체크한다 → 4. 완료 업무를 확인한다 → 5. 업무일지를 생성한다</p>
+</div>
+</div>
+<div class="builder-card">
+<div class="builder-head">
+<div><span class="mini-kicker">앱 사용 흐름</span><div class="builder-title">필요한 만큼 순서를 추가하고 정리하세요</div></div>
+<button class="small-action primary" data-action="add-flow" onclick="addFlowItem()" type="button">+ 순서 추가</button>
+</div>
+<div class="flow-builder" id="flow-builder"></div>
+<div class="builder-foot">입력한 흐름은 우측 워크북의 “사용자 흐름”과 1주차 미션 MD에 자동 반영됩니다.</div>
+</div>
+<div class="page-nav"><button class="nav-btn" onclick="goPageById('step2')">← 이전</button><button class="nav-btn primary" onclick="goPageById('step4')">다음 →</button></div>
+</section>
+<section class="page" id="page-step4">
+<div class="week-badge badge-w1">1주차 — UX 설계</div>
+<h1 class="page-title">STEP 4. 기능 우선순위</h1>
+<p class="page-desc">첫 버전에 반드시 필요한 기능과 나중으로 미룰 기능을 구분합니다. 각 기능은 따로 입력하고 필요하면 추가·삭제할 수 있습니다.</p>
+<div class="inline-tip"><span class="mini-kicker">이번 단계 결과물</span><br/>Must / Later / Out을 나눠 구현 범위를 줄입니다. 라이트 코칭의 기본 목표는 대시보드 MVP이므로 캘린더, 통계, AI 문장 고도화는 선택 확장으로 둡니다.</div>
+<div class="beginner-guide"><div class="beginner-card"><h3>비전문가용 판단 기준</h3><ul><li><b>Must</b>: 이 기능이 없으면 앱이라고 부르기 어려운 최소 기능입니다.</li><li><b>Later</b>: 있으면 좋지만 첫 버전이 완성된 뒤 붙여도 되는 기능입니다.</li><li><b>Out</b>: 이번 수업에서는 일부러 하지 않는 기능입니다. 제외를 잘해야 2주 안에 완성됩니다.</li></ul></div><div class="mini-warning">캘린더, 통계, AI 문장 고도화는 멋져 보이지만 기본 MVP의 필수 조건은 아닙니다. 먼저 업무 입력, 완료 체크, 업무일지 생성, 저장이 작동해야 합니다.</div></div>
+<div class="priority-guide-grid">
+<div class="priority-guide must"><b>Must</b><span>이번 2주 안에 꼭 작동해야 하는 최소 기능</span></div>
+<div class="priority-guide later"><b>Later</b><span>기본 기능 완성 후 확장하면 좋은 기능</span></div>
+<div class="priority-guide out"><b>Out</b><span>이번 과정에서는 일부러 제외할 기능</span></div>
+</div>
+<div class="priority-builder-grid">
+<div class="priority-card" data-priority="must">
+<div class="priority-card-head"><div><span class="priority-label must">Must</span><h3>첫 버전에 포함</h3></div><button class="small-action" data-action="add-priority" data-priority-type="must" onclick="addPriorityItem('must')" type="button">+ 추가</button></div>
+<div class="priority-list" id="priority-must"></div>
+</div>
+<div class="priority-card" data-priority="later">
+<div class="priority-card-head"><div><span class="priority-label later">Later</span><h3>다음 버전에 확장</h3></div><button class="small-action" data-action="add-priority" data-priority-type="later" onclick="addPriorityItem('later')" type="button">+ 추가</button></div>
+<div class="priority-list" id="priority-later"></div>
+</div>
+<div class="priority-card" data-priority="out">
+<div class="priority-card-head"><div><span class="priority-label out">Out</span><h3>이번엔 제외</h3></div><button class="small-action" data-action="add-priority" data-priority-type="out" onclick="addPriorityItem('out')" type="button">+ 추가</button></div>
+<div class="priority-list" id="priority-out"></div>
+</div>
+</div>
+<div class="builder-foot">각 항목은 우측 워크북과 1주차 미션 MD에 자동 반영됩니다.</div>
+<div class="page-nav"><button class="nav-btn" onclick="goPageById('step3')">← 이전</button><button class="nav-btn primary" onclick="goPageById('step5')">다음 →</button></div>
+</section>
+<section class="page" id="page-step5">
+<div class="week-badge badge-w1">1주차 — UX 설계</div>
+<h1 class="page-title">STEP 5. 화면 구조 설계</h1>
+<p class="page-desc">PC 대시보드 1장을 기준으로 화면의 영역을 블록으로 배치합니다. 블록을 추가·삭제하고, 자유롭게 드래그하거나 크기를 조절하면 화면 구조가 자동으로 텍스트화됩니다.</p>
+<div class="inline-tip"><span class="mini-kicker">이번 단계 결과물</span><br/>화면을 예쁘게 그리는 단계가 아니라, “어떤 영역이 어디에 있고, 각 영역이 무슨 역할을 하는지”를 구현 가능한 문장으로 바꾸는 단계입니다.</div>
+<div class="beginner-deep-card"><h3>왕초보용 안내: 여기서는 ‘디자인’을 하는 게 아니라 ‘영역의 위치와 역할’을 정합니다.</h3><ul><li>좌측 메뉴처럼 세로로 긴 영역은 블록을 길게 늘려서 표현합니다.</li><li>업무 입력 영역처럼 위쪽에 짧게 있어야 하는 영역은 작고 넓게 둡니다.</li><li>오늘 업무 목록처럼 핵심이 되는 영역은 화면 중앙에 크게 둡니다.</li><li>완료 업무나 업무일지는 오른쪽 또는 아래쪽에 배치해 “보조 정보”처럼 보이게 할 수 있습니다.</li><li>정답 배치는 없습니다. 중요한 것은 Antigravity가 “어떤 영역이 어디쯤 있어야 하는지” 이해할 수 있게 만드는 것입니다.</li></ul></div>
+<div class="beginner-guide"><div class="beginner-card"><h3>사용 방법</h3><ol><li>기본으로 들어있는 블록을 보고 대시보드 구조를 이해합니다.</li><li>필요한 영역은 <b>+ 블록 추가</b>로 추가합니다.</li><li>블록 상단을 잡고 드래그하면 위치를 옮길 수 있습니다.</li><li>오른쪽 아래 ↘ 표시를 잡아당기면 크기를 조절할 수 있습니다.</li><li>블록 제목에는 영역명, 설명에는 그 영역의 역할을 적습니다.</li></ol></div><div class="example-box"><b>예시</b><br/>좌측 메뉴 영역: 오늘 업무, 완료 업무, 업무일지 화면으로 이동하는 앱 내부 메뉴<br/>오늘 업무 목록: 진행 중인 업무 리스트와 완료 체크 버튼을 보여주는 영역</div></div>
+<div class="wireframe-guide">
+<div class="info-card"><div class="card-title">블록 설계 방법</div><ul class="check-list"><li>대시보드 1장 안에 필요한 영역을 블록으로 배치합니다.</li><li>좌측 메뉴처럼 세로로 긴 영역도 블록 크기를 조절해 표현할 수 있습니다.</li><li>블록 제목은 영역명, 설명은 그 영역의 역할입니다.</li><li>위치와 크기 정보가 텍스트로 변환되어 우측 워크북과 1주차 MD에 자동 반영됩니다.</li></ul></div>
+<div class="info-card"><div class="card-title">기본 대시보드 영역 예시</div><ul class="check-list"><li>좌측 메뉴 영역</li><li>업무 입력 영역</li><li>오늘 업무 목록</li><li>완료 현황 / 완료 업무</li><li>업무일지 생성 영역</li></ul></div>
+</div>
+<div class="wf-free-shell">
+<div class="wf-browser-bar">
+<div class="wf-dots"><span class="wf-dot" style="background:#ff5f56"></span><span class="wf-dot" style="background:#ffbd2e"></span><span class="wf-dot" style="background:#27c93f"></span></div>
+<div class="wf-url">WorkLog — PC 대시보드 1장</div>
+<div class="wf-toolbar"><button class="wf-simple-btn primary" data-action="add-wf" onclick="addWfBlock()">+ 블록 추가</button><button class="wf-simple-btn" data-action="reset-wf" onclick="resetWfBlocks()">초기화</button></div>
+</div>
+<div class="wf-app-frame">
+
+<div id="wf-canvas"><div class="wf-canvas-label">DASHBOARD CANVAS · 드래그 / 리사이즈 가능</div></div><div class="wf-helper-note"><b>⋮⋮ 이동 핸들</b>을 잡고 드래그하면 20px 그리드에 맞춰 이동합니다. 오른쪽 아래 <b>↘</b>를 잡아 크기를 조절하세요. 입력한 블록명과 역할은 자동으로 화면 구조 문장으로 변환됩니다.</div>
+</div>
+</div>
+<div class="wf-text-card">
+<div class="wf-text-head"><span class="wf-text-title">텍스트 변환 결과</span><span class="wf-text-sub">우측 패널 · 1주차 미션 제출에 자동 반영됩니다</span></div>
+<div id="wf-text-preview">(블록을 배치하면 자동으로 변환됩니다)</div>
+</div>
+<div class="page-nav"><button class="nav-btn" onclick="goPageById('step4')">← 이전</button><button class="nav-btn primary" onclick="goPageById('mission1')">1주차 미션 제출 →</button></div>
+</section>
+<section class="page" id="page-mission1">
+<div class="week-badge badge-w1">1주차 제출</div><h1 class="page-title">1주차 미션 제출 / MD 다운로드</h1><p class="page-desc">지금까지 작성한 문제정의, 사용자 흐름, 기능 우선순위, 화면 구조를 하나의 MD 파일로 다운로드합니다. 이 파일은 2주차 STEP 6에서 GPTs를 통해 구현용 PRD Lite로 변환합니다.</p><div class="inline-tip"><span class="mini-kicker">다운로드 전 확인</span><br/>오른쪽 패널에 지금까지 작성한 1주차 MD 미리보기가 표시됩니다. 빠진 항목을 보완한 뒤 다운로드하세요.</div>
+<div class="hero-card"><div class="card-title">이 파일은 ‘PRD 완성본’이 아니라 ‘1주차 기획 MD’입니다.</div><p style="color:var(--text2)">2주차 첫 단계에서 GPTs에 업로드하면 Antigravity에 전달하기 좋은 구현용 PRD Lite로 정리됩니다.</p></div>
+<div class="panel-actions" style="max-width:360px"><button class="primary-btn" onclick="downloadMission1()">1주차 미션 MD 다운로드</button></div>
+<div class="page-nav"><button class="nav-btn" onclick="goPageById('step5')">← 이전</button><button class="nav-btn primary" onclick="goPageById('step6')">2주차 시작 →</button></div>
+</section>
+<section class="page" id="page-step6">
+<div class="week-badge badge-w2">2주차 — 구현 준비</div><h1 class="page-title">STEP 6. 1주차 MD를 구현용 PRD로 변환하기</h1><p class="page-desc">1주차에서 다운로드한 MD 파일을 GPTs에 업로드해 Antigravity가 이해하기 쉬운 구현용 PRD Lite로 정리합니다.</p>
+<div class="beginner-deep-card"><h3>처음 하는 분은 이렇게 진행하세요</h3><ol><li>1주차 미션 제출 페이지에서 MD 파일을 다운로드합니다.</li><li>아래 GPTs 버튼을 눌러 변환봇을 엽니다.</li><li>다운로드한 MD 파일을 업로드합니다.</li><li>GPTs가 만들어준 “구현용 PRD Lite”를 확인합니다.</li><li>Must 기능에 캘린더/통계/AI 고도화가 들어가 있으면 Later로 옮겨달라고 다시 요청합니다.</li><li>정리된 PRD와 구현 요청문을 함께 Antigravity에 붙여넣습니다.</li></ol><p style="margin-top:8px;color:var(--muted)">이 단계의 목표는 멋진 문서를 만드는 것이 아니라, Antigravity가 구현 범위를 오해하지 않도록 “첫 버전의 기준”을 정리하는 것입니다.</p></div>
+<div class="cta-card" onclick="window.open('https://chatgpt.com/g/g-69ff890d4eb08191aa17657122d8736f-1juca-md-guhyeon-prd-byeonhwanbos','_blank')" style="cursor:pointer"><div class="cta-icon">🤖</div><div><div class="cta-title">1주차 MD → 구현 PRD 변환봇 열기</div><div class="cta-text">다운로드한 1주차 MD 파일을 업로드하고 구현용 PRD Lite를 생성합니다.</div></div><div class="cta-arrow">↗</div></div>
+<div class="prompt-card"><div class="prompt-head"><span class="prompt-label">Antigravity 전달 전 확인 문구</span><button class="copy-btn" onclick="copyText(this,'step6-prompt')">복사</button></div><div class="prompt-body" id="step6-prompt">아래 PRD Lite를 바탕으로 개인용 업무 대시보드 MVP를 구현해주세요.
+이번 단계에서는 캘린더, 통계, AI 문장 고도화 기능은 제외하고,
+업무 입력, 수정, 삭제, 완료 체크, 완료된 업무 기반 업무일지 생성, 기본 저장 기능이 작동하는 첫 번째 버전을 만들어주세요.
+먼저 전체 구현 계획을 간단히 설명한 뒤 필요한 파일을 생성하거나 수정해주세요.</div></div>
+<div class="page-nav"><button class="nav-btn" onclick="goPageById('mission1')">← 이전</button><button class="nav-btn primary" onclick="goPageById('step7')">다음 →</button></div>
+</section>
+<section class="page" id="page-step7">
+<div class="week-badge badge-w2">2주차 — MVP 구현</div><h1 class="page-title">STEP 7. 업무 입력/완료 체크 기능 만들기</h1><p class="page-desc">대시보드 MVP의 가장 기본 기능을 만듭니다. 입력, 수정, 삭제, 완료 체크가 먼저 작동해야 합니다.</p>
+<div class="beginner-deep-card"><h3>완료 기준을 먼저 확인하세요</h3><ul><li>업무를 입력하면 목록에 바로 추가되어야 합니다.</li><li>각 업무는 수정/삭제할 수 있어야 합니다.</li><li>체크하면 완료 업무로 구분되어야 합니다.</li><li>새로고침해도 업무가 사라지지 않아야 합니다.</li><li>화면이 예쁘지 않아도 괜찮습니다. 이 단계에서는 “작동”이 먼저입니다.</li></ul></div>
+<div class="prompt-card"><div class="prompt-head"><span class="prompt-label">추가 요청 프롬프트</span><button class="copy-btn" onclick="copyText(this,'step7-prompt')">복사</button></div><div class="prompt-body" id="step7-prompt">업무 대시보드의 핵심 기능을 먼저 완성해주세요.
+- 업무 입력
+- 업무 수정
+- 업무 삭제
+- 완료 체크
+- 완료된 업무 목록 분리 표시
+- 새로고침 후에도 데이터 유지
+
+캘린더, 통계, AI 기능은 아직 추가하지 말고 기본 MVP만 안정적으로 작동하게 해주세요.</div></div>
+<div class="page-nav"><button class="nav-btn" onclick="goPageById('step6')">← 이전</button><button class="nav-btn primary" onclick="goPageById('step8')">다음 →</button></div>
+</section>
+<section class="page" id="page-step8">
+<div class="week-badge badge-w2">2주차 — MVP 구현</div><h1 class="page-title">STEP 8. 업무일지 생성 기능 만들기</h1><p class="page-desc">완료 체크된 업무를 바탕으로 오늘의 업무일지를 생성합니다. 기본 버전은 AI 없이 템플릿 방식으로 충분합니다.</p>
+<div class="beginner-deep-card"><h3>업무일지는 AI가 없어도 만들 수 있습니다</h3><ul><li>완료된 업무 목록을 불러옵니다.</li><li>“오늘 완료한 업무는 다음과 같습니다.” 같은 기본 문장을 붙입니다.</li><li>완료 업무가 없을 때는 “완료된 업무가 없습니다” 안내가 나오게 합니다.</li><li>복사 버튼이 있으면 사용자가 업무일지를 외부 문서에 옮기기 쉽습니다.</li></ul></div>
+<div class="prompt-card"><div class="prompt-head"><span class="prompt-label">업무일지 생성 프롬프트</span><button class="copy-btn" onclick="copyText(this,'step8-prompt')">복사</button></div><div class="prompt-body" id="step8-prompt">완료된 업무 목록을 바탕으로 업무일지를 생성하는 기능을 추가해주세요.
+기본 버전에서는 AI API를 사용하지 않고 템플릿 방식으로 생성해주세요.
+완료된 업무가 없을 때는 안내 문구가 나오게 하고, 생성된 업무일지는 복사할 수 있게 해주세요.</div></div>
+<div class="page-nav"><button class="nav-btn" onclick="goPageById('step7')">← 이전</button><button class="nav-btn primary" onclick="goPageById('step9')">다음 →</button></div>
+</section>
+<section class="page" id="page-step9">
+<div class="week-badge badge-w2">2주차 — 점검</div><h1 class="page-title">STEP 9. 저장 기능과 기본 UX 점검</h1><p class="page-desc">작동은 되는데 쓰기 불편하면 MVP로 부족합니다. 저장과 기본 흐름을 확인합니다.</p>
+<div class="step-list"><div class="step-card"><div class="step-num green">1</div><div><div class="step-card-title">새로고침 테스트</div><div class="step-card-desc">입력한 업무와 완료 상태가 새로고침 후에도 유지되는지 확인합니다.</div></div></div><div class="step-card"><div class="step-num green">2</div><div><div class="step-card-title">처음 보는 사람 기준 점검</div><div class="step-card-desc">어디에 입력하고 어디서 업무일지를 만드는지 직관적인지 봅니다.</div></div></div></div>
+<div class="page-nav"><button class="nav-btn" onclick="goPageById('step8')">← 이전</button><button class="nav-btn primary" onclick="goPageById('step10')">다음 →</button></div>
+</section>
+<section class="page" id="page-step10">
+<div class="week-badge badge-w2">2주차 — 개선</div><h1 class="page-title">STEP 10. 오류 수정 및 사용성 개선</h1><p class="page-desc">오류를 한 번에 다 고치려 하지 말고, 증상별로 좁혀서 요청합니다.</p>
+<div class="prompt-card"><div class="prompt-head"><span class="prompt-label">오류 수정 요청 양식</span><button class="copy-btn" onclick="copyText(this,'step10-prompt')">복사</button></div><div class="prompt-body" id="step10-prompt">현재 문제가 되는 부분은 다음과 같습니다.
+
+[문제 상황]
+예: 업무를 추가하면 화면에 보이지만 새로고침하면 사라집니다.
+
+[원하는 결과]
+예: 새로고침 후에도 업무 목록과 완료 상태가 유지되면 좋겠습니다.
+
+기존 기능은 유지하고, 해당 문제만 수정해주세요.</div></div>
+<div class="page-nav"><button class="nav-btn" onclick="goPageById('step9')">← 이전</button><button class="nav-btn primary" onclick="goPageById('step11')">다음 →</button></div>
+</section>
+<section class="page" id="page-step11">
+<div class="week-badge badge-w2">2주차 제출</div><h1 class="page-title">STEP 11. 최종 제출 및 회고</h1><p class="page-desc">작동하는 업무 대시보드 MVP와 구현 과정의 핵심 기록을 정리합니다.</p>
+<div class="grid-2"><div class="info-card"><div class="card-title">필수 제출 항목</div><ul class="check-list"><li>작동하는 업무 대시보드 MVP 링크 또는 화면 캡처</li><li>문제정의 1문장</li><li>구현용 PRD Lite 문서</li><li>구현에 사용한 주요 프롬프트</li><li>기본 UX 점검 결과</li><li>짧은 회고</li></ul></div><div class="info-card"><div class="card-title">선택 제출 항목</div><ul class="check-list"><li>캘린더 기능 추가 여부</li><li>통계 기능 추가 여부</li><li>AI 문장 고도화 여부</li><li>디자인 커스텀 여부</li></ul></div></div>
+<div class="page-nav"><button class="nav-btn" onclick="goPageById('step10')">← 이전</button><button class="nav-btn primary" onclick="goPageById('bonus1')">BONUS 보기 →</button></div>
+</section>
+<section class="page" id="page-bonus1"><div class="week-badge badge-bonus">BONUS — 선택 확장</div><h1 class="page-title">BONUS 1. 캘린더 기능 추가</h1><p class="page-desc">기본 MVP를 완성한 뒤 날짜별 업무 기록을 보고 싶은 분만 진행합니다.</p><div class="prompt-card"><div class="prompt-head"><span class="prompt-label">캘린더 추가 프롬프트</span><button class="copy-btn" onclick="copyText(this,'bonus1-prompt')">복사</button></div><div class="prompt-body" id="bonus1-prompt">기존 업무 대시보드 기능은 유지한 상태에서 날짜별 업무 기록을 확인할 수 있는 월간 캘린더 뷰를 추가해주세요. 캘린더는 선택 기능이므로 기존 MVP 흐름을 깨지 않게 별도 영역으로 추가해주세요.</div></div><div class="page-nav"><button class="nav-btn" onclick="goPageById('step11')">← 이전</button><button class="nav-btn primary" onclick="goPageById('bonus2')">다음 →</button></div></section>
+<section class="page" id="page-bonus2"><div class="week-badge badge-bonus">BONUS — 선택 확장</div><h1 class="page-title">BONUS 2. 통계 기능 추가</h1><p class="page-desc">완료율, 카테고리별 업무량, 주간 업무량 등을 시각화합니다.</p><div class="prompt-card"><div class="prompt-head"><span class="prompt-label">통계 추가 프롬프트</span><button class="copy-btn" onclick="copyText(this,'bonus2-prompt')">복사</button></div><div class="prompt-body" id="bonus2-prompt">기존 기능은 유지하고, 완료된 업무 데이터를 바탕으로 간단한 통계 영역을 추가해주세요. 완료율, 카테고리별 업무량, 주간 업무량을 카드 또는 간단한 차트 형태로 보여주세요.</div></div><div class="page-nav"><button class="nav-btn" onclick="goPageById('bonus1')">← 이전</button><button class="nav-btn primary" onclick="goPageById('bonus3')">다음 →</button></div></section>
+<section class="page" id="page-bonus3"><div class="week-badge badge-bonus">BONUS — 선택 확장</div><h1 class="page-title">BONUS 3. AI 문장 고도화</h1><p class="page-desc">Ollama 또는 AI 모델을 활용해 업무일지 문장을 더 자연스럽게 다듬는 선택 실습입니다.</p><div class="hero-card"><div class="card-title">기본 MVP는 AI 없이도 완성됩니다.</div><p style="color:var(--text2)">이 단계는 업무일지 문장을 더 자연스럽게 만들고 싶은 분들을 위한 선택 확장입니다.</p></div><div class="page-nav"><button class="nav-btn" onclick="goPageById('bonus2')">← 이전</button><button class="nav-btn primary" onclick="goPageById('bonus4')">다음 →</button></div></section>
+<section class="page" id="page-bonus4"><div class="week-badge badge-bonus">BONUS — 선택 확장</div><h1 class="page-title">BONUS 4. 디자인 커스텀</h1><p class="page-desc">브랜드 컬러, 카드 스타일, 레이아웃을 내 취향에 맞게 정리합니다.</p><div class="prompt-card"><div class="prompt-head"><span class="prompt-label">디자인 커스텀 프롬프트</span><button class="copy-btn" onclick="copyText(this,'bonus4-prompt')">복사</button></div><div class="prompt-body" id="bonus4-prompt">기존 기능은 유지하고 UI만 정돈해주세요. 다크톤 기반으로 카드 간격, 버튼 스타일, 입력창, 완료 상태 표시가 더 보기 좋게 보이도록 디자인을 개선해주세요.</div></div><div class="page-nav"><button class="nav-btn" onclick="goPageById('bonus3')">← 이전</button><button class="nav-btn primary" onclick="goPageById('faq')">FAQ 보기 →</button></div></section>
+<section class="page" id="page-faq">
+<div class="week-badge badge-neutral">참고 자료</div><h1 class="page-title">자주 막히는 FAQ</h1><p class="page-desc">슬랙 질문 전에 먼저 검색해보세요. 기수가 쌓일수록 계속 추가될 예정이라 검색 기능이 필요합니다.</p>
+<div class="sec faq-search-section"><div class="sec-title">FAQ 검색</div>
+<div class="faq-search-card">
+  <div class="faq-search-guide">막히는 키워드를 입력해 먼저 찾아보세요.</div>
+  <div class="faq-search-wrap">
+    <span class="faq-search-icon">🔎</span>
+    <input class="search-box" id="faq-search" type="search" placeholder="검색어를 입력하세요. 예: 저장, 프롬프트, 배포, 화면, Ollama" oninput="filterFAQ()">
+    <button type="button" class="faq-clear-btn" onclick="clearFAQSearch()">초기화</button>
+  </div>
+  <div class="search-meta" id="faq-count">총 8개의 FAQ가 있습니다.</div>
+</div></div>
+<div class="step-list" id="faq-list">
+<div class="step-card faq-item" data-keywords="저장 localStorage 새로고침 데이터 사라짐"><div class="step-num">Q1</div><div><div class="step-card-title">새로고침하면 입력한 데이터가 사라져요</div><div class="step-card-desc">localStorage 저장 로직이 누락된 경우입니다. “입력한 데이터가 새로고침 후에도 유지되도록 저장 기능을 추가해줘”라고 요청해보세요.</div></div></div>
+<div class="step-card faq-item" data-keywords="프롬프트 기능 안 나옴 요청 한 번에 너무 많음"><div class="step-num">Q2</div><div><div class="step-card-title">프롬프트를 넣었는데 원하는 기능이 안 나와요</div><div class="step-card-desc">한 번에 너무 많은 기능을 요청했을 가능성이 큽니다. 기능을 하나씩 나눠서 요청하세요. 예: “업무 수정 기능만 먼저 추가해줘.”</div></div></div>
+<div class="step-card faq-item" data-keywords="UI 화면 배치 디자인 다름 화면 구조 step5"><div class="step-num">Q3</div><div><div class="step-card-title">UI가 생각한 것과 달라요</div><div class="step-card-desc">STEP 5에서 정리한 화면 구조를 다시 붙여넣고, 원하는 배치와 영역명을 구체적으로 요청하세요.</div></div></div>
+<div class="step-card faq-item" data-keywords="Antigravity 설치 접속 다운로드 로그인 계정"><div class="step-num">Q4</div><div><div class="step-card-title">Antigravity 설치나 접속에서 막혀요</div><div class="step-card-desc">시작 전의 “Antigravity 설치 및 접속” 페이지에 있는 공식 다운로드 링크로 접속했는지 먼저 확인하세요. 설치 화면 캡처와 오류 문구를 함께 슬랙에 올리면 빠르게 도와드릴 수 있습니다.</div></div></div>
+<div class="step-card faq-item" data-keywords="Ollama 설치 필수 선택 AI 문장 고도화"><div class="step-num">Q5</div><div><div class="step-card-title">Ollama는 꼭 설치해야 하나요?</div><div class="step-card-desc">아니요. 기본 업무 대시보드 MVP는 Ollama 없이 완성할 수 있습니다. Ollama는 BONUS 3의 AI 문장 고도화까지 하고 싶은 분만 설치하면 됩니다.</div></div></div>
+<div class="step-card faq-item" data-keywords="GPTs PRD 변환 1주차 MD 업로드 구현용 PRD"><div class="step-num">Q6</div><div><div class="step-card-title">1주차 MD를 바로 Antigravity에 넣어도 되나요?</div><div class="step-card-desc">가능하지만, 더 안정적으로 하려면 STEP 6의 GPTs 변환봇에 먼저 업로드해 구현용 PRD Lite로 정리한 뒤 Antigravity에 전달하는 것을 권장합니다.</div></div></div>
+<div class="step-card faq-item" data-keywords="배포 vercel github 링크 제출 화면 캡처"><div class="step-num">Q7</div><div><div class="step-card-title">배포까지 꼭 해야 하나요?</div><div class="step-card-desc">라이트 코칭의 필수 기준은 작동하는 대시보드 MVP입니다. 배포가 어렵다면 화면 캡처나 로컬 실행 화면으로 제출해도 됩니다. 배포는 가능하면 도전하는 선택 단계로 보면 됩니다.</div></div></div>
+<div class="step-card faq-item" data-keywords="오류 에러 메시지 슬랙 질문 캡처 콘솔"><div class="step-num">Q8</div><div><div class="step-card-title">오류가 났는데 어디서부터 질문해야 할지 모르겠어요</div><div class="step-card-desc">슬랙 질문 양식에서 “하고 싶었던 것 / 시도한 것 / 실제 결과 / 오류 문구”를 채워주세요. 가능하면 화면 캡처와 Antigravity가 수정한 파일명을 함께 올려주세요.</div></div></div>
+</div>
+<div class="faq-empty" id="faq-empty">검색 결과가 없습니다. 다른 단어로 검색하거나 슬랙 질문 양식으로 질문해주세요.</div>
+<div class="page-nav"><button class="nav-btn" onclick="goPageById('bonus4')">← 이전</button><div style="color:var(--muted);font-size:13px">FAQ는 계속 추가해도 검색이 작동하도록 구성되어 있습니다.</div></div>
+</section>
+</main>
+<aside class="mission-panel" id="side-panel"></aside>
+</div>
+</div>
+<script>
+
+    // 안전 저장소: 브라우저/로컬 파일/미리보기 환경에서 localStorage 접근이 막혀도 기능이 멈추지 않도록 메모리 저장소로 대체합니다.
+    const __memoryStore = {};
+    function safeGet(key){
+      try { return window.localStorage ? window.localStorage.getItem(key) : (__memoryStore[key] ?? null); }
+      catch(e) { return Object.prototype.hasOwnProperty.call(__memoryStore, key) ? __memoryStore[key] : null; }
+    }
+    function safeSet(key,value){
+      try { if(window.localStorage){ window.localStorage.setItem(key,value); return; } }
+      catch(e) {}
+      __memoryStore[key]=String(value);
+    }
+
+    function escapeHtml(value){
+      return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    }
+
+    const PASSWORD='1234';
+    const NAV=[
+      ['시작 전',[['orientation','오리엔테이션','▦'],['prep','사전 준비 체크리스트','✓'],['antigravity','Antigravity 설치 및 접속','A'],['ollama','Ollama 설치 — 선택 준비','O'],['slack-guide','슬랙 질문 양식','?']]],
+      ['1주차 — UX 설계',[['step1','STEP 1. 업무 기록 돌아보기','1'],['step2','STEP 2. 문제정의','2'],['step3','STEP 3. 사용자 흐름 설계','3'],['step4','STEP 4. 기능 우선순위','4'],['step5','STEP 5. 화면 구조 설계','5'],['mission1','1주차 미션 제출','↓']]],
+      ['2주차 — 대시보드 MVP 만들기',[['step6','STEP 6. 1주차 MD를 구현용 PRD로 변환하기','6'],['step7','STEP 7. 업무 입력/완료 체크 기능 만들기','7'],['step8','STEP 8. 업무일지 생성 기능 만들기','8'],['step9','STEP 9. 저장 기능과 기본 UX 점검','9'],['step10','STEP 10. 오류 수정 및 사용성 개선','10'],['step11','STEP 11. 최종 제출 및 회고','11']]],
+      ['BONUS — 선택 확장',[['bonus1','BONUS 1. 캘린더 기능 추가','B'],['bonus2','BONUS 2. 통계 기능 추가','B'],['bonus3','BONUS 3. AI 문장 고도화','B'],['bonus4','BONUS 4. 디자인 커스텀','B']]],
+      ['참고 자료',[['faq','자주 막히는 FAQ','?']]]
+    ];
+    const week1Fields=[
+      {step:'step1',fid:'m1-record',label:'1-1. 현재 기록 방식',placeholder:'예: 노션에 적지만 급한 업무는 메신저와 머릿속에 흩어져 있다.'},
+      {step:'step1',fid:'m1-moments',label:'1-2. 자주 놓치는 순간',placeholder:'예: 클라이언트 답변 후 기록하지 않아 밤에 기억이 나지 않는다.'},
+      {step:'step1',fid:'m1-pain',label:'1-3. 반복되는 불편',placeholder:'예: 하루가 끝난 뒤 업무를 다시 떠올리는 데 시간이 오래 걸린다.'},
+      {step:'step2',fid:'m1-pd',label:'2. 문제정의 문장',placeholder:'예: 프리랜서는 하루가 끝날 때 수행한 업무 내용을 자주 잊어버리는 문제를 겪고 있으며, 업무 기록을 오로지 기억에 의존하기 때문이다.'},
+      {step:'step3',fid:'m1-flow',label:'3. 사용자 흐름',placeholder:'1. 앱을 연다\n2. 오늘 할 업무를 입력한다\n3. 완료 체크한다\n4. 업무일지를 생성한다'},
+      {step:'step4',fid:'m1-must',label:'4-1. Must 기능',placeholder:'업무 입력 / 수정 / 삭제 / 완료 체크 / 완료 업무 목록 / 업무일지 생성 / 기본 저장'},
+      {step:'step4',fid:'m1-later',label:'4-2. Later 기능',placeholder:'캘린더 / 통계 / AI 문장 고도화 / 디자인 커스텀'},
+      {step:'step4',fid:'m1-out',label:'4-3. Out 기능',placeholder:'로그인 / 팀 공유 / 알림 / 모바일 앱 / 결제'},
+      {step:'step5',fid:'m1-screen',label:'5. 화면 구조',placeholder:'대시보드 화면 구조가 STEP 5에서 자동 생성됩니다.'},
+      {step:'mission1',fid:'m1-check',label:'제출 전 메모',placeholder:'빠진 내용이나 보완할 점을 적어두세요.'}
+    ];
+    const week1Order=['step1','step2','step3','step4','step5','mission1'];
+    const panelData={
+      orientation:{type:'prep'},prep:{type:'prep'},antigravity:{type:'prep'},ollama:{type:'prep'},'slack-guide':{type:'slack'},
+      step1:{type:'workbook',title:'1주차 워크북',desc:'STEP이 넘어갈수록 작성 영역이 하나씩 누적됩니다.'},
+      step2:{type:'workbook',title:'1주차 워크북',desc:'이전 단계 내용은 유지되고, 현재 단계 항목이 추가됩니다.'},
+      step3:{type:'workbook',title:'1주차 워크북',desc:'작성한 내용은 마지막에 MD 파일로 다운로드됩니다.'},
+      step4:{type:'workbook',title:'1주차 워크북',desc:'Must / Later / Out을 나누면 구현 범위가 안정됩니다.'},
+      step5:{type:'workbook',title:'1주차 워크북',desc:'화면 구조까지 채우면 1주차 기획 MD가 완성됩니다.'},
+      mission1:{type:'workbook',title:'1주차 미션 제출',desc:'작성 내용을 확인하고 MD로 다운로드하세요.',preview:true},
+      step6:{type:'check',title:'구현용 PRD 준비 체크',items:['1주차 미션 MD 파일을 다운로드했다','GPTs에 MD 파일을 업로드했다','구현용 PRD Lite가 생성되었다','Must 기능이 너무 많지 않은지 확인했다','캘린더/통계/AI 고도화가 Later로 빠져 있는지 확인했다','Antigravity에 붙여넣을 최종 요청문을 준비했다']},
+      step7:{type:'check',title:'업무 관리 기능 체크',items:['Antigravity에서 새 프로젝트를 열었다','구현용 PRD Lite를 붙여넣었다','업무 입력 기능이 생성되었다','업무 수정/삭제가 가능하다','완료 체크가 가능하다','완료된 업무가 별도로 보인다']},
+      step8:{type:'check',title:'업무일지 생성 체크',items:['완료된 업무를 기준으로 업무일지가 생성된다','완료 업무가 없을 때 안내 문구가 나온다','업무일지를 복사할 수 있다','AI 없이 템플릿 방식으로 작동한다']},
+      step9:{type:'check',title:'저장/UX 체크',items:['새로고침 후에도 업무가 남아 있다','완료 상태가 유지된다','입력 위치가 명확하다','오늘 업무와 완료 업무가 구분된다','업무일지 생성 위치가 자연스럽다']},
+      step10:{type:'check',title:'오류 수정 체크',items:['오류를 하나씩 분리해서 확인했다','수정 요청 전 화면 캡처를 준비했다','기존 기능을 유지하라고 요청했다','수정 후 동일 오류가 반복되는지 확인했다']},
+      step11:{type:'check',title:'최종 제출 체크',items:['작동 화면 캡처를 준비했다','구현용 PRD Lite를 저장했다','주요 프롬프트를 정리했다','기본 UX 점검 결과를 작성했다','짧은 회고를 작성했다','선택 확장 여부를 체크했다']},
+      bonus1:{type:'check',title:'BONUS 체크',items:['기본 MVP가 먼저 완성되었다','캘린더가 선택 기능으로 분리되어 있다','기존 업무 입력/완료 기능이 깨지지 않는다']},
+      bonus2:{type:'check',title:'BONUS 체크',items:['기본 MVP가 먼저 완성되었다','통계가 완료 업무 데이터를 기준으로 표시된다','차트가 없어도 카드형 통계로 대체 가능하다']},
+      bonus3:{type:'check',title:'BONUS 체크',items:['기본 업무일지 생성이 먼저 작동한다','Ollama 또는 AI 연결은 선택으로 진행한다','AI 연결 실패 시 기본 템플릿 방식이 유지된다']},
+      bonus4:{type:'check',title:'BONUS 체크',items:['기능 변경 없이 UI만 개선한다','입력/완료/업무일지 영역이 더 명확해졌다','색상과 간격이 일관적이다']},
+      faq:{type:'check',title:'질문 전 확인',items:['오류 메시지를 복사했다','화면 캡처를 준비했다','무엇을 시도했는지 정리했다','슬랙 질문 양식을 확인했다']}
+    };
+    function getWeek1VisibleFields(id){
+      const idx=week1Order.indexOf(id);
+      if(idx<0)return [];
+      const allowed=new Set(week1Order.slice(0,idx+1));
+      return week1Fields.filter(f=>allowed.has(f.step));
+    }
+    function getFieldValue(id){return safeGet('lc_v9_field_'+id)||document.querySelector(`[data-field="${id}"]`)?.value||document.getElementById(id)?.value||''}
+    function buildMissionMarkdown(){
+      const get=id=>getFieldValue(id)||'(미작성)';
+      const date=new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'2-digit',day:'2-digit'});
+      return `# 1주차 미션 제출\n제출일: ${date}\n\n---\n\n## 1. 업무 기록 돌아보기\n\n### 현재 기록 방식\n${get('m1-record')}\n\n### 자주 놓치는 순간\n${get('m1-moments')}\n\n### 반복되는 불편\n${get('m1-pain')}\n\n---\n\n## 2. 문제정의 문장\n\n${get('m1-pd')}\n\n---\n\n## 3. 사용자 흐름\n\n${get('m1-flow')}\n\n---\n\n## 4. 기능 우선순위표\n\n### Must (첫 버전에 포함)\n${get('m1-must')}\n\n### Later (다음 버전에)\n${get('m1-later')}\n\n### Out (이번엔 제외)\n${get('m1-out')}\n\n---\n\n## 5. 화면 구조 정리\n\n${get('m1-screen')}\n\n---\n\n## 6. 제출 전 메모\n\n${get('m1-check')}\n\n---\n\n## 다음 단계\n\n이 파일은 2주차 STEP 6에서 GPTs에 업로드하여 Antigravity에 전달할 구현용 PRD Lite로 변환합니다.\n`;
+    }
+    function buildNav(){const sb=document.getElementById('sidebar');sb.innerHTML=NAV.map((sec,si)=>`<div class="sb-label">${sec[0]}</div>${sec[1].map(([id,label,icon])=>`<div class="sb-item ${id==='orientation'?'active':''}" data-page="${id}" onclick="goPage(this)"><span class="sb-icon">${icon}</span><span>${label}</span></div>`).join('')}${si<NAV.length-1?'<div class="sb-divider"></div>':''}`).join('')}
+    function unlock(){const input=document.getElementById('pw-input');const val=input?input.value.trim():'';const err=document.getElementById('pw-error');if(val===PASSWORD){document.getElementById('lock-screen').style.display='none';document.getElementById('app').style.display='flex';try{initApp()}catch(e){console.error('initApp error:',e);try{buildNav();renderPanel('orientation')}catch(e2){console.error('fallback error:',e2)}}}else{if(err){err.style.display='block';setTimeout(()=>err.style.display='none',2200)}}}
+    function initApp(){buildNav();loadSavedFields();initFlowBuilder();initPriorityBuilder();initWireframe();loadProgress();renderPanel('orientation');showResumeBanner()}
+    function goPage(el){document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));el.classList.add('active');const id=el.dataset.page;document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const page=document.getElementById('page-'+id);if(page){page.classList.add('active');document.querySelector('.main').scrollTop=0;safeSet('lc_v9_last_page',id);renderPanel(id);if(id==='step3')setTimeout(()=>renderFlowBuilder(),0);if(id==='step4')setTimeout(()=>renderPriorityBuilder(),0);if(id==='step5')setTimeout(()=>renderWireframe(),0);loadProgress()}}
+    function goPageById(id){const el=document.querySelector(`.sb-item[data-page="${id}"]`);if(el)goPage(el)}
+    function copyText(btn,id){const el=document.getElementById(id);if(!el)return;navigator.clipboard.writeText(el.innerText).then(()=>{const o=btn.textContent;btn.textContent='복사됨 ✓';setTimeout(()=>btn.textContent=o,1400)})}
+    function renderPanel(id){
+      const data=panelData[id]||{type:'prep'};
+      const p=document.getElementById('side-panel');
+      if(data.type==='prep'){
+        p.innerHTML=`<div class="panel-kicker">시작 전 준비</div><div class="panel-title">전체 준비 현황</div><div class="panel-desc">실습을 원활하게 진행하기 위한 필수 점검 리스트입니다.</div><div class="panel-card" data-check-group="prep">${['Chrome 브라우저 최적화 확인','Antigravity 계정 연동/접속 완료','작업용 폴더 생성','슬랙 접속 및 프로필 설정','Ollama 설치 여부 결정'].map(t=>`<label class="panel-check"><input type="checkbox" onchange="updateProgress(this)"><span>${t}</span></label>`).join('')}<div class="progress-row"><span class="progress-text">0% 완료</span><div class="progress-bar"><div class="progress-fill"></div></div></div></div>`;
+      } else if(data.type==='slack'){
+        p.innerHTML=`<div class="panel-kicker">슬랙 전용 양식</div><div class="panel-title">실시간 생성기</div><div class="panel-desc">왼쪽 폼을 작성하면 여기에 결과가 출력됩니다.</div><div class="panel-card"><div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line2);padding-bottom:10px;margin-bottom:12px"><span style="font-size:12px;font-weight:900;color:var(--muted)">미리보기</span><button class="copy-btn" id="slack-copy-panel" onclick="copySlackGenerated()" disabled>복사하기</button></div><div class="slack-preview-box empty" id="slack-preview">(모든 항목을 입력하면 복사 버튼이 활성화됩니다.)</div></div>`;
+        setTimeout(updateSlackPreview,0);
+      } else if(data.type==='workbook'){
+        const visible=getWeek1VisibleFields(id);
+        const total=week1Fields.length;
+        const filled=week1Fields.filter(f=>(safeGet('lc_v9_field_'+f.fid)||'').trim()).length;
+        const currentSteps=new Set(visible.map(f=>f.step));
+        p.innerHTML=`<div class="panel-kicker">1주차 작성형 워크북</div><div class="panel-title">${data.title}</div><div class="panel-desc">${data.desc}</div><div class="workbook-progress"><span>누적 작성 항목 <b>${visible.length}</b> / ${total}</span><span>${filled}개 작성됨</span></div><div class="panel-card panel-form">${visible.map(f=>{const done=(safeGet('lc_v9_field_'+f.fid)||'').trim().length>0;const active=f.step===id||id==='mission1';return `<section class="panel-section ${active?'active':''} ${done?'done':''}"><div class="panel-step-head"><div class="panel-step-title">${f.label}</div><div class="panel-step-chip">${done?'작성됨':(active?'현재 단계':'누적')}</div></div><textarea class="input-textarea" data-field="${f.fid}" placeholder="${f.placeholder}" oninput="saveField(this)"></textarea></section>`}).join('')}</div><div class="panel-mini-actions"><button class="panel-link primary" onclick="downloadMission1()">1주차 MD 다운로드</button>${id==='mission1'?'<button class="panel-link secondary" onclick="updateMissionPreview()">미리보기 새로고침</button>':''}</div>${id==='mission1'?'<div class="mission-preview" id="mission-preview"></div>':'<div class="small-note">작성 내용은 자동 저장되고, 1주차 미션 MD에 반영됩니다.</div>'}`;
+        loadSavedFields();
+        if(id==='mission1') updateMissionPreview();
+      } else {
+        p.innerHTML=`<div class="panel-kicker">진행 체크</div><div class="panel-title">${data.title}</div><div class="panel-desc">스스로 완료 여부를 체크하면서 진행하세요.</div><div class="panel-card" data-check-group="${id}">${data.items.map(t=>`<label class="panel-check"><input type="checkbox" onchange="updateProgress(this)"><span>${t}</span></label>`).join('')}<div class="progress-row"><span class="progress-text">0% 완료</span><div class="progress-bar"><div class="progress-fill"></div></div></div></div>`;
+      }
+      restoreChecks(id);updateAllProgress();
+    }
+    function updateMissionPreview(){const prev=document.getElementById('mission-preview');if(prev)prev.textContent=buildMissionMarkdown()}
+    function updateProgress(input){const card=input.closest('[data-check-group]');const key='lc_v9_check_'+card.dataset.checkGroup;const states=[...card.querySelectorAll('input')].map(i=>i.checked);safeSet(key,JSON.stringify(states));updateAllProgress()}
+    function restoreChecks(id){document.querySelectorAll('[data-check-group]').forEach(card=>{const key='lc_v9_check_'+card.dataset.checkGroup;const states=JSON.parse(safeGet(key)||'[]');card.querySelectorAll('input').forEach((i,idx)=>{i.checked=!!states[idx]})})}
+    function updateAllProgress(){document.querySelectorAll('[data-check-group]').forEach(card=>{const inputs=[...card.querySelectorAll('input')];const done=inputs.filter(i=>i.checked).length;const pct=inputs.length?Math.round(done/inputs.length*100):0;const txt=card.querySelector('.progress-text');const fill=card.querySelector('.progress-fill');if(txt)txt.textContent=pct+'% 완료';if(fill)fill.style.width=pct+'%'})}
+    function syncFieldElements(fid,val,source){
+      document.querySelectorAll(`[data-field="${fid}"]`).forEach(el=>{if(el!==source)el.value=val});
+      const byId=document.getElementById(fid);if(byId&&byId!==source)byId.value=val;
+    }
+    function saveField(el){const fid=el.dataset.field||el.id;if(!fid)return;safeSet('lc_v9_field_'+fid,el.value);syncFieldElements(fid,el.value,el);updateMissionPreview();}
+    function loadSavedFields(){document.querySelectorAll('[data-field]').forEach(el=>{const fid=el.dataset.field;const v=safeGet('lc_v9_field_'+fid);if(v!==null)el.value=v});document.querySelectorAll('textarea[id^="m1-"]').forEach(el=>{const v=safeGet('lc_v9_field_'+el.id);if(v!==null)el.value=v});updatePD(false)}
+    function savePDPart(el){const fid=el.dataset.field;if(!fid)return;safeSet('lc_v9_field_'+fid,el.value);syncFieldElements(fid,el.value,el);updatePD(true)}
+    function updatePD(shouldSave=true){
+      const getPart=id=>document.querySelector(`[data-field="${id}"]`)?.value.trim()||safeGet('lc_v9_field_'+id)||'';
+      const u=getPart('pd-user'), st=getPart('pd-sit'), pr=getPart('pd-prob'), ca=getPart('pd-cause');
+      const ready=u&&st&&pr&&ca;
+      const text=ready?`${u}는 ${st} ${pr}를 겪고 있으며, 그 이유는 ${ca}입니다.`:'';
+      const result=document.getElementById('pd-result');
+      if(result){result.innerHTML=ready?`<span class="ct-user">${escapeHtml(u)}</span>는 <span class="ct-sit">${escapeHtml(st)}</span> <span class="ct-prob">${escapeHtml(pr)}</span>를 겪고 있으며, 그 이유는 <span class="ct-cause">${escapeHtml(ca)}</span>입니다.`:'<span class="muted">각 항목을 입력하면 문제정의 문장이 여기에 생성됩니다.</span>'}
+      if(ready&&shouldSave){safeSet('lc_v9_field_m1-pd',text);syncFieldElements('m1-pd',text,null);updateMissionPreview()}
+    }
+    function toggleDone(id){let done=JSON.parse(safeGet('lc_v9_done')||'[]');const idx=done.indexOf(id);if(idx>-1)done.splice(idx,1);else done.push(id);safeSet('lc_v9_done',JSON.stringify(done));loadProgress()}
+    function loadProgress(){const done=JSON.parse(safeGet('lc_v9_done')||'[]');document.querySelectorAll('.done-wrap').forEach(x=>x.remove());document.querySelectorAll('.page').forEach(page=>{const id=page.id.replace('page-','');if(!id.startsWith('step')&&!id.startsWith('bonus')&&id!=='mission1')return;const nav=page.querySelector('.page-nav');if(!nav)return;const btn=document.createElement('button');btn.className='done-btn '+(done.includes(id)?'checked':'');btn.textContent=done.includes(id)?'✓ 완료됨':'✓ 이 단계 완료';btn.onclick=()=>toggleDone(id);const wrap=document.createElement('div');wrap.className='done-wrap';wrap.style.cssText='display:flex;justify-content:center;margin-top:28px;';wrap.appendChild(btn);nav.parentNode.insertBefore(wrap,nav)})}
+    function showResumeBanner(){const last=safeGet('lc_v9_last_page');if(!last||last==='orientation')return;const label=[...document.querySelectorAll('.sb-item')].find(x=>x.dataset.page===last)?.innerText||last;const rb=document.getElementById('resume-banner');rb.classList.add('show');rb.innerHTML=`<div class="notice-left"><span class="notice-icon">i</span><span>마지막으로 <b>${label}</b>까지 보셨어요.</span></div><button class="pill-btn" onclick="goPageById('${last}');document.getElementById('resume-banner').classList.remove('show')">이어서 보기 →</button>`}
+    function downloadMission1(){
+      loadSavedFields();
+      const date=new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'2-digit',day:'2-digit'});
+      const md=buildMissionMarkdown();
+      const blob=new Blob([md],{type:'text/markdown;charset=utf-8'});
+      const a=document.createElement('a');
+      a.href=URL.createObjectURL(blob);
+      a.download=`1주차_기획_MD_${date.replace(/\. /g,'-').replace(/\.$/,'')}.md`;
+      a.click();
+    }
+
+
+
+    
+    // STEP 3 — 사용자 흐름 동적 빌더
+    const FLOW_STORAGE_KEY='lc_flow_items_v9';
+    const FLOW_DEFAULT_ITEMS=[
+      {action:'앱을 연다',desc:'오늘 업무를 입력하고 확인할 수 있는 대시보드 첫 화면을 본다.'},
+      {action:'오늘 할 업무를 입력한다',desc:'업무명과 카테고리를 입력하고 업무를 추가한다.'},
+      {action:'업무를 완료 체크한다',desc:'처리한 업무를 완료 상태로 바꾸고 완료 목록에서 확인한다.'},
+      {action:'업무일지를 생성한다',desc:'완료된 업무를 바탕으로 하루 업무일지 텍스트를 만든다.'}
+    ];
+    let flowItems=[];
+    function initFlowBuilder(){loadFlowItems();renderFlowBuilder();syncFlowToField()}
+    function loadFlowItems(){try{const saved=JSON.parse(safeGet(FLOW_STORAGE_KEY)||'null');const usable=Array.isArray(saved)&&saved.length&&saved.some(x=>(x.action||x.desc||'').trim());flowItems=usable?saved:JSON.parse(JSON.stringify(FLOW_DEFAULT_ITEMS))}catch(e){flowItems=JSON.parse(JSON.stringify(FLOW_DEFAULT_ITEMS))}}
+    function saveFlowItems(){safeSet(FLOW_STORAGE_KEY,JSON.stringify(flowItems))}
+    function renderFlowBuilder(){const wrap=document.getElementById('flow-builder');if(!wrap)return;if(!flowItems.length)loadFlowItems();wrap.innerHTML=flowItems.map((item,idx)=>`<div class="flow-row"><div class="flow-number">${idx+1}</div><div class="flow-inputs"><input class="flow-action-input" value="${escapeHtml(item.action||'')}" placeholder="사용자 행동을 적어주세요" oninput="updateFlowItem(${idx},'action',this.value)"><textarea class="flow-desc-input" placeholder="이 행동에서 화면이 무엇을 보여줘야 하는지 적어주세요" oninput="updateFlowItem(${idx},'desc',this.value)">${escapeHtml(item.desc||'')}</textarea></div><button type="button" class="row-delete" data-action="delete-flow" data-index="${idx}" onclick="deleteFlowItem(${idx})" title="삭제">×</button></div>`).join('')}
+    function updateFlowItem(idx,key,value){if(!flowItems[idx])return;flowItems[idx][key]=value;saveFlowItems();syncFlowToField()}
+    function addFlowItem(){if(!flowItems.length)loadFlowItems();flowItems.push({action:'',desc:''});saveFlowItems();renderFlowBuilder();syncFlowToField()}
+    function deleteFlowItem(idx){flowItems.splice(idx,1);if(!flowItems.length)flowItems.push({action:'',desc:''});saveFlowItems();renderFlowBuilder();syncFlowToField()}
+    function syncFlowToField(){if(!flowItems.length)loadFlowItems();const lines=flowItems.map((item,idx)=>{const a=(item.action||'').trim()||'사용자 행동';const d=(item.desc||'').trim();return d?`${idx+1}. ${a}\n   - ${d}`:`${idx+1}. ${a}`});const text=lines.join('\n');safeSet('lc_v9_field_m1-flow',text);syncFieldElements('m1-flow',text,null);updateMissionPreview()}
+
+    // STEP 4 — 기능 우선순위 동적 빌더
+    const PRIORITY_STORAGE_KEY='lc_priority_items_v9';
+    const PRIORITY_DEFAULTS={
+      must:[{title:'업무 입력',desc:'오늘 할 업무명과 카테고리를 입력한다.'},{title:'완료 체크',desc:'끝낸 업무를 완료 상태로 변경한다.'},{title:'업무일지 생성',desc:'완료된 업무를 바탕으로 업무일지 텍스트를 만든다.'},{title:'기본 저장',desc:'새로고침 후에도 업무 기록이 유지된다.'}],
+      later:[{title:'캘린더 뷰',desc:'날짜별 업무 기록을 확인한다.'},{title:'통계 뷰',desc:'완료율과 카테고리별 업무량을 확인한다.'},{title:'AI 문장 고도화',desc:'Ollama 또는 AI 모델로 업무일지 문장을 다듬는다.'}],
+      out:[{title:'로그인',desc:'개인용 실습 MVP에서는 제외한다.'},{title:'팀 공유',desc:'협업 기능은 이번 버전에서 제외한다.'},{title:'결제/모바일 앱',desc:'상용화 기능은 이번 과정에서 제외한다.'}]
+    };
+    let priorityItems={must:[],later:[],out:[]};
+    function initPriorityBuilder(){loadPriorityItems();renderPriorityBuilder();syncPriorityToFields()}
+    function loadPriorityItems(){try{const saved=JSON.parse(safeGet(PRIORITY_STORAGE_KEY)||'null');const usable=saved&&saved.must&&['must','later','out'].some(t=>Array.isArray(saved[t])&&saved[t].some(x=>(x.title||x.desc||'').trim()));priorityItems=usable?saved:JSON.parse(JSON.stringify(PRIORITY_DEFAULTS))}catch(e){priorityItems=JSON.parse(JSON.stringify(PRIORITY_DEFAULTS))}}
+    function savePriorityItems(){safeSet(PRIORITY_STORAGE_KEY,JSON.stringify(priorityItems))}
+    function renderPriorityBuilder(){['must','later','out'].forEach(type=>{const wrap=document.getElementById('priority-'+type);if(!wrap)return;const arr=priorityItems[type]||[];wrap.innerHTML=arr.map((item,idx)=>`<div class="priority-item"><div class="priority-item-fields"><input class="feature-title-input" value="${escapeHtml(item.title||'')}" placeholder="기능명" oninput="updatePriorityItem('${type}',${idx},'title',this.value)"><textarea class="feature-desc-input" placeholder="이 기능이 하는 일을 한 줄로 적어주세요" oninput="updatePriorityItem('${type}',${idx},'desc',this.value)">${escapeHtml(item.desc||'')}</textarea></div><button type="button" class="row-delete" data-action="delete-priority" data-priority-type="${type}" data-index="${idx}" onclick="deletePriorityItem('${type}',${idx})" title="삭제">×</button></div>`).join('')})}
+    function updatePriorityItem(type,idx,key,value){if(!priorityItems[type]||!priorityItems[type][idx])return;priorityItems[type][idx][key]=value;savePriorityItems();syncPriorityToFields()}
+    function addPriorityItem(type){if(!priorityItems[type])loadPriorityItems();if(!priorityItems[type])priorityItems[type]=[];priorityItems[type].push({title:'',desc:''});savePriorityItems();renderPriorityBuilder();syncPriorityToFields()}
+    function deletePriorityItem(type,idx){priorityItems[type].splice(idx,1);if(!priorityItems[type].length)priorityItems[type].push({title:'',desc:''});savePriorityItems();renderPriorityBuilder();syncPriorityToFields()}
+    function priorityText(type){const arr=priorityItems[type]||[];return arr.map(item=>{const t=(item.title||'').trim()||'기능명';const d=(item.desc||'').trim();return d?`- ${t}: ${d}`:`- ${t}`}).join('\n')}
+    function syncPriorityToFields(){if(!priorityItems.must)loadPriorityItems();[['must','m1-must'],['later','m1-later'],['out','m1-out']].forEach(([type,fid])=>{const text=priorityText(type);safeSet('lc_v9_field_'+fid,text);syncFieldElements(fid,text,null)});updateMissionPreview()}
+
+// STEP 5 — 자유형 PC 대시보드 와이어프레임 빌더
+    const WF_STORAGE_KEY='lc_wf_grid_blocks_v9';
+    const WF_COLORS={blue:{bg:'rgba(74,92,255,.15)',border:'rgba(99,114,255,.72)',text:'#dce2ff'},green:{bg:'rgba(34,197,94,.12)',border:'rgba(34,197,94,.58)',text:'#dcfce7'},purple:{bg:'rgba(167,139,250,.13)',border:'rgba(167,139,250,.62)',text:'#ede9fe'},yellow:{bg:'rgba(255,195,0,.13)',border:'rgba(255,195,0,.62)',text:'#fef3c7'},red:{bg:'rgba(248,113,113,.12)',border:'rgba(248,113,113,.55)',text:'#fee2e2'},default:{bg:'rgba(255,255,255,.06)',border:'rgba(255,255,255,.16)',text:'#e8edf7'}};
+    const COLOR_CYCLE=['blue','green','purple','yellow','red'];
+    const WF_DEFAULT_BLOCKS=[
+      {id:1,x:20,y:36,w:120,h:390,label:'좌측 메뉴 영역',desc:'오늘 업무 / 완료 업무 / 업무일지 화면으로 이동하는 앱 내부 메뉴',color:'blue'},
+      {id:2,x:160,y:36,w:260,h:104,label:'업무 입력 영역',desc:'업무명 입력, 카테고리 선택, 추가 버튼을 배치한다.',color:'green'},
+      {id:3,x:440,y:36,w:240,h:150,label:'완료 현황 요약',desc:'오늘 완료 수, 진행 중 업무 수 등 핵심 상태를 카드로 보여준다.',color:'purple'},
+      {id:4,x:160,y:168,w:260,h:258,label:'오늘 업무 목록',desc:'진행 중인 업무 리스트, 완료 체크, 수정/삭제 버튼을 제공한다.',color:'yellow'},
+      {id:5,x:440,y:214,w:240,h:212,label:'업무일지 생성 영역',desc:'완료된 업무를 바탕으로 업무일지 텍스트를 생성하고 복사할 수 있다.',color:'red'}
+    ];
+    let wfBlocks=[];let wfNextId=6;let wfDrag=null;let wfResize=null;
+    const snap=n=>Math.round(n/20)*20;
+    function cloneWfDefaults(){return JSON.parse(JSON.stringify(WF_DEFAULT_BLOCKS))}
+    function initWireframe(){loadWfBlocks();renderWireframe()}
+    function loadWfBlocks(){try{const saved=JSON.parse(safeGet(WF_STORAGE_KEY)||'null');const usable=Array.isArray(saved)&&saved.length&&saved.some(b=>(b.label||b.desc||'').trim());wfBlocks=usable?saved:cloneWfDefaults()}catch(e){wfBlocks=cloneWfDefaults()}wfNextId=Math.max(0,...wfBlocks.map(b=>b.id))+1}
+    function saveWfBlocks(){safeSet(WF_STORAGE_KEY,JSON.stringify(wfBlocks))}
+    function addWfBlock(){if(!wfBlocks.length)loadWfBlocks();const canvas=document.getElementById('wf-canvas');const color=COLOR_CYCLE[wfBlocks.length%COLOR_CYCLE.length];const base=40+(wfBlocks.length*24)%180;wfBlocks.push({id:wfNextId++,x:180+base,y:80+base,w:220,h:110,label:'새 영역',desc:'이 영역에서 보여줄 정보나 기능을 적어주세요.',color});saveWfBlocks();renderWireframe();syncScreenWireframe()}
+    function resetWfBlocks(){wfBlocks=cloneWfDefaults();wfNextId=6;saveWfBlocks();renderWireframe()}
+    function renderWireframe(){
+      const canvas=document.getElementById('wf-canvas');if(!canvas)return;canvas.innerHTML='<div class="wf-canvas-label">PC DASHBOARD GRID · 블록 드래그 / 리사이즈</div>';
+      if(!wfBlocks.length)loadWfBlocks();
+      wfBlocks.forEach(block=>{
+        const clr=WF_COLORS[block.color]||WF_COLORS.default;
+        const el=document.createElement('div');el.className='wf-block';el.dataset.id=block.id;el.style.left=block.x+'px';el.style.top=block.y+'px';el.style.width=block.w+'px';el.style.height=block.h+'px';el.style.background=clr.bg;el.style.borderColor=clr.border;el.style.color=clr.text;
+        el.innerHTML=`<div class="wf-block-head" style="background:${clr.border};color:${clr.text}"><div class="wf-drag-handle" title="이동 핸들: 잡고 드래그">⋮⋮</div><input class="wf-block-title-input" value="${escapeHtml(block.label)}" oninput="updateWfBlock(${block.id},'label',this.value)"/><button type="button" class="wf-icon-btn" data-action="delete-wf" data-id="${block.id}" onclick="deleteWfBlock(${block.id})" title="삭제">×</button></div><div class="wf-block-body"><textarea class="wf-block-desc" oninput="updateWfBlock(${block.id},'desc',this.value)" placeholder="이 영역의 역할">${escapeHtml(block.desc)}</textarea></div><div class="wf-resize" data-id="${block.id}">↘</div>`;
+        const handle=el.querySelector('.wf-drag-handle');
+        handle?.addEventListener('pointerdown',e=>startWfDrag(e,block.id));
+        el.addEventListener('pointerdown',e=>{
+          if(e.target.closest('input,textarea,button,.wf-resize,.wf-drag-handle')) return;
+          startWfDrag(e,block.id);
+        });
+        el.querySelector('.wf-resize').addEventListener('pointerdown',e=>startWfResize(e,block.id));
+        canvas.appendChild(el);
+      });
+      syncScreenWireframe();
+    }
+    function updateWfBlock(id,key,value){const b=wfBlocks.find(x=>x.id===id);if(!b)return;b[key]=value;saveWfBlocks();syncScreenWireframe()}
+    function deleteWfBlock(id){wfBlocks=wfBlocks.filter(b=>b.id!==id);saveWfBlocks();renderWireframe()}
+    function cycleWfColor(id){const b=wfBlocks.find(x=>x.id===id);if(!b)return;const idx=COLOR_CYCLE.indexOf(b.color);b.color=COLOR_CYCLE[(idx+1)%COLOR_CYCLE.length];saveWfBlocks();renderWireframe()}
+    function startWfDrag(e,id){const canvas=document.getElementById('wf-canvas');const b=wfBlocks.find(x=>x.id===id);if(!canvas||!b)return;const el=canvas.querySelector(`.wf-block[data-id="${id}"]`);wfDrag={id,startX:e.clientX,startY:e.clientY,origX:b.x,origY:b.y};el?.classList.add('dragging');e.preventDefault();window.addEventListener('pointermove',moveWfDrag);window.addEventListener('pointerup',endWfPointer,{once:true})}
+    function moveWfDrag(e){if(!wfDrag)return;const canvas=document.getElementById('wf-canvas');const b=wfBlocks.find(x=>x.id===wfDrag.id);if(!canvas||!b)return;const maxX=canvas.clientWidth-b.w,maxY=canvas.clientHeight-b.h;b.x=Math.max(0,Math.min(maxX,snap(wfDrag.origX+e.clientX-wfDrag.startX)));b.y=Math.max(0,Math.min(maxY,snap(wfDrag.origY+e.clientY-wfDrag.startY)));const el=canvas.querySelector(`.wf-block[data-id="${b.id}"]`);if(el){el.style.left=b.x+'px';el.style.top=b.y+'px'}syncScreenWireframe()}
+    function startWfResize(e,id){const canvas=document.getElementById('wf-canvas');const b=wfBlocks.find(x=>x.id===id);if(!canvas||!b)return;wfResize={id,startX:e.clientX,startY:e.clientY,origW:b.w,origH:b.h};e.preventDefault();e.stopPropagation();window.addEventListener('pointermove',moveWfResize);window.addEventListener('pointerup',endWfPointer,{once:true})}
+    function moveWfResize(e){if(!wfResize)return;const canvas=document.getElementById('wf-canvas');const b=wfBlocks.find(x=>x.id===wfResize.id);if(!canvas||!b)return;const maxW=canvas.clientWidth-b.x,maxH=canvas.clientHeight-b.y;b.w=Math.max(90,Math.min(maxW,snap(wfResize.origW+e.clientX-wfResize.startX)));b.h=Math.max(64,Math.min(maxH,snap(wfResize.origH+e.clientY-wfResize.startY)));const el=canvas.querySelector(`.wf-block[data-id="${b.id}"]`);if(el){el.style.width=b.w+'px';el.style.height=b.h+'px'}syncScreenWireframe()}
+    function endWfPointer(){document.querySelectorAll('.wf-block.dragging').forEach(el=>el.classList.remove('dragging'));window.removeEventListener('pointermove',moveWfDrag);window.removeEventListener('pointermove',moveWfResize);wfDrag=null;wfResize=null;saveWfBlocks();syncScreenWireframe()}
+    function getCanvasZone(b){const cx=b.x+b.w/2,cy=b.y+b.h/2;const col=cx<180?'좌측':(cx<440?'중앙':'우측');const row=cy<170?'상단':(cy<340?'중단':'하단');return `${row} ${col}`}
+    function syncScreenWireframe(){
+      if(!wfBlocks.length)loadWfBlocks();
+      const sorted=[...wfBlocks].sort((a,b)=>{const ry=Math.round(a.y/40)-Math.round(b.y/40);return ry||a.x-b.x});
+      const canvas=document.getElementById('wf-canvas');const cw=canvas?.clientWidth||720,ch=canvas?.clientHeight||520;
+      const lines=['[대시보드 화면 구조]','PC 화면 기준 1장의 개인 업무 대시보드로 구성한다. 좁은 화면에서는 주요 블록이 위에서 아래로 쌓이도록 반응형으로 처리한다.',''];
+      sorted.forEach((b,i)=>{lines.push(`${i+1}. ${b.label||'이름 없는 영역'}`);lines.push(`   - 배치: ${getCanvasZone(b)} / x ${Math.round(b.x/cw*100)}%, y ${Math.round(b.y/ch*100)}%, w ${Math.round(b.w/cw*100)}%, h ${Math.round(b.h/ch*100)}%`);if((b.desc||'').trim())lines.push(`   - 역할: ${b.desc.trim()}`)});
+      const text=lines.join('\n');const preview=document.getElementById('wf-text-preview');if(preview)preview.textContent=text;safeSet('lc_v9_field_m1-screen',text);syncFieldElements('m1-screen',text,null);updateMissionPreview();
+    }
+
+    // 슬랙 질문 생성기
+    function selectSlackChip(group,value,el){
+      document.getElementById('slack-'+group).value=value;
+      document.querySelectorAll('#chips-'+group+' .chip').forEach(c=>c.classList.remove('selected'));
+      el.classList.add('selected');
+      updateSlackPreview();
+    }
+    function getSlackText(){
+      const type=document.getElementById('slack-type')?.value||'';
+      const step=document.getElementById('slack-step')?.value||'';
+      const want=document.getElementById('slack-want')?.value.trim()||'';
+      const problem=document.getElementById('slack-problem')?.value.trim()||'';
+      const answer=document.getElementById('slack-answer')?.value.trim()||'';
+      if(!type||!step||!want||!problem||!answer)return '';
+      return `【질문 유형】\n${type}\n\n【현재 단계】\n${step}\n\n【하고 싶었던 것】\n${want}\n\n【현재 발생한 문제】\n${problem}\n\n【원하는 답변】\n${answer}\n\n【첨부】\n화면 캡처 또는 오류 메시지를 함께 첨부합니다.`;
+    }
+    function updateSlackPreview(){
+      const text=getSlackText();
+      const preview=document.getElementById('slack-preview');
+      if(preview){preview.textContent=text||'(모든 항목을 입력하면 복사 버튼이 활성화됩니다.)';preview.classList.toggle('empty',!text)}
+      ['slack-copy-main','slack-copy-panel'].forEach(id=>{const btn=document.getElementById(id);if(btn){btn.disabled=!text;btn.classList.toggle('enabled',!!text)}});
+    }
+    function copySlackGenerated(){const text=getSlackText();if(!text)return;navigator.clipboard.writeText(text).then(()=>{['slack-copy-main','slack-copy-panel'].forEach(id=>{const btn=document.getElementById(id);if(btn){const old=btn.textContent;btn.textContent='복사됨 ✓';setTimeout(()=>btn.textContent=old,1300)}})})}
+
+    // 전역 함수 등록 + 인라인 onclick이 막히는 환경을 위한 보조 이벤트 바인딩
+    window.unlock=unlock;
+    window.goPage=goPage;
+    window.goPageById=goPageById;
+    window.copyText=copyText;
+    window.downloadMission1=downloadMission1;
+    window.addWfBlock=addWfBlock;
+    window.resetWfBlocks=resetWfBlocks;
+    window.deleteWfBlock=deleteWfBlock;
+    window.updateWfBlock=updateWfBlock;
+    window.selectSlackChip=selectSlackChip;
+    window.updateSlackPreview=updateSlackPreview;
+    window.copySlackGenerated=copySlackGenerated;
+    window.updateMissionPreview=updateMissionPreview;
+    window.toggleDone=toggleDone;
+  
+
+    Object.assign(window,{saveField,savePDPart,updatePD,updateFlowItem,addFlowItem,deleteFlowItem,updatePriorityItem,addPriorityItem,deletePriorityItem,updateWfBlock,addWfBlock,resetWfBlocks,deleteWfBlock,cycleWfColor,syncScreenWireframe,renderFlowBuilder,renderPriorityBuilder,renderWireframe});
+    document.addEventListener('input', function(e){
+      const t=e.target;
+      if(!t) return;
+      if(t.matches('[data-field^="pd-"]')) { savePDPart(t); return; }
+      if(t.matches('[data-field]')) { saveField(t); return; }
+      if(t.classList && t.classList.contains('flow-action-input')) { const rows=[...document.querySelectorAll('.flow-row')]; const idx=rows.indexOf(t.closest('.flow-row')); updateFlowItem(idx,'action',t.value); return; }
+      if(t.classList && t.classList.contains('flow-desc-input')) { const rows=[...document.querySelectorAll('.flow-row')]; const idx=rows.indexOf(t.closest('.flow-row')); updateFlowItem(idx,'desc',t.value); return; }
+      if(t.classList && t.classList.contains('feature-title-input')) { const card=t.closest('.priority-card'); const type=card?.dataset.priority; const rows=[...card.querySelectorAll('.priority-item')]; const idx=rows.indexOf(t.closest('.priority-item')); if(type) updatePriorityItem(type,idx,'title',t.value); return; }
+      if(t.classList && t.classList.contains('feature-desc-input')) { const card=t.closest('.priority-card'); const type=card?.dataset.priority; const rows=[...card.querySelectorAll('.priority-item')]; const idx=rows.indexOf(t.closest('.priority-item')); if(type) updatePriorityItem(type,idx,'desc',t.value); return; }
+      if(t.classList && t.classList.contains('wf-block-title-input')) { const id=Number(t.closest('.wf-block')?.dataset.id); updateWfBlock(id,'label',t.value); return; }
+      if(t.classList && t.classList.contains('wf-block-desc')) { const id=Number(t.closest('.wf-block')?.dataset.id); updateWfBlock(id,'desc',t.value); return; }
+    });
+
+
+
+    function openExternalLink(anchor){
+      if(!anchor || !anchor.href) return true;
+      const opened = window.open(anchor.href, '_blank', 'noopener,noreferrer');
+      if(!opened){ window.location.href = anchor.href; }
+      return false;
+    }
+    function clearFAQSearch(){
+      const input = document.getElementById('faq-search');
+      if(input){ input.value=''; input.focus(); }
+      filterFAQ();
+    }
+    window.openExternalLink=openExternalLink;
+    window.clearFAQSearch=clearFAQSearch;
+
+    function filterFAQ(){
+      const input = document.getElementById('faq-search');
+      const q = (input?.value || '').trim().toLowerCase();
+      const items = Array.from(document.querySelectorAll('.faq-item'));
+      let visible = 0;
+      items.forEach(item => {
+        const text = (item.innerText + ' ' + (item.dataset.keywords || '')).toLowerCase();
+        const show = !q || text.includes(q);
+        item.style.display = show ? '' : 'none';
+        if(show) visible++;
+      });
+      const count = document.getElementById('faq-count');
+      if(count) count.textContent = q ? `${visible}개의 FAQ가 검색되었습니다.` : `총 ${items.length}개의 FAQ가 있습니다.`;
+      const empty = document.getElementById('faq-empty');
+      if(empty) empty.style.display = visible === 0 ? 'block' : 'none';
+    }
+
+</script>
+</body>
+</html>
