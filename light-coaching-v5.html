@@ -67,6 +67,10 @@
       padding: 0
     }
 
+    html {
+      scrollbar-gutter: stable;
+    }
+
     html,
     body {
       height: 100%;
@@ -3138,6 +3142,7 @@
       padding: 19px 20px;
       border-color: rgba(255, 255, 255, .085);
       background: linear-gradient(135deg, rgba(16, 21, 34, .86), rgba(16, 21, 34, .58));
+      transition: border-color .15s ease, background .15s ease;
     }
 
     .step-card:hover {
