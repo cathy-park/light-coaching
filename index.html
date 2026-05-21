@@ -98,12 +98,18 @@
     }
 
     ::-webkit-scrollbar-track {
-      background: transparent
+      background: rgba(9, 14, 25, 0.95)
     }
 
     ::-webkit-scrollbar-thumb {
       background: rgba(255, 255, 255, .16);
       border-radius: 20px
+    }
+
+    .sidebar::-webkit-scrollbar-track,
+    .main::-webkit-scrollbar-track,
+    .mission-panel::-webkit-scrollbar-track {
+      background: transparent
     }
 
     #lock-screen {
@@ -290,8 +296,7 @@
       border-right: 1px solid var(--line2);
       background: rgba(14, 19, 31, .72);
       padding: 16px 18px 70px;
-      overflow: auto;
-      scrollbar-gutter: stable;
+      overflow-y: scroll;
     }
 
     .sb-label {
@@ -355,9 +360,8 @@
     }
 
     .main {
-      overflow: auto;
+      overflow-y: scroll;
       padding: 34px 34px 90px;
-      scrollbar-gutter: stable;
     }
 
     .page {
@@ -882,8 +886,7 @@
       border-left: 1px solid var(--line2);
       background: rgba(14, 19, 31, .72);
       padding: 26px 22px 70px;
-      overflow: auto;
-      scrollbar-gutter: stable;
+      overflow-y: scroll;
     }
 
     .panel-kicker {
