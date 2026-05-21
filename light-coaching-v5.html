@@ -3712,6 +3712,7 @@
       overflow: hidden;
       background: rgba(255, 255, 255, .035);
       box-shadow: 0 10px 28px rgba(0, 0, 0, .18);
+      pointer-events: none;
     }
 
     .inline-shot img {
@@ -4484,22 +4485,25 @@
                 <div class="step-num">5</div>
                 <div>
                   <div class="step-card-title">Gemini 3.5 Flash (High/Medium) 선택</div>
-                  <div class="step-card-desc">
-                    모델 선택 창에서 가벼운 실습에 적합한 <b>Gemini 3.5 Flash (High 또는 Medium)</b>를 선택하여 작업을 시작할 준비를 마칩니다.
-                    <div class="model-guide-box" style="margin-top:12px; padding:14px; background:rgba(255,255,255,0.03); border:1px solid var(--line2); border-radius:10px; font-size:12.5px; line-height:1.65;">
-                      <b style="color:var(--text2); display:block; margin-bottom:8px;">💡 모델별 특징 안내:</b>
-                      <ul style="margin:0; padding-left:16px; color:var(--text2); display:flex; flex-direction:column; gap:6px;">
-                        <li><b>Gemini 3.5 Flash (High / Medium):</b> 응답 속도가 매우 빠르고 효율적인 경량 모델로, 일반적인 실습 및 신속한 기능 구현에 가장 적합합니다.</li>
-                        <li><b>Gemini 3.1 Pro (High / Low):</b> 더 복잡한 로직 설계나 정교한 논리적 추론이 필요할 때 권장하는 고성능 모델입니다.</li>
-                        <li><b>Claude Sonnet 4.6 (Thinking):</b> 사고 과정(Thinking)을 거쳐 디테일한 코드 구현과 에러 디버깅을 우수하게 수행하는 코딩 특화 모델입니다.</li>
-                        <li><b>Claude Opus 4.6 (Thinking):</b> 고난도의 아키텍처 설계와 깊은 논리 분석이 필요한 대형 태스크에 적합한 최상위 모델입니다.</li>
-                        <li><b>GPT-OSS 120B (Medium):</b> 특정 영역 테스트를 위한 대규모 오픈소스 계열 모델입니다.</li>
-                      </ul>
-                    </div>
-                  </div>
+                  <div class="step-card-desc">모델 선택 창에서 가벼운 실습에 적합한 <b>Gemini 3.5 Flash (High 또는 Medium)</b>를 선택하여 작업을 시작할 준비를 마칩니다.</div>
                   <div class="inline-shot" style="margin:12px 0 0; max-width:100%;"><img alt="Antigravity 단계 4 참고 캡처"
                       src="img/antigravity3.png" style="width:100%; height:auto; display:block;" />
                     <div class="inline-shot-caption">모델 선택창에서 Gemini 3.5 Flash (High) 또는 (Medium)을 확인하고 선택하세요.</div>
+                  </div>
+                  <div class="model-guide-box" style="margin-top:14px; padding:14px; background:rgba(255,255,255,0.03); border:1px solid var(--line2); border-radius:10px; font-size:12.5px; line-height:1.65;">
+                    <b style="color:var(--text2); display:block; margin-bottom:8px;">💡 모델별 특징 및 차이점 안내:</b>
+                    <ul style="margin:0; padding-left:16px; color:var(--text2); display:flex; flex-direction:column; gap:6px;">
+                      <li><b>Gemini 3.5 Flash (High / Medium):</b> 응답 속도가 매우 빠르고 효율적인 경량 모델로, 일반적인 실습 및 신속한 기능 구현에 가장 적합합니다.</li>
+                      <li><b>Gemini 3.1 Pro (High / Low):</b> 더 복잡한 로직 설계나 정교한 논리적 추론이 필요할 때 권장하는 고성능 모델입니다.</li>
+                      <li><b>Claude Sonnet 4.6 (Thinking):</b> 사고 과정(Thinking)을 거쳐 디테일한 코드 구현과 에러 디버깅을 우수하게 수행하는 코딩 특화 모델입니다.</li>
+                      <li><b>Claude Opus 4.6 (Thinking):</b> 고난도의 아키텍처 설계와 깊은 논리 분석이 필요한 대형 태스크에 적합한 최상위 모델입니다.</li>
+                      <li><b>GPT-OSS 120B (Medium):</b> 특정 영역 테스트를 위한 대규모 오픈소스 계열 모델입니다.</li>
+                    </ul>
+                    <hr style="border:0; border-top:1px solid var(--line2); margin:12px 0;" />
+                    <ul style="margin:0; padding-left:16px; color:var(--text2); display:flex; flex-direction:column; gap:6px;">
+                      <li><b>High vs Medium 차이:</b> High는 속도와 지능의 밸런스가 최고 수준으로 튜닝된 모델이며, Medium은 High 대비 가벼운 리소스로 구동되는 효율 중시 모델입니다. 실습 시 결과물에는 큰 차이가 없으므로 둘 중 표시되는 버전을 선택하시면 됩니다.</li>
+                      <li><b>High vs Low 차이:</b> 용량 및 연산 강도의 차이입니다. Low 버전은 응답 지연을 극한으로 줄여 테스트하기에 용이하나 깊은 추론이 제한될 수 있고, High 버전은 넓은 코딩 맥락을 정확하게 파악하고 정밀하게 코드를 완성해 줍니다.</li>
+                    </ul>
                   </div>
                 </div>
               </div>
