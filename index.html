@@ -4261,10 +4261,102 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* ── 모바일/소형화면 차단 오버레이 ── */
+    #screen-block {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: radial-gradient(ellipse at 50% 0%, rgba(89, 104, 255, .22), transparent 55%),
+                  linear-gradient(145deg, #07091a 0%, #0b0e1e 50%, #080b17 100%);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 32px;
+      animation: sb-fade .3s ease;
+    }
+    #screen-block.show {
+      display: flex;
+    }
+    @keyframes sb-fade {
+      from { opacity: 0; transform: scale(.97); }
+      to   { opacity: 1; transform: none; }
+    }
+    .sb-card {
+      max-width: 460px;
+      width: 100%;
+      background: rgba(14, 18, 34, .88);
+      border: 1px solid rgba(89, 104, 255, .28);
+      border-radius: 28px;
+      padding: 48px 40px 44px;
+      box-shadow: 0 32px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.04);
+      backdrop-filter: blur(24px);
+    }
+    .sb-icon-wrap {
+      width: 72px;
+      height: 72px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(89,104,255,.28), rgba(176,132,255,.18));
+      border: 1px solid rgba(89,104,255,.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 32px;
+    }
+    .sb-title {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -.04em;
+      color: #eef2ff;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .sb-desc {
+      font-size: 14px;
+      color: #8892ad;
+      line-height: 1.75;
+      word-break: keep-all;
+    }
+    .sb-divider {
+      width: 40px;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--purple));
+      margin: 24px auto;
+    }
+    .sb-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      color: #5968ff;
+      font-weight: 750;
+      background: rgba(89,104,255,.1);
+      border: 1px solid rgba(89,104,255,.25);
+      border-radius: 999px;
+      padding: 8px 18px;
+    }
   </style>
 </head>
 
 <body>
+
+  <!-- 모바일/소형화면 차단 오버레이 -->
+  <div id="screen-block" role="dialog" aria-modal="true" aria-label="PC 전용 안내">
+    <div class="sb-card">
+      <div class="sb-icon-wrap">🖥️</div>
+      <div class="sb-title">PC에서만 이용 가능해요</div>
+      <div class="sb-desc">
+        이 페이지는 PC 환경에 최적화되어 있습니다.<br />
+        모바일 기기나 작은 화면에서는 접근이 제한됩니다.
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-hint">💡 PC 브라우저에서 접속해 주세요</div>
+    </div>
+  </div>
   <div id="lock-screen">
     <div class="lock-card">
       <div class="brand"><img src="img/ddokd_logo_white.png" alt="DDOK"
@@ -7185,6 +7277,18 @@
       return `# 1주차 미션 제출\n제출일: ${date}\n\n---\n\n## 1. 업무 기록 돌아보기\n\n### 리서치 근거\n${researchText}\n\n### 현재 기록 방식\n${get('m1-record')}\n\n### 자주 놓치는 순간\n${get('m1-moments')}\n\n### 반복되는 불편\n${get('m1-pain')}\n\n---\n\n## 2. 문제정의 문장\n\n${get('m1-pd')}\n\n### 세부 입력\n- 사용자: ${getPD('pd-user')}\n- 상황: ${getPD('pd-sit')}\n- 목표: ${getPD('pd-goal')}\n- 장애물/원인: ${getPD('pd-block')}\n- 반복되는 비효율/손실: ${getPD('pd-loss')}\n\n---\n\n## 3. 사용자 흐름\n\n${get('m1-flow')}\n\n---\n\n## 4. 기능 우선순위표\n\n### Must (첫 버전에 포함)\n${get('m1-must')}\n\n### Later (다음 버전에)\n${get('m1-later')}\n\n### Out (이번엔 제외)\n${get('m1-out')}\n\n---\n\n## 5. 화면 구조 정리\n\n${get('m1-screen')}\n\n---\n\n## 6. 제출 전 메모\n\n${get('m1-check')}\n\n---\n\n## 다음 단계\n\n이 파일은 2주차 STEP 6에서 GPTs에 업로드하여 Antigravity에 전달할 구현용 PRD Lite로 변환합니다.\n`;
     }
     function buildNav() { const sb = document.getElementById('sidebar'); sb.innerHTML = NAV.map((sec, si) => `<div class="sb-label">${sec[0]}</div>${sec[1].map(([id, label, icon]) => `<div class="sb-item ${id === 'orientation' ? 'active' : ''}" data-page="${id}" onclick="goPage(this)"><span class="sb-icon">${icon}</span><span>${label}</span></div>`).join('')}${si < NAV.length - 1 ? '<div class="sb-divider"></div>' : ''}`).join('') }
+    /* ── 모바일/소형화면 차단 ── */
+    const BLOCK_WIDTH = 1024; // px 기준 (이 값 미만이면 차단)
+    function isMobileUA() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+    function checkScreenBlock() {
+      const blocked = window.innerWidth < BLOCK_WIDTH || isMobileUA();
+      document.getElementById('screen-block').classList.toggle('show', blocked);
+    }
+    checkScreenBlock();
+    window.addEventListener('resize', checkScreenBlock);
+    /* ── ──────────────────── ── */
     function unlock() { const input = document.getElementById('pw-input'); const val = input ? input.value.trim() : ''; const err = document.getElementById('pw-error'); if (val === PASSWORD) { document.getElementById('lock-screen').style.display = 'none'; document.getElementById('app').style.display = 'flex'; try { initApp() } catch (e) { console.error('initApp error:', e); try { buildNav(); renderPanel('orientation') } catch (e2) { console.error('fallback error:', e2) } } } else { if (err) { err.style.display = 'block'; setTimeout(() => err.style.display = 'none', 2200) } } }
     function initApp() { buildNav(); loadSavedFields(); initFlowBuilder(); initPriorityBuilder(); initWireframe(); loadProgress(); renderPanel('orientation'); showResumeBanner() }
     function goPage(el) {
