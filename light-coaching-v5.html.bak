@@ -67,6 +67,10 @@
       padding: 0
     }
 
+    html {
+      scrollbar-gutter: stable;
+    }
+
     html,
     body {
       height: 100%;
@@ -75,8 +79,7 @@
       color: var(--text);
       font-size: 15px;
       line-height: 1.72;
-      -webkit-font-smoothing: antialiased;
-      overflow-y: scroll;
+      -webkit-font-smoothing: antialiased
     }
 
     button,
@@ -3720,6 +3723,7 @@
       overflow: hidden;
       background: rgba(255, 255, 255, .035);
       box-shadow: 0 10px 28px rgba(0, 0, 0, .18);
+      pointer-events: none;
     }
 
     .inline-shot img {
@@ -4261,353 +4265,10 @@
         grid-template-columns: 1fr;
       }
     }
-
-    /* ── 모바일/소형화면 차단 오버레이 ── */
-    #screen-block {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: radial-gradient(ellipse at 50% 0%, rgba(89, 104, 255, .22), transparent 55%),
-        linear-gradient(145deg, #07091a 0%, #0b0e1e 50%, #080b17 100%);
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
-      padding: 32px;
-      animation: sb-fade .3s ease;
-    }
-
-    #screen-block.show {
-      display: flex;
-    }
-
-    @keyframes sb-fade {
-      from {
-        opacity: 0;
-        transform: scale(.97);
-      }
-
-      to {
-        opacity: 1;
-        transform: none;
-      }
-    }
-
-    .sb-card {
-      max-width: 460px;
-      width: 100%;
-      background: rgba(14, 18, 34, .88);
-      border: 1px solid rgba(89, 104, 255, .28);
-      border-radius: 28px;
-      padding: 48px 40px 44px;
-      box-shadow: 0 32px 80px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 255, 255, .04);
-      backdrop-filter: blur(24px);
-    }
-
-    .sb-icon-wrap {
-      width: 72px;
-      height: 72px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, rgba(89, 104, 255, .28), rgba(176, 132, 255, .18));
-      border: 1px solid rgba(89, 104, 255, .4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 24px;
-      font-size: 32px;
-    }
-
-    .sb-title {
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: -.04em;
-      color: #eef2ff;
-      margin-bottom: 12px;
-      line-height: 1.3;
-    }
-
-    .sb-desc {
-      font-size: 14px;
-      color: #8892ad;
-      line-height: 1.75;
-      word-break: keep-all;
-    }
-
-    .sb-divider {
-      width: 40px;
-      height: 2px;
-      border-radius: 2px;
-      background: linear-gradient(90deg, var(--blue), var(--purple));
-      margin: 24px auto;
-    }
-
-    .sb-hint {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      font-size: 13px;
-      color: #5968ff;
-      font-weight: 750;
-      background: rgba(89, 104, 255, .1);
-      border: 1px solid rgba(89, 104, 255, .25);
-      border-radius: 999px;
-      padding: 8px 18px;
-    }
-
-    /* ═══════════════════════════════════════
-       2주차 비밀번호 게이트 모달
-    ═══════════════════════════════════════ */
-    @keyframes w2ModalIn {
-      from { opacity: 0; transform: scale(.88) translateY(24px); }
-      to   { opacity: 1; transform: scale(1)  translateY(0); }
-    }
-    @keyframes w2GlowPulse {
-      0%, 100% { opacity: .55; transform: scale(1); }
-      50%      { opacity: 1;   transform: scale(1.12); }
-    }
-    @keyframes w2Shake {
-      0%,100% { transform: translateX(0); }
-      18%     { transform: translateX(-8px); }
-      36%     { transform: translateX(8px); }
-      54%     { transform: translateX(-6px); }
-      72%     { transform: translateX(6px); }
-      90%     { transform: translateX(-3px); }
-    }
-    @keyframes w2LockBounce {
-      0%   { transform: translateY(0) rotate(0deg); }
-      30%  { transform: translateY(-8px) rotate(-8deg); }
-      60%  { transform: translateY(0) rotate(6deg); }
-      80%  { transform: translateY(-3px) rotate(-3deg); }
-      100% { transform: translateY(0) rotate(0deg); }
-    }
-    @keyframes w2CheckDraw {
-      to { stroke-dashoffset: 0; }
-    }
-    @keyframes w2UnlockFadeIn {
-      from { opacity: 0; transform: scale(.8); }
-      to   { opacity: 1; transform: scale(1); }
-    }
-    @keyframes w2UnlockGlow {
-      0%, 100% { box-shadow: 0 0 40px 12px rgba(100, 220, 130, .35); }
-      50%       { box-shadow: 0 0 80px 28px rgba(100, 220, 130, .65); }
-    }
-    #week2-gate-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 9000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .25s ease;
-    }
-    #week2-gate-modal.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-    .w2-gate-backdrop {
-      position: absolute;
-      inset: 0;
-      background: rgba(6, 9, 18, .72);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-    .w2-gate-card {
-      position: relative;
-      width: 440px;
-      max-width: calc(100vw - 48px);
-      background: linear-gradient(145deg, rgba(18, 24, 44, .97), rgba(12, 16, 32, .99));
-      border: 1px solid rgba(130, 100, 255, .35);
-      border-radius: 28px;
-      padding: 44px 40px 36px;
-      box-shadow: 0 0 0 1px rgba(130,100,255,.12), 0 24px 80px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.06);
-      text-align: center;
-      overflow: hidden;
-    }
-    #week2-gate-modal.active .w2-gate-card {
-      animation: w2ModalIn .38s cubic-bezier(.22,.97,.44,.98) both;
-    }
-    .w2-gate-card.unlocked {
-      animation: w2UnlockGlow .6s ease both !important;
-      border-color: rgba(100, 220, 130, .6) !important;
-    }
-    .w2-gate-glow {
-      position: absolute;
-      top: -60px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, rgba(110, 80, 255, .4) 0%, transparent 70%);
-      border-radius: 50%;
-      pointer-events: none;
-      animation: w2GlowPulse 3.2s ease-in-out infinite;
-    }
-    .w2-gate-lock-icon {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 16px;
-      background: linear-gradient(135deg, rgba(110,80,255,.25), rgba(170,120,255,.15));
-      border: 1px solid rgba(130,100,255,.4);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #b69aff;
-    }
-    #week2-gate-modal.active .w2-gate-lock-icon {
-      animation: w2LockBounce 1.8s ease-in-out 0.4s both;
-    }
-    .w2-gate-lock-icon svg { width: 30px; height: 30px; }
-    .w2-gate-badge {
-      display: inline-block;
-      background: linear-gradient(90deg, #7c5cfc, #a78bfa);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      border-radius: 999px;
-      padding: 4px 14px;
-      margin-bottom: 14px;
-    }
-    .w2-gate-title {
-      font-size: 22px;
-      font-weight: 800;
-      color: #e8e2ff;
-      margin: 0 0 10px;
-      line-height: 1.3;
-    }
-    .w2-gate-desc {
-      font-size: 13.5px;
-      color: rgba(200, 195, 225, .75);
-      line-height: 1.65;
-      margin: 0 0 26px;
-    }
-    .w2-input-wrap { margin-bottom: 20px; text-align: left; }
-    .w2-pw-input {
-      width: 100%;
-      box-sizing: border-box;
-      background: rgba(255,255,255,.04);
-      border: 1.5px solid rgba(130,100,255,.3);
-      border-radius: 12px;
-      padding: 13px 16px;
-      font-size: 15px;
-      color: #e8e2ff;
-      outline: none;
-      transition: border-color .2s, box-shadow .2s;
-      font-family: inherit;
-      letter-spacing: .15em;
-    }
-    .w2-pw-input::placeholder { color: rgba(200,195,225,.35); letter-spacing: 0; }
-    .w2-pw-input:focus {
-      border-color: #8b5cf6;
-      box-shadow: 0 0 0 3px rgba(139,92,246,.2);
-    }
-    .w2-pw-input.shake {
-      animation: w2Shake .5s ease both;
-      border-color: #f87171 !important;
-    }
-    .w2-pw-error {
-      font-size: 12px;
-      color: #f87171;
-      margin-top: 8px;
-      padding-left: 4px;
-      transition: opacity .25s ease;
-      opacity: 0;
-    }
-    .w2-gate-actions { display: flex; gap: 10px; margin-bottom: 16px; }
-    .w2-btn-cancel {
-      flex: 1;
-      height: 46px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 12px;
-      color: rgba(200,195,225,.7);
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background .18s, color .18s;
-      font-family: inherit;
-    }
-    .w2-btn-cancel:hover { background: rgba(255,255,255,.09); color: #e8e2ff; }
-    .w2-btn-unlock {
-      flex: 2;
-      height: 46px;
-      background: linear-gradient(135deg, #7c3aed, #6d28d9);
-      border: none;
-      border-radius: 12px;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      box-shadow: 0 4px 18px rgba(109,40,217,.4);
-      transition: transform .15s, box-shadow .15s, background .2s;
-      font-family: inherit;
-    }
-    .w2-btn-unlock:hover { transform: translateY(-1px); box-shadow: 0 7px 28px rgba(109,40,217,.55); background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
-    .w2-btn-unlock:active { transform: translateY(0); }
-    .w2-gate-hint { font-size: 12px; color: rgba(200,195,225,.38); margin-top: 4px; }
-
-    /* 잠금해제 성공 오버레이 */
-    .w2-unlock-anim {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(145deg, rgba(18,44,30,.97), rgba(10,28,18,.99));
-      border-radius: 28px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .2s ease;
-    }
-    .w2-gate-card.unlocked .w2-unlock-anim { opacity: 1; pointer-events: all; animation: w2UnlockFadeIn .3s ease both; }
-    .w2-check { width: 70px; height: 70px; }
-    .w2-check-circle {
-      stroke: #4ade80;
-      stroke-width: 2;
-      stroke-dasharray: 166;
-      stroke-dashoffset: 166;
-      stroke-linecap: round;
-    }
-    .w2-gate-card.unlocked .w2-check-circle { animation: w2CheckDraw .5s ease .05s forwards; }
-    .w2-check-check {
-      stroke: #4ade80;
-      stroke-width: 3;
-      stroke-dasharray: 48;
-      stroke-dashoffset: 48;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    .w2-gate-card.unlocked .w2-check-check { animation: w2CheckDraw .35s ease .3s forwards; }
-    .w2-unlock-label { font-size: 17px; font-weight: 800; color: #86efac; letter-spacing: .02em; }
   </style>
 </head>
 
 <body>
-
-  <!-- 모바일/소형화면 차단 오버레이 -->
-  <div id="screen-block" role="dialog" aria-modal="true" aria-label="PC 전용 안내">
-    <div class="sb-card">
-      <div class="sb-icon-wrap">🖥️</div>
-      <div class="sb-title">PC에서만 이용 가능해요</div>
-      <div class="sb-desc">
-        이 페이지는 PC 환경에 최적화되어 있습니다.<br />
-        모바일 기기나 작은 화면에서는 접근이 제한됩니다.
-      </div>
-      <div class="sb-divider"></div>
-      <div class="sb-hint">💡 PC 브라우저에서 접속해 주세요</div>
-    </div>
-  </div>
   <div id="lock-screen">
     <div class="lock-card">
       <div class="brand"><img src="img/ddokd_logo_white.png" alt="DDOK"
@@ -4633,9 +4294,7 @@
       <div class="top-actions">
         <a class="top-link gold" href="https://worklog-ten-chi.vercel.app/" rel="noreferrer" target="_blank">완성 예시 보기
           ↗</a>
-        <a class="top-link" href="https://w1746165050-wn2416556.slack.com/archives/C08QK70KRN1" rel="noreferrer"
-          target="_blank"><img src="img/slack.webp" alt="Slack"
-            style="width:16px;height:16px;object-fit:contain;vertical-align:middle;margin-right:5px;">슬랙 채널 ▾</a>
+        <a class="top-link" href="#" rel="noreferrer" target="_blank">슬랙 채널 ▾</a>
       </div>
     </header>
     <div class="layout">
@@ -4826,57 +4485,11 @@
                 <div class="step-num">4</div>
                 <div>
                   <div class="step-card-title">작업 폴더 열기</div>
-                  <div class="step-card-desc">실습을 진행할 프로젝트 폴더를 Antigravity에서 열어줍니다. 아래 순서대로 따라하세요.</div>
-
-                  <!-- 4-1 폴더 추가 아이콘 클릭 -->
-                  <div style="margin-top:16px; display:flex; flex-direction:column; gap:10px;">
-                    <div style="display:flex; align-items:flex-start; gap:10px;">
-                      <div
-                        style="min-width:22px; height:22px; border-radius:50%; background:var(--blue); color:#fff; font-size:12px; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
-                        1</div>
-                      <div style="font-size:13px; color:var(--text2); line-height:1.65;">왼쪽 사이드바 <b>Projects</b> 우측의
-                        <b>폴더 추가 아이콘</b>을 클릭합니다.</div>
-                    </div>
-                    <div class="inline-shot" style="max-width:100%; margin-left:0;"><img alt="Projects 영역 폴더 추가 아이콘 클릭"
-                        src="img/antigravity2.png" style="width:100%; height:auto; display:block;" />
-                      <div class="inline-shot-caption">파란색으로 표시된 폴더 아이콘을 클릭하세요.</div>
-                    </div>
-                  </div>
-
-                  <!-- 4-2 New Project 클릭 -->
-                  <div style="margin-top:16px; display:flex; flex-direction:column; gap:10px;">
-                    <div style="display:flex; align-items:flex-start; gap:10px;">
-                      <div
-                        style="min-width:22px; height:22px; border-radius:50%; background:var(--blue); color:#fff; font-size:12px; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
-                        2</div>
-                      <div style="font-size:13px; color:var(--text2); line-height:1.65;">드롭다운 메뉴에서 <b>New Project</b>를
-                        클릭합니다.</div>
-                    </div>
-                    <div class="inline-shot" style="max-width:100%; margin-left:0;"><img alt="New Project 메뉴 선택"
-                        src="img/antigravity2-1.png" style="width:100%; height:auto; display:block;" />
-                      <div class="inline-shot-caption">메뉴가 열리면 'New Project'를 선택하세요.</div>
-                    </div>
-                  </div>
-
-                  <!-- 4-3 Add Folder 클릭 -->
-                  <div style="margin-top:16px; display:flex; flex-direction:column; gap:10px;">
-                    <div style="display:flex; align-items:flex-start; gap:10px;">
-                      <div
-                        style="min-width:22px; height:22px; border-radius:50%; background:var(--blue); color:#fff; font-size:12px; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
-                        3</div>
-                      <div style="font-size:13px; color:var(--text2); line-height:1.65;">'Create Project' 팝업이 뜨면 <b>+
-                          Add Folder</b> 버튼을 클릭하여 미리 만들어둔 <b>worklog-mvp</b> 폴더를 선택합니다.</div>
-                    </div>
-                    <div class="inline-shot" style="max-width:100%; margin-left:0;"><img
-                        alt="Create Project 팝업 + Add Folder 클릭" src="img/antigravity2-2.png"
-                        style="width:100%; height:auto; display:block;" />
-                      <div class="inline-shot-caption">'+ Add Folder'를 눌러 미리 만들어둔 프로젝트 폴더를 선택하면 완료됩니다.</div>
-                    </div>
-                  </div>
-
-                  <div
-                    style="margin-top:12px; padding:10px 14px; background:rgba(255,255,255,0.04); border:1px solid var(--line2); border-radius:10px; font-size:12.5px; color:var(--text2); line-height:1.65;">
-                    💡 폴더명은 가급적 <b>worklog-mvp</b>와 같이 영문 소문자+하이픈 조합을 추천합니다.
+                  <div class="step-card-desc">실습을 진행할 프로젝트 폴더를 Antigravity에서 열어줍니다. 왼쪽 사이드바의 <b>Projects</b> 영역 우측에 있는
+                    폴더 아이콘을 클릭하여 준비해둔 작업 폴더를 선택합니다. 폴더명은 가급적 <b>worklog-mvp</b>와 같이 영문 소문자 결합을 추천합니다.</div>
+                  <div class="inline-shot" style="margin:12px 0 0; max-width:100%;"><img alt="Antigravity 단계 3 참고 캡처"
+                      src="img/antigravity2.png" style="width:100%; height:auto; display:block;" />
+                    <div class="inline-shot-caption">준비해둔 작업 폴더가 정상적으로 열리면 화면 중앙에 폴더명이 표시됩니다.</div>
                   </div>
                 </div>
               </div>
@@ -4895,15 +4508,13 @@
                     <b style="color:var(--text2); display:block; margin-bottom:8px;">💡 모델별 특징 및 차이점 안내:</b>
                     <ul
                       style="margin:0; padding-left:16px; color:var(--text2); display:flex; flex-direction:column; gap:6px;">
-                      <li><b style="color:#4fc3f7;">Gemini 3.5 Flash (High / Medium):</b> 응답 속도가 매우 빠르고 효율적인 경량 모델로,
-                        일반적인 실습 및 신속한 기능 구현에 가장 적합합니다.</li>
-                      <li><b style="color:#29b6f6;">Gemini 3.1 Pro (High / Low):</b> 더 복잡한 로직 설계나 정교한 논리적 추론이 필요할 때 권장하는
-                        고성능 모델입니다.</li>
-                      <li><b style="color:#ce93d8;">Claude Sonnet 4.6 (Thinking):</b> 사고 과정(Thinking)을 거쳐 디테일한 코드 구현과 에러
-                        디버깅을 우수하게 수행하는 코딩 특화 모델입니다.</li>
-                      <li><b style="color:#b39ddb;">Claude Opus 4.6 (Thinking):</b> 고난도의 아키텍처 설계와 깊은 논리 분석이 필요한 대형 태스크에
-                        적합한 최상위 모델입니다.</li>
-                      <li><b style="color:#80cbc4;">GPT-OSS 120B (Medium):</b> 특정 영역 테스트를 위한 대규모 오픈소스 계열 모델입니다.</li>
+                      <li><b>Gemini 3.5 Flash (High / Medium):</b> 응답 속도가 매우 빠르고 효율적인 경량 모델로, 일반적인 실습 및 신속한 기능 구현에 가장
+                        적합합니다.</li>
+                      <li><b>Gemini 3.1 Pro (High / Low):</b> 더 복잡한 로직 설계나 정교한 논리적 추론이 필요할 때 권장하는 고성능 모델입니다.</li>
+                      <li><b>Claude Sonnet 4.6 (Thinking):</b> 사고 과정(Thinking)을 거쳐 디테일한 코드 구현과 에러 디버깅을 우수하게 수행하는 코딩 특화
+                        모델입니다.</li>
+                      <li><b>Claude Opus 4.6 (Thinking):</b> 고난도의 아키텍처 설계와 깊은 논리 분석이 필요한 대형 태스크에 적합한 최상위 모델입니다.</li>
+                      <li><b>GPT-OSS 120B (Medium):</b> 특정 영역 테스트를 위한 대규모 오픈소스 계열 모델입니다.</li>
                     </ul>
                     <hr style="border:0; border-top:1px solid var(--line2); margin:12px 0;" />
                     <ul
@@ -7551,55 +7162,11 @@
       return `# 1주차 미션 제출\n제출일: ${date}\n\n---\n\n## 1. 업무 기록 돌아보기\n\n### 리서치 근거\n${researchText}\n\n### 현재 기록 방식\n${get('m1-record')}\n\n### 자주 놓치는 순간\n${get('m1-moments')}\n\n### 반복되는 불편\n${get('m1-pain')}\n\n---\n\n## 2. 문제정의 문장\n\n${get('m1-pd')}\n\n### 세부 입력\n- 사용자: ${getPD('pd-user')}\n- 상황: ${getPD('pd-sit')}\n- 목표: ${getPD('pd-goal')}\n- 장애물/원인: ${getPD('pd-block')}\n- 반복되는 비효율/손실: ${getPD('pd-loss')}\n\n---\n\n## 3. 사용자 흐름\n\n${get('m1-flow')}\n\n---\n\n## 4. 기능 우선순위표\n\n### Must (첫 버전에 포함)\n${get('m1-must')}\n\n### Later (다음 버전에)\n${get('m1-later')}\n\n### Out (이번엔 제외)\n${get('m1-out')}\n\n---\n\n## 5. 화면 구조 정리\n\n${get('m1-screen')}\n\n---\n\n## 6. 제출 전 메모\n\n${get('m1-check')}\n\n---\n\n## 다음 단계\n\n이 파일은 2주차 STEP 6에서 GPTs에 업로드하여 Antigravity에 전달할 구현용 PRD Lite로 변환합니다.\n`;
     }
     function buildNav() { const sb = document.getElementById('sidebar'); sb.innerHTML = NAV.map((sec, si) => `<div class="sb-label">${sec[0]}</div>${sec[1].map(([id, label, icon]) => `<div class="sb-item ${id === 'orientation' ? 'active' : ''}" data-page="${id}" onclick="goPage(this)"><span class="sb-icon">${icon}</span><span>${label}</span></div>`).join('')}${si < NAV.length - 1 ? '<div class="sb-divider"></div>' : ''}`).join('') }
-    /* ── 모바일/소형화면 차단 ── */
-    const BLOCK_WIDTH = 1024; // px 기준 (이 값 미만이면 차단)
-    function isMobileUA() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
-    function checkScreenBlock() {
-      const blocked = window.innerWidth < BLOCK_WIDTH || isMobileUA();
-      document.getElementById('screen-block').classList.toggle('show', blocked);
-    }
-    checkScreenBlock();
-    window.addEventListener('resize', checkScreenBlock);
-    /* ── ──────────────────── ── */
     function unlock() { const input = document.getElementById('pw-input'); const val = input ? input.value.trim() : ''; const err = document.getElementById('pw-error'); if (val === PASSWORD) { document.getElementById('lock-screen').style.display = 'none'; document.getElementById('app').style.display = 'flex'; try { initApp() } catch (e) { console.error('initApp error:', e); try { buildNav(); renderPanel('orientation') } catch (e2) { console.error('fallback error:', e2) } } } else { if (err) { err.style.display = 'block'; setTimeout(() => err.style.display = 'none', 2200) } } }
     function initApp() { buildNav(); loadSavedFields(); initFlowBuilder(); initPriorityBuilder(); initWireframe(); loadProgress(); renderPanel('orientation'); showResumeBanner() }
-    const WEEK2_PAGES = ['step6','step7','step8','step9','step10','step11'];
-    const WEEK2_UNLOCK_KEY = 'lc_week2_unlocked';
-    function isWeek2Unlocked() { return safeGet(WEEK2_UNLOCK_KEY) === 'true'; }
-    function unlockWeek2(pw) {
-      if (pw === '5678') {
-        safeSet(WEEK2_UNLOCK_KEY, 'true');
-        return true;
-      }
-      return false;
-    }
-
     function goPage(el) {
       const id = el?.dataset?.page;
       if (!id) return;
-      if (WEEK2_PAGES.includes(id) && !isWeek2Unlocked()) {
-        showWeek2Gate(() => {
-          document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
-          el.classList.add('active');
-          document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-          const page = document.getElementById('page-' + id);
-          if (page) {
-            page.classList.add('active');
-            document.querySelector('.main').scrollTop = 0;
-            safeSet(LAST_PAGE_KEY, id);
-            renderPanel(id);
-            if (id === 'step3') setTimeout(() => renderFlowBuilder(), 0);
-            if (id === 'step4') setTimeout(() => renderPriorityBuilder(), 0);
-            if (id === 'step5') setTimeout(() => renderWireframe(), 0);
-            if (id === 'mission1') setTimeout(() => updateSubmissionCanvas(), 0);
-            if (id === 'ai-prompt-guide') setTimeout(() => { loadSavedFields(); updateAiPromptGuide(); }, 0);
-            loadProgress();
-          }
-        });
-        return;
-      }
       if (el.classList.contains('locked') || !isUnlocked(id)) { showLockNotice(); return; }
       document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
       el.classList.add('active');
@@ -8389,93 +7956,7 @@ Antigravity, 너는 지금부터 '프론트엔드 디자이너' 모드로 동작
       }
     }
 
-
-    /* ── 2주차 비밀번호 게이트 ── */
-    function showWeek2Gate(onSuccess) {
-      const modal = document.getElementById('week2-gate-modal');
-      if (!modal) return;
-      modal.classList.add('active');
-      document.getElementById('w2-pw-input').value = '';
-      document.getElementById('w2-pw-error').style.opacity = '0';
-      document.getElementById('w2-pw-input').focus();
-      window.__week2GateCallback = onSuccess;
-    }
-    function closeWeek2Gate() {
-      const modal = document.getElementById('week2-gate-modal');
-      if (modal) modal.classList.remove('active');
-      window.__week2GateCallback = null;
-    }
-    function submitWeek2Gate() {
-      const input = document.getElementById('w2-pw-input');
-      const errEl = document.getElementById('w2-pw-error');
-      const val = input ? input.value.trim() : '';
-      if (unlockWeek2(val)) {
-        // 성공 애니메이션
-        const card = document.getElementById('week2-gate-card');
-        card.classList.add('unlocked');
-        setTimeout(() => {
-          card.classList.remove('unlocked');
-          closeWeek2Gate();
-          if (typeof window.__week2GateCallback === 'function') {
-            window.__week2GateCallback();
-            window.__week2GateCallback = null;
-          }
-        }, 900);
-      } else {
-        errEl.style.opacity = '1';
-        input.classList.add('shake');
-        setTimeout(() => {
-          errEl.style.opacity = '0';
-          input.classList.remove('shake');
-        }, 1800);
-      }
-    }
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeWeek2Gate();
-    });
   </script>
-  <!-- ═══ 2주차 비밀번호 게이트 모달 ═══ -->
-  <div id="week2-gate-modal" role="dialog" aria-modal="true" aria-labelledby="w2-gate-title">
-    <div class="w2-gate-backdrop" onclick="closeWeek2Gate()"></div>
-    <div id="week2-gate-card" class="w2-gate-card">
-      <div class="w2-gate-glow"></div>
-      <div class="w2-gate-lock-icon">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="5" y="11" width="14" height="10" rx="2.5" stroke="currentColor" stroke-width="1.8"/>
-          <path d="M8 11V7.5a4 4 0 0 1 8 0V11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-          <circle cx="12" cy="16" r="1.5" fill="currentColor"/>
-        </svg>
-      </div>
-      <div class="w2-gate-badge">2주차</div>
-      <h2 class="w2-gate-title" id="w2-gate-title">2주차 잠금 해제</h2>
-      <p class="w2-gate-desc">2주차 콘텐츠는 수업 당일 공개됩니다.<br>담당자로부터 받은 비밀번호를 입력해 주세요.</p>
-      <div class="w2-input-wrap">
-        <input
-          id="w2-pw-input"
-          class="w2-pw-input"
-          type="password"
-          placeholder="비밀번호 입력"
-          maxlength="20"
-          autocomplete="off"
-          onkeydown="if(event.key==='Enter')submitWeek2Gate()"
-        />
-        <div class="w2-pw-error" id="w2-pw-error">비밀번호가 올바르지 않습니다.</div>
-      </div>
-      <div class="w2-gate-actions">
-        <button class="w2-btn-cancel" onclick="closeWeek2Gate()" type="button">취소</button>
-        <button class="w2-btn-unlock" onclick="submitWeek2Gate()" type="button">
-          <span class="w2-btn-text">잠금 해제</span>
-          <span class="w2-btn-icon">🔓</span>
-        </button>
-      </div>
-      <div class="w2-gate-hint">비밀번호를 모르시면 슬랙으로 문의해주세요</div>
-      <div class="w2-unlock-anim" aria-hidden="true">
-        <svg class="w2-check" viewBox="0 0 52 52"><circle class="w2-check-circle" cx="26" cy="26" r="25" fill="none"/><path class="w2-check-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
-        <div class="w2-unlock-label">잠금 해제! 🎉</div>
-      </div>
-    </div>
-  </div>
 </body>
-
 
 </html>
