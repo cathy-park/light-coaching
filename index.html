@@ -7566,10 +7566,10 @@
     function unlock() { const input = document.getElementById('pw-input'); const val = input ? input.value.trim() : ''; const err = document.getElementById('pw-error'); if (val === PASSWORD) { document.getElementById('lock-screen').style.display = 'none'; document.getElementById('app').style.display = 'flex'; try { initApp() } catch (e) { console.error('initApp error:', e); try { buildNav(); renderPanel('orientation') } catch (e2) { console.error('fallback error:', e2) } } } else { if (err) { err.style.display = 'block'; setTimeout(() => err.style.display = 'none', 2200) } } }
     function initApp() { buildNav(); loadSavedFields(); initFlowBuilder(); initPriorityBuilder(); initWireframe(); loadProgress(); renderPanel('orientation'); showResumeBanner() }
     const WEEK2_PAGES = ['step6','step7','step8','step9','step10','step11'];
-    const WEEK2_UNLOCK_KEY = 'lc_week2_unlocked';
+    const WEEK2_UNLOCK_KEY = 'lc_week2_unlocked_v2';
     function isWeek2Unlocked() { return safeGet(WEEK2_UNLOCK_KEY) === 'true'; }
     function unlockWeek2(pw) {
-      if (pw === '5678') {
+      if (pw === 'light2026') {
         safeSet(WEEK2_UNLOCK_KEY, 'true');
         return true;
       }
