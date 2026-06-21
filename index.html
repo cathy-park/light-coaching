@@ -7569,7 +7569,9 @@
     const WEEK2_UNLOCK_KEY = 'lc_week2_unlocked_v2';
     function isWeek2Unlocked() { return safeGet(WEEK2_UNLOCK_KEY) === 'true'; }
     function unlockWeek2(pw) {
-      if (pw === 'light2026') {
+      const p = pw.toLowerCase();
+      // 'light2026'을 한글 상태에서 그대로 쳤을 때 'ㅣㅑ홋2026'이 됨
+      if (p === 'light2026' || p === 'ㅣㅑ홋2026' || p === 'ㅣㅑㅎㅗㅅ2026') {
         safeSet(WEEK2_UNLOCK_KEY, 'true');
         return true;
       }
