@@ -7904,8 +7904,10 @@
     }
     function setDoneList(done) { safeSet(PROGRESS_KEY, JSON.stringify(done)) }
     function isUnlocked(id) {
-      if (id === 'faq' || id === 'ai-prompt-guide' || id === 'ui-prompt-guide' || id === 'ai-models') return true;
       const done = getDoneList();
+      if (id === 'faq' || id === 'ai-prompt-guide' || id === 'ui-prompt-guide' || id === 'ai-models') {
+        return done.includes('step5');
+      }
       if (id.startsWith('bonus')) {
         return done.includes('step11');
       }
