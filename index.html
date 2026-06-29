@@ -4891,28 +4891,24 @@
                     <div class="inline-shot-caption">모델 선택창에서 Gemini 3.5 Flash (High) 또는 (Medium)을 확인하고 선택하세요.</div>
                   </div>
                   <div class="model-guide-box"
-                    style="margin-top:14px; padding:14px; background:rgba(255,255,255,0.03); border:1px solid var(--line2); border-radius:10px; font-size:12.5px; line-height:1.65;">
-                    <b style="color:var(--text2); display:block; margin-bottom:8px;">💡 모델별 특징 및 차이점 안내:</b>
-                    <ul
-                      style="margin:0; padding-left:16px; color:var(--text2); display:flex; flex-direction:column; gap:6px;">
-                      <li><b style="color:#4fc3f7;">Gemini 3.5 Flash (High / Medium):</b> 응답 속도가 매우 빠르고 효율적인 경량 모델로,
-                        일반적인 실습 및 신속한 기능 구현에 가장 적합합니다.</li>
-                      <li><b style="color:#29b6f6;">Gemini 3.1 Pro (High / Low):</b> 더 복잡한 로직 설계나 정교한 논리적 추론이 필요할 때 권장하는
-                        고성능 모델입니다.</li>
-                      <li><b style="color:#ce93d8;">Claude Sonnet 4.6 (Thinking):</b> 사고 과정(Thinking)을 거쳐 디테일한 코드 구현과 에러
-                        디버깅을 우수하게 수행하는 코딩 특화 모델입니다.</li>
-                      <li><b style="color:#b39ddb;">Claude Opus 4.6 (Thinking):</b> 고난도의 아키텍처 설계와 깊은 논리 분석이 필요한 대형 태스크에
-                        적합한 최상위 모델입니다.</li>
-                      <li><b style="color:#80cbc4;">GPT-OSS 120B (Medium):</b> 특정 영역 테스트를 위한 대규모 오픈소스 계열 모델입니다.</li>
-                    </ul>
-                    <hr style="border:0; border-top:1px solid var(--line2); margin:12px 0;" />
-                    <ul
-                      style="margin:0; padding-left:16px; color:var(--text2); display:flex; flex-direction:column; gap:6px;">
-                      <li><b>High vs Medium 차이:</b> High는 속도와 지능의 밸런스가 최고 수준으로 튜닝된 모델이며, Medium은 High 대비 가벼운 리소스로 구동되는
-                        효율 중시 모델입니다. 실습 시 결과물에는 큰 차이가 없으므로 둘 중 표시되는 버전을 선택하시면 됩니다.</li>
-                      <li><b>High vs Low 차이:</b> 용량 및 연산 강도의 차이입니다. Low 버전은 응답 지연을 극한으로 줄여 테스트하기에 용이하나 깊은 추론이 제한될 수 있고,
-                        High 버전은 넓은 코딩 맥락을 정확하게 파악하고 정밀하게 코드를 완성해 줍니다.</li>
-                    </ul>
+                    style="margin-top:14px; padding:16px; background:rgba(255,255,255,0.03); border:1px solid var(--line2); border-radius:10px; font-size:13px; line-height:1.65;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                      <b style="color:#fff; display:block;">🧠 내 프로젝트에 맞는 '두뇌' 고르기</b>
+                      <button class="nav-btn primary" style="padding: 4px 10px; font-size: 11px; height: 26px;" onclick="goPageById('ai-models')">자세히 보기 →</button>
+                    </div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                      <div style="background:rgba(255,255,255,0.02); padding:10px 12px; border-radius:8px;">
+                        <span style="display:block; font-size:12px; font-weight:700; color:#4fc3f7; margin-bottom:4px;">Gemini (빠른 속도 & 기획)</span>
+                        <span style="color:var(--text2); font-size:11.5px;">빠른 속도와 넓은 컨텍스트를 지원하여 기획(PRD) 문서 분석이나 초기 뼈대 구축에 탁월합니다.</span>
+                      </div>
+                      <div style="background:rgba(255,255,255,0.02); padding:10px 12px; border-radius:8px;">
+                        <span style="display:block; font-size:12px; font-weight:700; color:#ce93d8; margin-bottom:4px;">Claude (디자인 & 고도화)</span>
+                        <span style="color:var(--text2); font-size:11.5px;">'Thinking' 과정을 통해 복잡한 로직과 세련된 UI/UX 디자인을 가장 완벽하게 구현합니다.</span>
+                      </div>
+                    </div>
+                    <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--line2); color:var(--text2); font-size:12px;">
+                      <b>💡 추천 워크플로우:</b> 전체 기획안 설계는 <b>Gemini</b>에게 맡기고, 이를 바탕으로 실제 디자인과 코드를 입히는 작업은 <b>Claude Sonnet</b>에게 요청하세요.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -5560,6 +5556,13 @@
           <div class="week-badge badge-w2">2주차 — 구현 준비</div>
           <h1 class="page-title">STEP 6. 1주차 MD를 구현용 PRD로 변환하기</h1>
           <p class="page-desc">1주차에서 다운로드한 MD 파일을 GPTs에 업로드해 Antigravity가 이해하기 쉬운 구현용 PRD Lite로 정리합니다.</p>
+          <div class="inline-shot" style="margin-top: 20px; margin-left: 0; padding: 14px 18px; border-color: rgba(79, 195, 247, 0.3); background: rgba(79, 195, 247, 0.05); display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+            <div>
+              <p style="color: #4fc3f7; font-weight: 700; margin: 0 0 4px 0; font-size: 13.5px;">💡 코딩 투입 전 모델 선택 꿀팁!</p>
+              <p style="color: var(--text2); margin: 0; font-size: 12.5px;">전체 구조와 뼈대는 <b>Gemini 3.1 Pro</b>로 잡고, 디자인 마크업은 <b>Claude Sonnet 4.6</b>으로 진행하면 가장 효율적입니다.</p>
+            </div>
+            <button class="nav-btn primary" style="flex-shrink: 0; padding: 6px 12px; font-size: 12px;" onclick="goPageById('ai-models')">자세히 보기</button>
+          </div>
           <div class="sec" style="margin-top: 28px;">
             <div class="sec-title">구현용 PRD Lite 변환 가이드</div>
             <div class="step-list">
@@ -6681,6 +6684,148 @@
         <!-- ══════════════════════════════════
              참고 자료 — AI에게 질문 잘하기
         ══════════════════════════════════ -->
+        <section class="page" id="page-ai-models">
+          <div class="week-badge badge-bonus">참고 자료</div>
+          <h1 class="page-title">🧠 안티그라비티 모델 선택 가이드</h1>
+          <p class="page-desc">선택지에 있는 모델들은 각자 고유한 '두뇌 성향'과 강점을 가지고 있습니다. 실무 흐름에 맞춰 가장 효율적으로 활용하는 방법을 안내해 드립니다.</p>
+
+          <div class="sec" style="margin-top: 32px;">
+            <div class="sec-title">1. Claude 4.6 라인업 (Thinking)</div>
+            <p style="color:var(--text2); font-size:14px; margin-bottom:16px;">Anthropic의 4.6 버전은 '생각하는 과정(Thinking)'이 시각적으로 드러나며, 복잡한 지시 사항을 다각도로 분석한 뒤 결과물을 내놓는 것이 특징입니다.</p>
+            
+            <div class="step-list" style="margin-top:0;">
+              <div class="step-card" style="border-left: 4px solid #ce93d8;">
+                <div style="width:100%;">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div class="step-card-title" style="margin-bottom:6px; color:#ce93d8;">Claude Sonnet 4.6 (Thinking) 🚀 [추천]</div>
+                    <span style="background:rgba(206,147,216,0.15); color:#ce93d8; font-size:11px; padding:4px 8px; border-radius:4px; font-weight:700;">감각적인 시니어 디자이너 겸 개발자</span>
+                  </div>
+                  <div class="step-card-desc" style="color:var(--text2);">
+                    현존하는 모델 중 UI/UX 디자인 감각과 CSS 스타일링 능력이 가장 뛰어납니다. '벤토박스'나 '글래스모피즘' 같은 추상적인 트렌드 용어를 던져도, 모던하고 수려한 컴포넌트 코드로 곧잘 구현해 냅니다. 반응형 분기점(Breakpoints)을 잡거나 UI의 디테일한 마이크로 인터랙션을 설계할 때 실패 확률이 가장 적습니다.
+                  </div>
+                </div>
+              </div>
+              <div class="step-card" style="border-left: 4px solid #b39ddb;">
+                <div style="width:100%;">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div class="step-card-title" style="margin-bottom:6px; color:#b39ddb;">Claude Opus 4.6 (Thinking)</div>
+                    <span style="background:rgba(179,157,219,0.15); color:#b39ddb; font-size:11px; padding:4px 8px; border-radius:4px; font-weight:700;">아키텍처 설계 수석 엔지니어</span>
+                  </div>
+                  <div class="step-card-desc" style="color:var(--text2);">
+                    Sonnet보다 깊은 추론 능력을 가졌습니다. 단순히 HTML/CSS 레이아웃을 짜는 것을 넘어, 랜딩페이지에 복잡한 JavaScript 애니메이션 라이브러리(GSAP, Three.js 등)를 결합하거나 컴포넌트 간의 상태 관리, 데이터 바인딩 등 구조적이고 난이도 높은 인터랙션을 짜야 할 때 압도적인 안정성을 보여줍니다.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sec" style="margin-top: 40px;">
+            <div class="sec-title">2. Gemini 라인업 (3.5 & 3.1)</div>
+            <p style="color:var(--text2); font-size:14px; margin-bottom:16px;">Google의 Gemini 라인업은 방대한 컨텍스트(입력량) 처리 능력과 빠른 속도, 그리고 뛰어난 지시문 준수 능력이 강점입니다.</p>
+            
+            <div class="step-list" style="margin-top:0;">
+              <div class="step-card" style="border-left: 4px solid #4fc3f7;">
+                <div style="width:100%;">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div class="step-card-title" style="margin-bottom:6px; color:#4fc3f7;">Gemini 3.5 Flash (Medium / High / Low)</div>
+                    <span style="background:rgba(79,195,247,0.15); color:#4fc3f7; font-size:11px; padding:4px 8px; border-radius:4px; font-weight:700;">손이 엄청나게 빠른 주니어 개발자</span>
+                  </div>
+                  <div class="step-card-desc" style="color:var(--text2);">
+                    Flash 모델은 속도가 상상을 초월할 정도로 빠릅니다. 대량의 기존 코드를 빠르게 훑고 구조를 파악하거나, 프롬프트를 바꿨을 때 결과물이 어떻게 변하는지 프로토타입을 '스피디하게' 여러 버전으로 뽑아보고 싶을 때 유용합니다. (디자인의 심미성은 Claude에 비해 조금 정형화되어 나올 수 있습니다)
+                  </div>
+                </div>
+              </div>
+              <div class="step-card" style="border-left: 4px solid #29b6f6;">
+                <div style="width:100%;">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div class="step-card-title" style="margin-bottom:6px; color:#29b6f6;">Gemini 3.1 Pro (Low / High)</div>
+                    <span style="background:rgba(41,182,246,0.15); color:#29b6f6; font-size:11px; padding:4px 8px; border-radius:4px; font-weight:700;">꼼꼼하고 끈기 있는 중견 풀스택 엔지니어</span>
+                  </div>
+                  <div class="step-card-desc" style="color:var(--text2);">
+                    Flash보다 훨씬 깊은 컨텍스트 이해도를 가집니다. 기존 HTML 코드의 양이 무지막지하게 길거나, 참고해야 할 텍스트 자산(기획서, 브랜드 가이드 등)이 많을 때 이를 누락 없이 전부 기억하고 반영하는 능력이 탁월합니다. 코드가 길어져도 중간에 생략하지 않고 끝까지 마크업을 완성해 내는 지구력이 좋습니다.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sec" style="margin-top: 40px;">
+            <div class="sec-title">3. 오픈소스 및 성능 옵션 가이드</div>
+            
+            <div class="step-list" style="margin-top:16px;">
+              <div class="step-card" style="border-left: 4px solid #80cbc4;">
+                <div style="width:100%;">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div class="step-card-title" style="margin-bottom:6px; color:#80cbc4;">GPT-OSS 120B (Medium)</div>
+                    <span style="background:rgba(128,203,196,0.15); color:#80cbc4; font-size:11px; padding:4px 8px; border-radius:4px; font-weight:700;">정석적인 서브 어시스턴트</span>
+                  </div>
+                  <div class="step-card-desc" style="color:var(--text2);">
+                    오픈소스 기반 대형 언어 모델입니다. 화려한 UI를 창의적으로 만들어내는 능력은 독점 모델에 비해 다소 낮지만, 표준적인 웹 표준(W3C)과 마크업 규격을 엄격하게 잘 따릅니다. Claude가 짠 코드를 가져와서 교차 검증 및 디버깅을 시키는 용도로 쓰기 좋습니다.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:24px; padding:20px; background:rgba(255,255,255,0.03); border:1px solid var(--line2); border-radius:12px;">
+              <div style="font-weight:700; color:#fff; margin-bottom:12px; font-size:14px;">⚙️ High / Medium / Low 옵션의 차이</div>
+              <ul style="margin:0; padding-left:20px; color:var(--text2); display:flex; flex-direction:column; gap:12px; font-size:13.5px;">
+                <li><b style="color:#fff;">High (고도 추론):</b> 더 많은 '추론 토큰(Reasoning tokens)'을 소비하여 깊이 연산합니다. 복잡한 코딩이나 높은 논리가 필요할 때 성능을 극대화하지만, 대기 시간이 길어지고 비용이 상승합니다.</li>
+                <li><b style="color:#fff;">Medium / Low (중간 및 빠른 응답):</b> 내부적인 생각 수준을 낮추어 속도와 비용 효율을 챙기는 설정입니다. 정형화된 출력이나 대량의 문서 처리, 단순 코드 수정 등 빠른 응답이 필요할 때 유리합니다.</li>
+              </ul>
+              <div style="margin-top:12px; padding-top:12px; border-top:1px dashed var(--line2); color:var(--text2); font-size:13px;">
+                <b>💡 요약:</b> 전체 정보 구조를 짜거나 복잡한 로직을 해결해야 할 때는 <b>High</b>를 선택해 퀄리티를 극대화하고, 단순 수정이나 가벼운 텍스트 작업에는 <b>Medium/Low</b>를 선택해 효율을 챙기세요.
+              </div>
+            </div>
+          </div>
+
+          <div class="sec" style="margin-top: 48px;">
+            <div class="sec-title" style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:24px;">🛠️</span> 실무 추천 워크플로우
+            </div>
+            <div style="display:flex; flex-direction:column; gap:16px; margin-top:16px;">
+              
+              <div style="background:rgba(41,182,246,0.05); border:1px solid rgba(41,182,246,0.2); border-radius:12px; padding:20px;">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                  <span style="background:#29b6f6; color:#0f172a; font-weight:800; font-size:12px; padding:4px 10px; border-radius:20px;">1단계</span>
+                  <span style="font-size:16px; font-weight:700; color:#fff;">기획 & 뼈대 구축 (Gemini 3.1 Pro High)</span>
+                </div>
+                <div style="color:var(--text2); font-size:14px; line-height:1.6;">
+                  <b style="color:#29b6f6;">역할:</b> 꼼꼼한 기획자 / 아키텍처 설계<br/>
+                  <b style="color:#29b6f6;">실행:</b> PRD 문서를 입력하고 "이 요구사항을 바탕으로 랜딩페이지의 전체 섹션 구성(IA)과 각 섹션별로 들어가야 할 데이터, 컴포넌트 명세서를 논리적으로 짜줘" 라고 요청합니다.<br/>
+                  <b style="color:#29b6f6;">결과:</b> 요구사항이 하나도 누락되지 않은 탄탄하고 촘촘한 화면 설계 뼈대가 나옵니다.
+                </div>
+              </div>
+
+              <div style="background:rgba(206,147,216,0.05); border:1px solid rgba(206,147,216,0.2); border-radius:12px; padding:20px;">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                  <span style="background:#ce93d8; color:#0f172a; font-weight:800; font-size:12px; padding:4px 10px; border-radius:20px;">2단계</span>
+                  <span style="font-size:16px; font-weight:700; color:#fff;">디자인 & 마크업 입히기 (Claude Sonnet 4.6 Thinking)</span>
+                </div>
+                <div style="color:var(--text2); font-size:14px; line-height:1.6;">
+                  <b style="color:#ce93d8;">역할:</b> 트렌디한 시니어 UX/UI 디자이너<br/>
+                  <b style="color:#ce93d8;">실행:</b> 앞서 Gemini가 짜준 탄탄한 뼈대(구조)를 그대로 복사해서 Sonnet에게 넘깁니다. "이 정보 구조를 바탕으로 다크모드, 글래스모피즘 스타일이 적용된 트렌디한 하이엔드 HTML/CSS 코드로 비주얼을 입혀줘" 라고 요청합니다.<br/>
+                  <b style="color:#ce93d8;">결과:</b> 기획 의도는 완벽히 지켜지면서, 시각적으로는 매우 세련되고 감각적인 UI 코드가 도출됩니다.
+                </div>
+              </div>
+
+              <div style="background:rgba(179,157,219,0.05); border:1px solid rgba(179,157,219,0.2); border-radius:12px; padding:20px;">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                  <span style="background:#b39ddb; color:#0f172a; font-weight:800; font-size:12px; padding:4px 10px; border-radius:20px;">3단계</span>
+                  <span style="font-size:16px; font-weight:700; color:#fff;">고도화 및 기능 추가 (Claude Opus 4.6 Thinking)</span>
+                </div>
+                <div style="color:var(--text2); font-size:14px; line-height:1.6;">
+                  <b style="color:#b39ddb;">역할:</b> 수석 프론트엔드 개발자<br/>
+                  <b style="color:#b39ddb;">실행:</b> 디자인이 완성된 코드에 "스크롤에 따라 반응하는 패럴랙스 애니메이션이나, 복잡한 상태 관리를 추가해 줘" 라고 요청하여 인터랙션의 완성도를 극대화합니다.
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="page-nav">
+            <button class="nav-btn primary" onclick="goPageById('bonus4')">디자인 커스텀 가이드 보기 →</button>
+          </div>
+        </section>
         <section class="page" id="page-ai-prompt-guide">
           <div class="week-badge badge-neutral">참고 자료</div>
           <h1 class="page-title">AI에게 질문 잘하기</h1>
@@ -7501,7 +7646,7 @@
       ['1주차 — UX 설계', [['step1', 'STEP 1. 업무 기록 돌아보기', '1'], ['step2', 'STEP 2. 문제정의', '2'], ['step3', 'STEP 3. 사용자 흐름 설계', '3'], ['step4', 'STEP 4. 기능 우선순위', '4'], ['step5', 'STEP 5. 화면 구조 설계', '5'], ['mission1', '1주차 미션 제출', '↓']]],
       ['2주차 — 대시보드 MVP 만들기', [['step6', 'STEP 6. 1주차 MD를 구현용 PRD로 변환하기', '6'], ['step7', 'STEP 7. 업무 입력/완료 체크 기능 만들기', '7'], ['step8', 'STEP 8. 업무일지 생성 기능 만들기', '8'], ['step9', 'STEP 9. 저장 기능과 기본 UX 점검', '9'], ['step10', 'STEP 10. 오류 수정 및 사용성 개선', '10'], ['step11', '2주차 최종 제출 및 회고', '11']]],
       ['BONUS — 선택 확장', [['bonus1', 'BONUS 1. 캘린더 기능 추가', 'B'], ['bonus2', 'BONUS 2. 통계 기능 추가', 'B'], ['bonus3', 'BONUS 3. AI 문장 고도화', 'B'], ['bonus5', 'BONUS 4. 배포 (GitHub/Vercel)', 'B']]],
-      ['참고 자료', [['bonus4', '🎁 GIFT. 디자인 커스텀', 'G'], ['ai-prompt-guide', '💬 AI에게 질문 잘하기', 'A'], ['ui-prompt-guide', '🎨 상황별 UX/UI 수정 프롬프트', 'U'], ['faq', '자주 막히는 FAQ', '?']]]
+      ['참고 자료', [['ai-models', '🧠 안티그라비티 모델 선택 가이드', 'M'], ['bonus4', '🎁 GIFT. 디자인 커스텀', 'G'], ['ai-prompt-guide', '💬 AI에게 질문 잘하기', 'A'], ['ui-prompt-guide', '🎨 상황별 UX/UI 수정 프롬프트', 'U'], ['faq', '자주 막히는 FAQ', '?']]]
     ];
     const week1Fields = [
       { step: 'step1', fid: 'm1-record', label: '1-1. 현재 기록 방식', placeholder: '예: 노션에 적지만 급한 업무는 메신저와 머릿속에 흩어져 있다.' },
