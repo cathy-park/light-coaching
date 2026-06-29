@@ -7897,14 +7897,14 @@
     const PROGRESS_KEY = 'lc_v13_done';
     const LAST_PAGE_KEY = 'lc_v12_last_page';
     function getProgressOrder() {
-      return NAV.flatMap(sec => sec[1].map(item => item[0])).filter(id => id !== 'faq' && id !== 'ai-prompt-guide' && id !== 'ui-prompt-guide');
+      return NAV.flatMap(sec => sec[1].map(item => item[0])).filter(id => id !== 'faq' && id !== 'ai-prompt-guide' && id !== 'ui-prompt-guide' && id !== 'ai-models');
     }
     function getDoneList() {
       try { return JSON.parse(safeGet(PROGRESS_KEY) || '[]') } catch (e) { return [] }
     }
     function setDoneList(done) { safeSet(PROGRESS_KEY, JSON.stringify(done)) }
     function isUnlocked(id) {
-      if (id === 'faq' || id === 'ai-prompt-guide' || id === 'ui-prompt-guide') return true;
+      if (id === 'faq' || id === 'ai-prompt-guide' || id === 'ui-prompt-guide' || id === 'ai-models') return true;
       const done = getDoneList();
       if (id.startsWith('bonus')) {
         return done.includes('step11');
