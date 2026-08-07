@@ -1526,8 +1526,8 @@
 
 
 
-    /* ── 슬랙 질문 생성기 복구 ── */
-    .slack-form-card {
+    /* ── 디스코드 질문 생성기 복구 ── */
+    .discord-form-card {
       background: var(--surface2);
       border: 1px solid var(--line);
       border-radius: 22px;
@@ -1536,14 +1536,14 @@
       box-shadow: 0 18px 42px rgba(0, 0, 0, .18)
     }
 
-    .slack-field-label {
+    .discord-field-label {
       font-size: 13px;
       font-weight: 900;
       color: var(--text2);
       margin: 18px 0 10px
     }
 
-    .slack-field-label:first-child {
+    .discord-field-label:first-child {
       margin-top: 0
     }
 
@@ -1578,7 +1578,7 @@
       color: white
     }
 
-    .slack-textarea {
+    .discord-textarea {
       width: 100%;
       min-height: 86px;
       border: 1px solid var(--line);
@@ -1592,12 +1592,12 @@
       line-height: 1.7
     }
 
-    .slack-textarea:focus {
+    .discord-textarea:focus {
       border-color: var(--blue);
       box-shadow: 0 0 0 4px var(--blue-bg)
     }
 
-    .slack-copy-main {
+    .discord-copy-main {
       display: flex;
       justify-content: flex-end;
       margin-top: 16px
@@ -1609,7 +1609,7 @@
       font-size: 13px
     }
 
-    .slack-preview-box {
+    .discord-preview-box {
       min-height: 520px;
       white-space: pre-wrap;
       line-height: 1.75;
@@ -1617,7 +1617,7 @@
       font-size: 13px
     }
 
-    .slack-preview-box.empty {
+    .discord-preview-box.empty {
       color: var(--muted)
     }
 
@@ -4621,7 +4621,7 @@
         type="password" />
       <div class="lock-error" id="pw-error">비밀번호가 올바르지 않습니다.</div>
       <button class="primary-btn" id="unlock-btn" onclick="unlock()" style="width:100%" type="button">입장하기</button>
-      <div class="lock-hint">비밀번호를 모르신다면 슬랙으로 문의해주세요</div>
+      <div class="lock-hint">비밀번호를 모르신다면 디스코드로 문의해주세요</div>
     </div>
   </div>
   <div id="app">
@@ -4633,9 +4633,9 @@
       <div class="top-actions">
         <a class="top-link gold" href="https://worklog-ten-chi.vercel.app/" rel="noreferrer" target="_blank">완성 예시 보기
           ↗</a>
-        <a class="top-link" href="https://w1746165050-wn2416556.slack.com/archives/C08QK70KRN1" rel="noreferrer"
-          target="_blank"><img src="img/slack.webp" alt="Slack"
-            style="width:16px;height:16px;object-fit:contain;vertical-align:middle;margin-right:5px;">슬랙 채널 ▾</a>
+        <a class="top-link" href="https://discord.gg/CNdW7M4dN" rel="noreferrer"
+          target="_blank"><svg viewBox="0 0 127.14 96.36" aria-hidden="true"
+            style="width:16px;height:16px;vertical-align:middle;margin-right:5px;"><path fill="#5865F2" d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>디스코드 채널 ▾</a>
       </div>
     </header>
     <div class="layout">
@@ -4645,7 +4645,7 @@
           <div class="notice-bar resume-banner" id="resume-banner"></div>
           <div class="week-badge badge-neutral">시작 전</div>
           <h1 class="page-title">코칭 시작 전에 꼭 읽어주세요 👋</h1>
-          <p class="page-desc">2주 동안 무엇을 배우는지, 어떤 흐름으로 진행되는지, 슬랙은 어떻게 쓰는지 안내합니다.</p>
+          <p class="page-desc">2주 동안 무엇을 배우는지, 어떤 흐름으로 진행되는지, 디스코드는 어떻게 쓰는지 안내합니다.</p>
           <div class="hero-card">
             <div class="card-title">이 과정의 필수 완성 목표는 ‘업무 대시보드 MVP’입니다.</div>
             <p style="color:var(--text2)">단순히 업무 기록 앱을 따라 만드는 과정이 아니라, 아이디어를 UX 관점에서 정리하고 PRD Lite로 문서화한 뒤 AI 개발 도구로
@@ -4818,7 +4818,7 @@
                 <div class="step-num">3</div>
                 <div>
                   <div class="step-card-title">로그인/계정 연동 확인</div>
-                  <div class="step-card-desc">실습 진행 전에 Antigravity가 정상적으로 실행되는지, 계정 로그인이 완료되었는지 확인합니다. 로그인 단계에서 막힌다면 슬랙에
+                  <div class="step-card-desc">실습 진행 전에 Antigravity가 정상적으로 실행되는지, 계정 로그인이 완료되었는지 확인합니다. 로그인 단계에서 막힌다면 디스코드에
                     문의해주세요.</div>
                 </div>
               </div>
@@ -4987,12 +4987,12 @@
           </div>
 
           <div class="page-nav"><button class="nav-btn" onclick="goPageById('antigravity')">← 이전</button><button
-              class="nav-btn primary" onclick="goPageById('slack-guide')">다음 →</button></div>
+              class="nav-btn primary" onclick="goPageById('discord-guide')">다음 →</button></div>
         </section>
-        <section class="page" id="page-slack-guide">
+        <section class="page" id="page-discord-guide">
           <div class="week-badge badge-neutral">시작 전</div>
-          <h1 class="page-title">슬랙 질문 양식</h1>
-          <p class="page-desc">질문은 아래 양식에 맞춰 작성해야 피드백을 받을 수 있습니다. 왼쪽에서 항목을 채우면 오른쪽 패널에 슬랙용 문장이 실시간으로 생성됩니다.</p>
+          <h1 class="page-title">디스코드 질문 양식</h1>
+          <p class="page-desc">질문은 아래 양식에 맞춰 작성해야 피드백을 받을 수 있습니다. 왼쪽에서 항목을 채우면 오른쪽 패널에 디스코드용 문장이 실시간으로 생성됩니다.</p>
           <div class="sec">
             <div class="sec-title">왜 양식으로 질문해야 하나요?</div>
             <div class="info-card">
@@ -5001,44 +5001,44 @@
             </div>
           </div>
           <div class="sec">
-            <div class="sec-title">실시간 슬랙 질문 생성기</div>
-            <div class="slack-form-card">
-              <div class="slack-field-label">【질문 유형】</div>
-              <input id="slack-type" type="hidden" value="" />
+            <div class="sec-title">실시간 디스코드 질문 생성기</div>
+            <div class="discord-form-card">
+              <div class="discord-field-label">【질문 유형】</div>
+              <input id="discord-type" type="hidden" value="" />
               <div class="chip-grid" id="chips-type">
-                <button class="chip" onclick="selectSlackChip('type','오류',this)" type="button">💥 오류</button>
-                <button class="chip" onclick="selectSlackChip('type','기능 구현',this)" type="button">🛠️ 기능 구현</button>
-                <button class="chip" onclick="selectSlackChip('type','UX 흐름',this)" type="button">🗺️ UX 흐름</button>
-                <button class="chip" onclick="selectSlackChip('type','프롬프트',this)" type="button">📝 프롬프트</button>
-                <button class="chip" onclick="selectSlackChip('type','커스텀',this)" type="button">🎨 커스텀</button>
-                <button class="chip" onclick="selectSlackChip('type','기타',this)" type="button">❓ 기타</button>
+                <button class="chip" onclick="selectDiscordChip('type','오류',this)" type="button">💥 오류</button>
+                <button class="chip" onclick="selectDiscordChip('type','기능 구현',this)" type="button">🛠️ 기능 구현</button>
+                <button class="chip" onclick="selectDiscordChip('type','UX 흐름',this)" type="button">🗺️ UX 흐름</button>
+                <button class="chip" onclick="selectDiscordChip('type','프롬프트',this)" type="button">📝 프롬프트</button>
+                <button class="chip" onclick="selectDiscordChip('type','커스텀',this)" type="button">🎨 커스텀</button>
+                <button class="chip" onclick="selectDiscordChip('type','기타',this)" type="button">❓ 기타</button>
               </div>
-              <div class="slack-field-label">【현재 단계】</div>
-              <input id="slack-step" type="hidden" value="" />
+              <div class="discord-field-label">【현재 단계】</div>
+              <input id="discord-step" type="hidden" value="" />
               <div class="chip-grid" id="chips-step">
-                <button class="chip" onclick="selectSlackChip('step','1주차 STEP 1',this)" type="button">W1 S1</button>
-                <button class="chip" onclick="selectSlackChip('step','1주차 STEP 2',this)" type="button">W1 S2</button>
-                <button class="chip" onclick="selectSlackChip('step','1주차 STEP 3',this)" type="button">W1 S3</button>
-                <button class="chip" onclick="selectSlackChip('step','1주차 STEP 4',this)" type="button">W1 S4</button>
-                <button class="chip" onclick="selectSlackChip('step','1주차 STEP 5',this)" type="button">W1 S5</button>
-                <button class="chip" onclick="selectSlackChip('step','2주차 STEP 6',this)" type="button">W2 S6</button>
-                <button class="chip" onclick="selectSlackChip('step','2주차 STEP 7',this)" type="button">W2 S7</button>
-                <button class="chip" onclick="selectSlackChip('step','2주차 STEP 8',this)" type="button">W2 S8</button>
-                <button class="chip" onclick="selectSlackChip('step','2주차 STEP 9',this)" type="button">W2 S9</button>
-                <button class="chip" onclick="selectSlackChip('step','2주차 STEP 10',this)" type="button">W2 S10</button>
-                <button class="chip" onclick="selectSlackChip('step','2주차 STEP 11',this)" type="button">W2 S11</button>
+                <button class="chip" onclick="selectDiscordChip('step','1주차 STEP 1',this)" type="button">W1 S1</button>
+                <button class="chip" onclick="selectDiscordChip('step','1주차 STEP 2',this)" type="button">W1 S2</button>
+                <button class="chip" onclick="selectDiscordChip('step','1주차 STEP 3',this)" type="button">W1 S3</button>
+                <button class="chip" onclick="selectDiscordChip('step','1주차 STEP 4',this)" type="button">W1 S4</button>
+                <button class="chip" onclick="selectDiscordChip('step','1주차 STEP 5',this)" type="button">W1 S5</button>
+                <button class="chip" onclick="selectDiscordChip('step','2주차 STEP 6',this)" type="button">W2 S6</button>
+                <button class="chip" onclick="selectDiscordChip('step','2주차 STEP 7',this)" type="button">W2 S7</button>
+                <button class="chip" onclick="selectDiscordChip('step','2주차 STEP 8',this)" type="button">W2 S8</button>
+                <button class="chip" onclick="selectDiscordChip('step','2주차 STEP 9',this)" type="button">W2 S9</button>
+                <button class="chip" onclick="selectDiscordChip('step','2주차 STEP 10',this)" type="button">W2 S10</button>
+                <button class="chip" onclick="selectDiscordChip('step','2주차 STEP 11',this)" type="button">W2 S11</button>
               </div>
-              <div class="slack-field-label">【하고 싶었던 것】</div>
-              <textarea class="slack-textarea" id="slack-want" oninput="updateSlackPreview()"
+              <div class="discord-field-label">【하고 싶었던 것】</div>
+              <textarea class="discord-textarea" id="discord-want" oninput="updateDiscordPreview()"
                 placeholder="하고 싶었던 동작을 적어주세요"></textarea>
-              <div class="slack-field-label">【현재 발생한 문제】</div>
-              <textarea class="slack-textarea" id="slack-problem" oninput="updateSlackPreview()"
+              <div class="discord-field-label">【현재 발생한 문제】</div>
+              <textarea class="discord-textarea" id="discord-problem" oninput="updateDiscordPreview()"
                 placeholder="어떤 에러나 막힘이 있나요?"></textarea>
-              <div class="slack-field-label">【원하는 답변】</div>
-              <textarea class="slack-textarea" id="slack-answer" oninput="updateSlackPreview()"
+              <div class="discord-field-label">【원하는 답변】</div>
+              <textarea class="discord-textarea" id="discord-answer" oninput="updateDiscordPreview()"
                 placeholder="어떤 피드백을 원하시나요?"></textarea>
-              <div class="slack-copy-main"><button class="copy-btn big" disabled="" id="slack-copy-main"
-                  onclick="copySlackGenerated()">슬랙에 복사하기</button></div>
+              <div class="discord-copy-main"><button class="copy-btn big" disabled="" id="discord-copy-main"
+                  onclick="copyDiscordGenerated()">디스코드에 복사하기</button></div>
             </div>
           </div>
           <div class="sec">
@@ -5163,7 +5163,7 @@
             </div>
           </div>
 
-          <div class="page-nav"><button class="nav-btn" onclick="goPageById('slack-guide')">← 이전</button><button
+          <div class="page-nav"><button class="nav-btn" onclick="goPageById('discord-guide')">← 이전</button><button
               class="nav-btn primary" onclick="goPageById('step2')">다음 →</button></div>
         </section>
         <section class="page" id="page-step2">
@@ -6598,7 +6598,7 @@
         <section class="page" id="page-faq">
           <div class="week-badge badge-neutral">참고 자료</div>
           <h1 class="page-title">자주 막히는 FAQ</h1>
-          <p class="page-desc">슬랙 질문 전에 먼저 검색해보세요.</p>
+          <p class="page-desc">디스코드 질문 전에 먼저 검색해보세요.</p>
           <div class="sec faq-search-section">
             <div class="sec-title">FAQ 검색</div>
             <div class="faq-search-card">
@@ -6641,7 +6641,7 @@
               <div>
                 <div class="step-card-title">Antigravity 설치나 접속에서 막혀요</div>
                 <div class="step-card-desc">시작 전의 "Antigravity 설치 및 접속" 페이지에 있는 공식 다운로드 링크로 접속했는지 먼저 확인하세요. 설치 화면 캡처와 오류
-                  문구를 함께 슬랙에 올리면 빠르게 도와드릴 수 있습니다.</div>
+                  문구를 함께 디스코드에 올리면 빠르게 도와드릴 수 있습니다.</div>
               </div>
             </div>
             <div class="step-card faq-item" data-keywords="Ollama 설치 필수 선택 AI 문장 고도화">
@@ -6668,16 +6668,16 @@
                   가능하면 도전하는 선택 단계로 보면 됩니다.</div>
               </div>
             </div>
-            <div class="step-card faq-item" data-keywords="오류 에러 메시지 슬랙 질문 캡처 콘솔">
+            <div class="step-card faq-item" data-keywords="오류 에러 메시지 디스코드 질문 캡처 콘솔">
               <div class="step-num">Q8</div>
               <div>
                 <div class="step-card-title">오류가 났는데 어디서부터 질문해야 할지 모르겠어요</div>
-                <div class="step-card-desc">슬랙 질문 양식에서 "하고 싶었던 것 / 시도한 것 / 실제 결과 / 오류 문구"를 채워주세요. 가능하면 화면 캡처와
+                <div class="step-card-desc">디스코드 질문 양식에서 "하고 싶었던 것 / 시도한 것 / 실제 결과 / 오류 문구"를 채워주세요. 가능하면 화면 캡처와
                   Antigravity가 수정한 파일명을 함께 올려주세요.</div>
               </div>
             </div>
           </div>
-          <div class="faq-empty" id="faq-empty">검색 결과가 없습니다. 다른 단어로 검색하거나 슬랙 질문 양식으로 질문해주세요.</div>
+          <div class="faq-empty" id="faq-empty">검색 결과가 없습니다. 다른 단어로 검색하거나 디스코드 질문 양식으로 질문해주세요.</div>
           <div class="page-nav"><button class="nav-btn" onclick="goPageById('ui-prompt-guide')">← 이전</button>
             <div style="color:var(--muted);font-size:13px">FAQ는 계속 추가해도 검색이 작동하도록 구성되어 있습니다.</div>
           </div>
@@ -7656,7 +7656,7 @@
 
     const PASSWORD = '1234';
     const NAV = [
-      ['시작 전', [['orientation', '오리엔테이션', '▦'], ['prep', '사전 준비 체크리스트', '✓'], ['antigravity', 'Antigravity 설치 및 접속', 'A'], ['ollama', 'Ollama 설치 <span class="mini-chip optional">선택</span>', 'O'], ['slack-guide', '슬랙 질문 양식', '?']]],
+      ['시작 전', [['orientation', '오리엔테이션', '▦'], ['prep', '사전 준비 체크리스트', '✓'], ['antigravity', 'Antigravity 설치 및 접속', 'A'], ['ollama', 'Ollama 설치 <span class="mini-chip optional">선택</span>', 'O'], ['discord-guide', '디스코드 질문 양식', '?']]],
       ['1주차 — UX 설계', [['step1', 'STEP 1. 업무 기록 돌아보기', '1'], ['step2', 'STEP 2. 문제정의', '2'], ['step3', 'STEP 3. 사용자 흐름 설계', '3'], ['step4', 'STEP 4. 기능 우선순위', '4'], ['step5', 'STEP 5. 화면 구조 설계', '5'], ['mission1', '1주차 미션 제출', '↓']]],
       ['2주차 — 대시보드 MVP 만들기', [['step6', 'STEP 6. 1주차 MD를 구현용 PRD로 변환하기', '6'], ['step7', 'STEP 7. 업무 입력/완료 체크 기능 만들기', '7'], ['step8', 'STEP 8. 업무일지 생성 기능 만들기', '8'], ['step9', 'STEP 9. 저장 기능과 기본 UX 점검', '9'], ['step10', 'STEP 10. 오류 수정 및 사용성 개선', '10'], ['step11', '2주차 최종 제출 및 회고', '11']]],
       ['BONUS — 선택 확장', [['bonus1', 'BONUS 1. 캘린더 기능 추가', 'B'], ['bonus2', 'BONUS 2. 통계 기능 추가', 'B'], ['bonus3', 'BONUS 3. AI 문장 고도화', 'B'], ['bonus5', 'BONUS 4. 배포 (GitHub/Vercel)', 'B']]],
@@ -7680,7 +7680,7 @@
       prep: { type: 'check', title: '사전 준비 체크', items: ['Chrome 브라우저 준비', '작업용 폴더 만들기', 'Antigravity 계정/접속 준비', 'Ollama 설치 여부 결정'] },
       antigravity: { type: 'check', title: 'Antigravity 준비', items: ['공식 설치 파일을 다운로드했다', '설치 완료 후 계정 연동을 확인했다'] },
       ollama: { type: 'check', title: 'Ollama 결정 (선택)', items: ['Ollama 설치 여부를 결정했다 (또는 완료했다)'] },
-      'slack-guide': { type: 'slack' },
+      'discord-guide': { type: 'discord' },
       step1: { type: 'workbook', title: '1주차 워크북', desc: 'STEP이 넘어갈수록 작성 영역이 하나씩 누적됩니다.' },
       step2: { type: 'workbook', title: '1주차 워크북', desc: '이전 단계 내용은 유지되고, 현재 단계 항목이 추가됩니다.' },
       step3: { type: 'workbook', title: '1주차 워크북', desc: '작성한 내용은 마지막에 MD 파일로 다운로드됩니다.' },
@@ -7699,7 +7699,7 @@
       bonus4: { type: 'check', title: 'BONUS 체크', items: ['다크/라이트 모드 중 하나를 선택했다', '컬러 프리셋을 선택했다', 'Radius 스타일을 선택했다', '아이콘 스타일을 선택했다', '카드 스타일을 선택했다', '화면 밀도를 선택했다', '원하는 느낌을 한 문장으로 작성했다', 'Design MD Lite의 사용 목적을 이해했다', 'Design MD Lite를 복사했다'] },
       bonus5: { type: 'check', title: 'BONUS 체크', items: ['GitHub 계정을 준비했다', 'GitHub 저장소를 생성했다', '업로드할 파일과 제외할 파일을 구분했다', '프로젝트 파일을 GitHub에 업로드했다', 'Commit changes까지 완료했다', 'Vercel 계정을 준비했다', 'Vercel에서 GitHub 저장소를 Import했다', 'Deploy를 완료했다', '배포 주소로 접속해 정상 작동을 확인했다', 'localStorage 데이터 한계를 이해했다'] },
       'ui-prompt-guide': { type: 'check', title: 'UX/UI 점검 기준', items: ['사용자의 첫 행동이 명확한가', '정보 위계가 잘 보이는가', 'CTA가 버튼처럼 인식되는가', '빈 상태/오류/완료 상태 고려됨', '모바일 레이아웃이 안정적인가', '기존 디자인 톤이 유지되는가'] },
-      faq: { type: 'check', title: '질문 전 확인', items: ['오류 메시지를 복사했다', '화면 캡처를 준비했다', '무엇을 시도했는지 정리했다', '슬랙 질문 양식을 확인했다'] }
+      faq: { type: 'check', title: '질문 전 확인', items: ['오류 메시지를 복사했다', '화면 캡처를 준비했다', '무엇을 시도했는지 정리했다', '디스코드 질문 양식을 확인했다'] }
     };
     function getWeek1VisibleFields(id) {
       if (id === 'mission1') return week1Fields;
@@ -7826,9 +7826,9 @@
       const hasNext = !!getNextPageId(id);
       const actionHtml = hasNext ? `<button class="panel-action-btn" onclick="completeAndGoNext('${id}')" disabled>다음 단계로 →</button>` : '';
 
-      if (data.type === 'slack') {
-        p.innerHTML = `<div class="panel-kicker">슬랙 전용 양식</div><div class="panel-title">실시간 생성기</div><div class="panel-desc">왼쪽 폼을 작성하면 여기에 결과가 출력됩니다.</div><div class="panel-card"><div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line2);padding-bottom:10px;margin-bottom:12px"><span style="font-size:12px;font-weight:900;color:var(--muted)">미리보기</span><button class="copy-btn" id="slack-copy-panel" onclick="copySlackGenerated()" disabled>복사하기</button></div><div class="slack-preview-box empty" id="slack-preview">(모든 항목을 입력하면 복사 버튼이 활성화됩니다.)</div></div><button class="panel-action-btn" onclick="completeAndGoNext('${id}')">다음 단계로 →</button>`;
-        setTimeout(updateSlackPreview, 0);
+      if (data.type === 'discord') {
+        p.innerHTML = `<div class="panel-kicker">디스코드 전용 양식</div><div class="panel-title">실시간 생성기</div><div class="panel-desc">왼쪽 폼을 작성하면 여기에 결과가 출력됩니다.</div><div class="panel-card"><div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line2);padding-bottom:10px;margin-bottom:12px"><span style="font-size:12px;font-weight:900;color:var(--muted)">미리보기</span><button class="copy-btn" id="discord-copy-panel" onclick="copyDiscordGenerated()" disabled>복사하기</button></div><div class="discord-preview-box empty" id="discord-preview">(모든 항목을 입력하면 복사 버튼이 활성화됩니다.)</div></div><button class="panel-action-btn" onclick="completeAndGoNext('${id}')">다음 단계로 →</button>`;
+        setTimeout(updateDiscordPreview, 0);
       } else if (data.type === 'workbook') {
         const visible = getWeek1VisibleFields(id);
         const total = week1Fields.length;
@@ -8174,29 +8174,29 @@
       const text = lines.join('\n'); const preview = document.getElementById('wf-text-preview'); if (preview) preview.textContent = text; safeSet('lc_v9_field_m1-screen', text); syncFieldElements('m1-screen', text, null); updateMissionPreview();
     }
 
-    // 슬랙 질문 생성기
-    function selectSlackChip(group, value, el) {
-      document.getElementById('slack-' + group).value = value;
+    // 디스코드 질문 생성기
+    function selectDiscordChip(group, value, el) {
+      document.getElementById('discord-' + group).value = value;
       document.querySelectorAll('#chips-' + group + ' .chip').forEach(c => c.classList.remove('selected'));
       el.classList.add('selected');
-      updateSlackPreview();
+      updateDiscordPreview();
     }
-    function getSlackText() {
-      const type = document.getElementById('slack-type')?.value || '';
-      const step = document.getElementById('slack-step')?.value || '';
-      const want = document.getElementById('slack-want')?.value.trim() || '';
-      const problem = document.getElementById('slack-problem')?.value.trim() || '';
-      const answer = document.getElementById('slack-answer')?.value.trim() || '';
+    function getDiscordText() {
+      const type = document.getElementById('discord-type')?.value || '';
+      const step = document.getElementById('discord-step')?.value || '';
+      const want = document.getElementById('discord-want')?.value.trim() || '';
+      const problem = document.getElementById('discord-problem')?.value.trim() || '';
+      const answer = document.getElementById('discord-answer')?.value.trim() || '';
       if (!type || !step || !want || !problem || !answer) return '';
       return `【질문 유형】\n${type}\n\n【현재 단계】\n${step}\n\n【하고 싶었던 것】\n${want}\n\n【현재 발생한 문제】\n${problem}\n\n【원하는 답변】\n${answer}\n\n【첨부】\n화면 캡처 또는 오류 메시지를 함께 첨부합니다.`;
     }
-    function updateSlackPreview() {
-      const text = getSlackText();
-      const preview = document.getElementById('slack-preview');
+    function updateDiscordPreview() {
+      const text = getDiscordText();
+      const preview = document.getElementById('discord-preview');
       if (preview) { preview.textContent = text || '(모든 항목을 입력하면 복사 버튼이 활성화됩니다.)'; preview.classList.toggle('empty', !text) }
-      ['slack-copy-main', 'slack-copy-panel'].forEach(id => { const btn = document.getElementById(id); if (btn) { btn.disabled = !text; btn.classList.toggle('enabled', !!text) } });
+      ['discord-copy-main', 'discord-copy-panel'].forEach(id => { const btn = document.getElementById(id); if (btn) { btn.disabled = !text; btn.classList.toggle('enabled', !!text) } });
     }
-    function copySlackGenerated() { const text = getSlackText(); if (!text) return; navigator.clipboard.writeText(text).then(() => { ['slack-copy-main', 'slack-copy-panel'].forEach(id => { const btn = document.getElementById(id); if (btn) { const old = btn.textContent; btn.textContent = '복사됨 ✓'; setTimeout(() => btn.textContent = old, 1300) } }) }) }
+    function copyDiscordGenerated() { const text = getDiscordText(); if (!text) return; navigator.clipboard.writeText(text).then(() => { ['discord-copy-main', 'discord-copy-panel'].forEach(id => { const btn = document.getElementById(id); if (btn) { const old = btn.textContent; btn.textContent = '복사됨 ✓'; setTimeout(() => btn.textContent = old, 1300) } }) }) }
 
     // 전역 함수 등록 + 인라인 onclick이 막히는 환경을 위한 보조 이벤트 바인딩
     window.unlock = unlock;
@@ -8208,9 +8208,9 @@
     window.resetWfBlocks = resetWfBlocks;
     window.deleteWfBlock = deleteWfBlock;
     window.updateWfBlock = updateWfBlock;
-    window.selectSlackChip = selectSlackChip;
-    window.updateSlackPreview = updateSlackPreview;
-    window.copySlackGenerated = copySlackGenerated;
+    window.selectDiscordChip = selectDiscordChip;
+    window.updateDiscordPreview = updateDiscordPreview;
+    window.copyDiscordGenerated = copyDiscordGenerated;
     window.updateMissionPreview = updateMissionPreview;
     window.toggleDone = toggleDone;
     window.completeAndGoNext = completeAndGoNext;
@@ -8635,7 +8635,7 @@ Antigravity, 너는 지금부터 '프론트엔드 디자이너' 모드로 동작
           <span class="w2-btn-icon">🔓</span>
         </button>
       </div>
-      <div class="w2-gate-hint">비밀번호를 모르시면 슬랙으로 문의해주세요</div>
+      <div class="w2-gate-hint">비밀번호를 모르시면 디스코드로 문의해주세요</div>
       <div class="w2-unlock-anim" aria-hidden="true">
         <svg class="w2-check" viewBox="0 0 52 52"><circle class="w2-check-circle" cx="26" cy="26" r="25" fill="none"/><path class="w2-check-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
         <div class="w2-unlock-label">잠금 해제! 🎉</div>
